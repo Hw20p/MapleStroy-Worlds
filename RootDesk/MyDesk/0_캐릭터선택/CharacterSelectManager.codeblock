@@ -47,7 +47,7 @@
             "Name": null
           },
           "Arguments": null,
-          "Code": "log(\"[CharacterSelect] Manager initialized\")\n\n-- 서버에 캐릭터 목록 요청\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then\n\tlog(\"[CharacterSelect] mapEntity not found\")\n\treturn\nend\n\nmapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))",
+          "Code": "log(\"[CharacterSelect] Manager initialized\")\n\n-- 서버에 캐릭터 목록 요청\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then return end\n\nmapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))",
           "Scope": 2,
           "ExecSpace": 0,
           "Attributes": [],
@@ -90,6 +90,29 @@
           "ExecSpace": 0,
           "Attributes": [],
           "Name": "TryOpenCreate"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "integer",
+              "DefaultValue": "0",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "slotIndex"
+            }
+          ],
+          "Code": "-- 빈 슬롯 선택 방지\nif slotIndex + 1 > self.charCount then return end\n\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then return end\n\nlog(\"[CharacterSelect] TrySelectChar slot=\" .. slotIndex)\nmapEntity.init:RequestSelectChar(tostring(player.PlayerComponent.UserId), slotIndex)",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "TrySelectChar"
         },
         {
           "Return": {

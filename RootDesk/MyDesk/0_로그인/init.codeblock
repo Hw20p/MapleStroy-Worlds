@@ -256,6 +256,73 @@
           "ExecSpace": 6,
           "Attributes": [],
           "Name": "NotifyDelete"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "integer",
+              "DefaultValue": "0",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "slotIndex"
+            }
+          ],
+          "Code": "log(\"[CharacterSelect][Server] RequestSelectChar userId=\" .. userId .. \" slot=\" .. slotIndex)\n\nlocal storage = _DataStorageService:GetUserDataStorage(\"characters\")\nlocal errCode, raw = storage:GetAndWait(userId)\n\nlocal function parseChars(r)\n\tif type(r) ~= \"string\" then return {} end\n\tif r:sub(1,1) ~= \"[\" then return {} end\n\tlocal result = {}\n\tfor n, j in r:gmatch('\"nickname\":\"([^\"]*)\",\"job\":\"([^\"]*)\"') do\n\t\ttable.insert(result, { nickname = n, job = j })\n\tend\n\treturn result\nend\n\nif errCode ~= 0 then\n\tlog(\"[CharacterSelect][Server] GetAndWait error: \" .. tostring(errCode))\n\treturn\nend\n\nlocal chars = parseChars(raw)\nlocal luaIndex = slotIndex + 1\n\nif luaIndex < 1 or luaIndex > #chars then\n\tlog(\"[CharacterSelect][Server] invalid slot: \" .. tostring(slotIndex))\n\treturn\nend\n\nlocal char = chars[luaIndex]\n\n-- 선택된 캐릭터를 DataStorage에 저장 (로비에서 참조용)\nlocal selectedStorage = _DataStorageService:GetUserDataStorage(\"selectedChar\")\nlocal selJson = '{\"nickname\":\"' .. char.nickname .. '\",\"job\":\"' .. char.job .. '\"}'\nselectedStorage:SetAndWait(userId, selJson)\n\nlog(\"[CharacterSelect][Server] Selected: \" .. char.nickname .. \" / \" .. char.job)\nself:NotifySelect(userId, char.nickname, char.job)",
+          "Scope": 1,
+          "ExecSpace": 5,
+          "Attributes": [],
+          "Name": "RequestSelectChar"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "nickname"
+            },
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "job"
+            }
+          ],
+          "Code": "local player = _UserService.LocalPlayer\nif not isvalid(player) then return end\nif tostring(player.PlayerComponent.UserId) ~= userId then return end\n\nlog(\"[CharacterSelect] Teleporting to 1_메인로비 as \" .. nickname .. \" / \" .. job)\n_TeleportService:TeleportToEntityPath(player, \"/maps/1_메인로비\")",
+          "Scope": 2,
+          "ExecSpace": 6,
+          "Attributes": [],
+          "Name": "NotifySelect"
         }
       ]
     }

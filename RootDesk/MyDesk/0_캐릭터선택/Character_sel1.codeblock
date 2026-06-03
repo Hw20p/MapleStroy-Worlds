@@ -1,0 +1,46 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://47cd555a-1119-436f-b3db-1f7d529fc912",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "",
+      "Id": "47cd555a-1119-436f-b3db-1f7d529fc912",
+      "Language": 1,
+      "Name": "Character_sel1",
+      "Type": 1,
+      "Source": 0,
+      "Target": null,
+      "Properties": [],
+      "Methods": [],
+      "EntityEventHandlers": [
+        {
+          "Name": "HandleButtonClickEvent",
+          "EventName": "ButtonClickEvent",
+          "ParameterName": "event",
+          "Target": "self",
+          "Code": "local ui_1 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nui_1.Enable = false\n\nlocal selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.CharacterSelectManager:TrySelectChar(0)\nend",
+          "Scope": 0,
+          "ExecSpace": 0
+        }
+      ]
+    }
+  }
+}

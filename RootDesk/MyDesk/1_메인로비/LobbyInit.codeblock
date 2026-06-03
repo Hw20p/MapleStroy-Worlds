@@ -1,0 +1,105 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://b2c3d4e5-f6a7-8901-bcde-lobby0000001",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "로비 진입 시 선택된 캐릭터 닉네임을 네임태그에 적용",
+      "Id": "b2c3d4e5-f6a7-8901-bcde-lobby0000001",
+      "Language": 1,
+      "Name": "LobbyInit",
+      "Type": 1,
+      "Source": 0,
+      "Target": null,
+      "Properties": [],
+      "Methods": [
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": null,
+          "Code": "log(\"[LobbyInit] OnBeginPlay\")\n\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal userId = tostring(player.PlayerComponent.UserId)\nlog(\"[LobbyInit] Requesting nameTag for userId=\" .. userId)\nself:RequestNameTag(userId)",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "OnBeginPlay"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            }
+          ],
+          "Code": "log(\"[LobbyInit][Server] RequestNameTag userId=\" .. userId)\n\nlocal selectedStorage = _DataStorageService:GetUserDataStorage(\"selectedChar\")\nlocal errCode, raw = selectedStorage:GetAndWait(userId)\n\nif errCode ~= 0 or raw == nil then\n\tlog(\"[LobbyInit][Server] No selectedChar for userId=\" .. userId)\n\treturn\nend\n\nlocal nickname = raw:match('\"nickname\":\"([^\"]*)')\nif not nickname or nickname == \"\" then\n\tlog(\"[LobbyInit][Server] nickname parse failed, raw=\" .. tostring(raw))\n\treturn\nend\n\nlog(\"[LobbyInit][Server] Found nickname=\" .. nickname)\nself:NotifyNameTag(userId, nickname)",
+          "Scope": 1,
+          "ExecSpace": 5,
+          "Attributes": [],
+          "Name": "RequestNameTag"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "nickname"
+            }
+          ],
+          "Code": "local player = _UserService.LocalPlayer\nif not isvalid(player) then return end\nif tostring(player.PlayerComponent.UserId) ~= userId then return end\n\nplayer.NameTagComponent.Name = nickname\nlog(\"[LobbyInit] NameTag set to \" .. nickname)",
+          "Scope": 2,
+          "ExecSpace": 6,
+          "Attributes": [],
+          "Name": "NotifyNameTag"
+        }
+      ],
+      "EntityEventHandlers": []
+    }
+  }
+}
