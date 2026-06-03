@@ -67,7 +67,7 @@
             {
               "@type": "MOD.Core.BackgroundComponent",
               "TemplateRUID": "01f094565960447f9c289cb4eebe9a74",
-              "Type": 3,
+              "Type": 1,
               "WebUrl": "af46f84255e64718b703ba64c57ea9bd",
               "Enable": true
             }
