@@ -183,7 +183,7 @@
       {
         "id": "c4595fbd-7e96-4cab-a07d-1229cea1ff4d",
         "path": "/ui/0_로그인-UI/사용자정보/시작버튼",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,script.MapMoveButton",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,script.UI_Enable_1",
         "jsonString": {
           "name": "시작버튼",
           "path": "/ui/0_로그인-UI/사용자정보/시작버튼",
@@ -304,7 +304,7 @@
               "Enable": true
             },
             {
-              "@type": "script.MapMoveButton",
+              "@type": "script.UI_Enable_1",
               "Enable": true
             }
           ],

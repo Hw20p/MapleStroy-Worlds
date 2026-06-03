@@ -1,7 +1,7 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "directory://f4e9e28a3b574641a2b9b85fb876296c",
+  "EntryKey": "directory://31188c6e3abd4651beac46faf29cff0e",
   "ContentType": "x-mod/directory",
   "Content": "",
   "Usage": 0,
@@ -13,8 +13,8 @@
   "ContentProto": {
     "Use": "Json",
     "Json": {
-      "entry_id": "directory://f4e9e28a3b574641a2b9b85fb876296c",
-      "name": "맵_이동_버튼",
+      "entry_id": "directory://31188c6e3abd4651beac46faf29cff0e",
+      "name": "0_캐릭터생성",
       "lock": false,
       "folding": false,
       "nameEditable": true

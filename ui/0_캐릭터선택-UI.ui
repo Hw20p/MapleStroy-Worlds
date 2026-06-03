@@ -3750,7 +3750,7 @@
       {
         "id": "4b5e38d7-3f3f-4a2a-9718-51d8e84ad3e4",
         "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯3/만들기버튼",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,MOD.Core.TextComponent,script.MapMoveButton_2",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,MOD.Core.TextComponent,script.UI_Enable_2",
         "jsonString": {
           "name": "만들기버튼",
           "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯3/만들기버튼",
@@ -3996,7 +3996,7 @@
               "Enable": true
             },
             {
-              "@type": "script.MapMoveButton_2",
+              "@type": "script.UI_Enable_2",
               "Enable": true
             }
           ],

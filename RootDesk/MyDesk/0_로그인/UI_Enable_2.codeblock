@@ -1,0 +1,46 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://58c24023-432b-4194-aa19-0b88dd02c2ed",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "",
+      "Id": "58c24023-432b-4194-aa19-0b88dd02c2ed",
+      "Language": 1,
+      "Name": "UI_Enable_2",
+      "Type": 1,
+      "Source": 0,
+      "Target": null,
+      "Properties": [],
+      "Methods": [],
+      "EntityEventHandlers": [
+        {
+          "Name": "HandleButtonClickEvent",
+          "EventName": "ButtonClickEvent",
+          "ParameterName": "event",
+          "Target": "self",
+          "Code": "-- 버튼이 클릭되었을 때 실행됩니다.\nlocal ui_1 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nlocal ui_2 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\n\nui_1.Enable = true\nui_2.Enable = false",
+          "Scope": 0,
+          "ExecSpace": 0
+        }
+      ]
+    }
+  }
+}

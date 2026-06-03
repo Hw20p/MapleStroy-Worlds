@@ -16,7 +16,7 @@
       {
         "id": "878aeb93-8466-42e1-abff-3617bba6e6e2",
         "path": "/maps/0_로그인",
-        "componentNames": "MOD.Core.MapComponent,MOD.Core.FootholdComponent",
+        "componentNames": "MOD.Core.MapComponent,MOD.Core.FootholdComponent,script.init",
         "jsonString": {
           "name": "0_로그인",
           "path": "/maps/0_로그인",
@@ -38,6 +38,10 @@
             {
               "@type": "MOD.Core.FootholdComponent",
               "FootholdsByLayer": {},
+              "Enable": true
+            },
+            {
+              "@type": "script.init",
               "Enable": true
             }
           ],
@@ -63,7 +67,8 @@
             {
               "@type": "MOD.Core.BackgroundComponent",
               "TemplateRUID": "01f094565960447f9c289cb4eebe9a74",
-              "Type": 1,
+              "Type": 3,
+              "WebUrl": "af46f84255e64718b703ba64c57ea9bd",
               "Enable": true
             }
           ],

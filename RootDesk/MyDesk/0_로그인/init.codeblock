@@ -1,0 +1,52 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://1c988470-b408-4d0a-8950-69d09661a139",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "",
+      "Id": "1c988470-b408-4d0a-8950-69d09661a139",
+      "Language": 1,
+      "Name": "init",
+      "Type": 1,
+      "Source": 0,
+      "Target": null,
+      "Properties": [],
+      "Methods": [
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": null,
+          "Code": "local player = _UserService.LocalPlayer\nif not isvalid(player) then\n\treturn\nend\n\nlocal playerComp = player.PlayerComponent\nif not isvalid(playerComp) then\n\treturn\nend\n\nlocal nickname = playerComp.Nickname\nlocal profileCode = playerComp.ProfileCode\n\nlog(\"[LoginUI] Nickname: \" .. tostring(nickname) .. \", UserId: \" .. tostring(profileCode))\n\nlocal nameText = _EntityService:GetEntityByPath(\"/ui/0_로그인-UI/사용자정보/계정이름_text\")\nif isvalid(nameText) then\n\tnameText.TextComponent.Text = nickname\nend\n\nlocal codeText = _EntityService:GetEntityByPath(\"/ui/0_로그인-UI/사용자정보/계정코드_text\")\nif isvalid(codeText) then\n\tcodeText.TextComponent.Text = \"#\" .. profileCode\nend",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "OnBeginPlay"
+        }
+      ],
+      "EntityEventHandlers": []
+    }
+  }
+}

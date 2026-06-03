@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://fbd86d5664ea432aa0589ae85513b3e9",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://fbd86d5664ea432aa0589ae85513b3e9",
+      "name": "0_로그인",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}
