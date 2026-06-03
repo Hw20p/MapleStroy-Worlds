@@ -39,7 +39,7 @@
             "Name": null
           },
           "Arguments": null,
-          "Code": "log(\"[LobbyInit] OnBeginPlay\")\n\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal userId = tostring(player.PlayerComponent.UserId)\nlog(\"[LobbyInit] Requesting nameTag for userId=\" .. userId)\nself:RequestNameTag(userId)",
+          "Code": "_SoundService:PlayBGM(\"1b9988e57879481f970bf12bb0aa59fc\", 1.0)\n\nlog(\"[LobbyInit] OnBeginPlay\")\n\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal userId = tostring(player.PlayerComponent.UserId)\nlog(\"[LobbyInit] Requesting nameTag for userId=\" .. userId)\nself:RequestNameTag(userId)\n\nlocal ui_1 = _EntityService:GetEntityByPath(\"/ui/1_공통-UI\")\nui_1.Enable = true",
           "Scope": 2,
           "ExecSpace": 0,
           "Attributes": [],

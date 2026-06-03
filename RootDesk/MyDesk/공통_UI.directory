@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "directory://0a30336a5ded444dbb31a7e29c0d5060",
+  "ContentType": "x-mod/directory",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "entry_id": "directory://0a30336a5ded444dbb31a7e29c0d5060",
+      "name": "공통_UI",
+      "lock": false,
+      "folding": false,
+      "nameEditable": true
+    }
+  }
+}
