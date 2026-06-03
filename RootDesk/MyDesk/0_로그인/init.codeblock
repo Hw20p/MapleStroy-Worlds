@@ -189,6 +189,73 @@
           "ExecSpace": 6,
           "Attributes": [],
           "Name": "NotifyResult"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "integer",
+              "DefaultValue": "0",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "slotIndex"
+            }
+          ],
+          "Code": "log(\"[CharacterDelete][Server] RequestDeleteChar userId=\" .. userId .. \" slot=\" .. slotIndex)\n\nlocal storage = _DataStorageService:GetUserDataStorage(\"characters\")\nlocal errCode, raw = storage:GetAndWait(userId)\n\nlocal function parseChars(r)\n\tif type(r) ~= \"string\" then return {} end\n\tif r:sub(1,1) ~= \"[\" then return {} end\n\tlocal result = {}\n\tfor nickname, job in r:gmatch('\"nickname\":\"([^\"]*)\",\"job\":\"([^\"]*)\"') do\n\t\ttable.insert(result, { nickname = nickname, job = job })\n\tend\n\treturn result\nend\n\nlocal function serializeChars(chars)\n\tlocal parts = {}\n\tfor _, c in ipairs(chars) do\n\t\ttable.insert(parts, '{\"nickname\":\"' .. c.nickname .. '\",\"job\":\"' .. c.job .. '\"}')\n\tend\n\treturn \"[\" .. table.concat(parts, \",\") .. \"]\"\nend\n\nif errCode ~= 0 then\n\tlog(\"[CharacterDelete][Server] GetAndWait error: \" .. tostring(errCode))\n\tself:NotifyDelete(userId, false, slotIndex)\n\treturn\nend\n\nlocal chars = parseChars(raw)\nlocal luaIndex = slotIndex + 1  -- 0-based → 1-based\n\nif luaIndex < 1 or luaIndex > #chars then\n\tlog(\"[CharacterDelete][Server] invalid slot: \" .. slotIndex)\n\tself:NotifyDelete(userId, false, slotIndex)\n\treturn\nend\n\nlocal deleted = chars[luaIndex].nickname\ntable.remove(chars, luaIndex)\n\nlocal newJson = serializeChars(chars)\nlocal setErr = storage:SetAndWait(userId, newJson)\nif setErr ~= 0 then\n\tlog(\"[CharacterDelete][Server] SetAndWait error: \" .. tostring(setErr))\n\tself:NotifyDelete(userId, false, slotIndex)\n\treturn\nend\n\nlog(\"[CharacterDelete][Server] Deleted slot=\" .. slotIndex .. \" nickname=\" .. deleted)\nself:NotifyDelete(userId, true, slotIndex)",
+          "Scope": 1,
+          "ExecSpace": 5,
+          "Attributes": [],
+          "Name": "RequestDeleteChar"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "boolean",
+              "DefaultValue": "false",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "success"
+            },
+            {
+              "Type": "integer",
+              "DefaultValue": "0",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "slotIndex"
+            }
+          ],
+          "Code": "log(\"[CharacterDelete] NotifyDelete client success=\" .. tostring(success))\nlocal selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif not isvalid(selectUI) then return end\nif not selectUI.Enable then return end\n\nif success then\n\t-- 삭제 성공: 목록 새로고침\n\tlocal player = _UserService.LocalPlayer\n\tif isvalid(player) then\n\t\tlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\n\t\tif isvalid(mapEntity) then\n\t\t\tmapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))\n\t\tend\n\tend\nelse\n\t-- 삭제 실패 토스트\n\tlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\n\tlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\n\tif isvalid(toastGroup) and isvalid(toastMsg) then\n\t\ttoastGroup.Enable = true\n\t\ttoastMsg.TextComponent.Text = \"캐릭터 삭제에 실패했습니다.\"\n\t\t_TimerService:SetTimer(function()\n\t\t\tif isvalid(toastGroup) then toastGroup.Enable = false end\n\t\tend, 2)\n\tend\nend",
+          "Scope": 2,
+          "ExecSpace": 6,
+          "Attributes": [],
+          "Name": "NotifyDelete"
         }
       ]
     }

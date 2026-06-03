@@ -702,12 +702,12 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": 470.0,
-                "y": 220.0
+                "x": 475.2694,
+                "y": 253.374771
               },
               "OffsetMin": {
-                "x": -470.0,
-                "y": -180.0
+                "x": -464.7306,
+                "y": -212.204178
               },
               "Pivot": {
                 "x": 0.5,
@@ -715,7 +715,7 @@
               },
               "RectSize": {
                 "x": 940.0,
-                "y": 400.0
+                "y": 465.578949
               },
               "UIMode": 1,
               "UIScale": {
@@ -725,12 +725,12 @@
               },
               "UIVersion": 2,
               "anchoredPosition": {
-                "x": 0.0,
-                "y": 20.0
+                "x": 5.2694,
+                "y": 20.5853
               },
               "Position": {
-                "x": 0.0,
-                "y": 20.0,
+                "x": 5.2694,
+                "y": 20.5853,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -787,12 +787,12 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": -248.0,
-                "y": 190.0
+                "x": -248.0004,
+                "y": 188.2894
               },
               "OffsetMin": {
-                "x": -448.0,
-                "y": -190.0
+                "x": -448.0004,
+                "y": -211.7106
               },
               "Pivot": {
                 "x": 0.5,
@@ -800,7 +800,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -810,12 +810,12 @@
               },
               "UIVersion": 2,
               "anchoredPosition": {
-                "x": -348.0,
-                "y": 0.0
+                "x": -348.0004,
+                "y": -11.7106
               },
               "Position": {
-                "x": -348.0,
-                "y": 0.0,
+                "x": -348.0004,
+                "y": -11.7106,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -885,7 +885,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -983,7 +983,7 @@
       {
         "id": "c96d414c-8e73-4193-8937-7139da0523b0",
         "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯0/아바타",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.AvatarGUIRendererComponent,MOD.Core.SpriteGUIRendererComponent",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
           "name": "아바타",
           "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯0/아바타",
@@ -1045,7 +1045,7 @@
               },
               "Position": {
                 "x": 0.0,
-                "y": 174.0,
+                "y": 184.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -1059,22 +1059,6 @@
                 "y": 1.0,
                 "z": 1.0
               },
-              "Enable": true
-            },
-            {
-              "@type": "MOD.Core.AvatarGUIRendererComponent",
-              "Color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
-              },
-              "FlipX": false,
-              "FlipY": false,
-              "MaterialId": "",
-              "PlayRate": 1.0,
-              "PreserveAvatar": 0,
-              "RaycastTarget": true,
               "Enable": true
             },
             {
@@ -1179,11 +1163,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": 90.0,
-                "y": 141.0
+                "y": 156.0
               },
               "OffsetMin": {
                 "x": -90.0,
-                "y": 105.0
+                "y": 120.0
               },
               "Pivot": {
                 "x": 0.5,
@@ -1202,11 +1186,11 @@
               "UIVersion": 2,
               "anchoredPosition": {
                 "x": 0.0,
-                "y": 105.0
+                "y": 120.0
               },
               "Position": {
                 "x": 0.0,
-                "y": -85.0,
+                "y": -80.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -1333,7 +1317,7 @@
               },
               "SizeFit": false,
               "SortingLayer": "UI",
-              "Text": "캐릭터1",
+              "Text": "",
               "UseConstraintX": false,
               "UseConstraintY": false,
               "UseOutLine": false,
@@ -1408,7 +1392,7 @@
               },
               "Position": {
                 "x": 0.0,
-                "y": -160.0,
+                "y": -170.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -1596,6 +1580,159 @@
         }
       },
       {
+        "id": "08bd738d-5074-4607-a78a-66db451e1ca9",
+        "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯0/삭제버튼",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,script.Character_del1",
+        "jsonString": {
+          "name": "삭제버튼",
+          "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯0/삭제버튼",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": true,
+          "displayOrder": 4,
+          "pathConstraints": "/////",
+          "revision": 1,
+          "origin": {
+            "type": "Model",
+            "entry_id": "uibutton",
+            "sub_entity_id": null,
+            "root_entity_id": "08bd738d-5074-4607-a78a-66db451e1ca9",
+            "replaced_model_id": null
+          },
+          "modelId": "uibutton",
+          "@components": [
+            {
+              "@type": "MOD.Core.UITransformComponent",
+              "AlignmentOption": 0,
+              "AnchorsMax": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "AnchorsMin": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "MobileOnly": false,
+              "OffsetMax": {
+                "x": -49.710186,
+                "y": 199.999939
+              },
+              "OffsetMin": {
+                "x": -98.92241,
+                "y": 142.365875
+              },
+              "Pivot": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "RectSize": {
+                "x": 49.2122269,
+                "y": 57.6340675
+              },
+              "UIMode": 1,
+              "UIScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "UIVersion": 2,
+              "anchoredPosition": {
+                "x": -74.3163,
+                "y": 171.1829
+              },
+              "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "Position": {
+                "x": -74.3163,
+                "y": 171.1829,
+                "z": 0.0
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": -1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "ZRotation": 0.0,
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteGUIRendererComponent",
+              "ImageRUID": {
+                "DataId": "3e828fa1acad40f6a9f8ec4d9fa2bfc0"
+              },
+              "OverrideSorting": false,
+              "Color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.ButtonComponent",
+              "Colors": {
+                "NormalColor": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "HighlightedColor": {
+                  "r": 0.9607843,
+                  "g": 0.9607843,
+                  "b": 0.9607843,
+                  "a": 1.0
+                },
+                "PressedColor": {
+                  "r": 0.784313738,
+                  "g": 0.784313738,
+                  "b": 0.784313738,
+                  "a": 1.0
+                },
+                "SelectedColor": {
+                  "r": 0.9607843,
+                  "g": 0.9607843,
+                  "b": 0.9607843,
+                  "a": 1.0
+                },
+                "DisabledColor": {
+                  "r": 0.784313738,
+                  "g": 0.784313738,
+                  "b": 0.784313738,
+                  "a": 0.5019608
+                },
+                "ColorMultiplier": 1.0,
+                "FadeDuration": 0.1
+              },
+              "ImageRUIDs": {
+                "HighlightedSprite": null,
+                "PressedSprite": null,
+                "SelectedSprite": null,
+                "DisabledSprite": null
+              },
+              "OverrideSorting": false,
+              "Enable": true
+            },
+            {
+              "@type": "script.Character_del1",
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
         "id": "5b0ac869-f459-4327-8146-ebbdeaf01eb4",
         "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯1",
         "componentNames": "MOD.Core.UITransformComponent",
@@ -1633,11 +1770,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": -16.0,
-                "y": 190.0
+                "y": 188.2894
               },
               "OffsetMin": {
                 "x": -216.0,
-                "y": -190.0
+                "y": -211.7106
               },
               "Pivot": {
                 "x": 0.5,
@@ -1645,7 +1782,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -1656,11 +1793,11 @@
               "UIVersion": 2,
               "anchoredPosition": {
                 "x": -116.0,
-                "y": 0.0
+                "y": -11.7106
               },
               "Position": {
                 "x": -116.0,
-                "y": 0.0,
+                "y": -11.7106,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -1730,7 +1867,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -1828,7 +1965,7 @@
       {
         "id": "5625058d-b0ec-45d0-a912-3daf71d7f149",
         "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯1/아바타",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.AvatarGUIRendererComponent,MOD.Core.SpriteGUIRendererComponent",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
           "name": "아바타",
           "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯1/아바타",
@@ -1890,7 +2027,7 @@
               },
               "Position": {
                 "x": 0.0,
-                "y": 174.0,
+                "y": 184.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -1904,22 +2041,6 @@
                 "y": 1.0,
                 "z": 1.0
               },
-              "Enable": true
-            },
-            {
-              "@type": "MOD.Core.AvatarGUIRendererComponent",
-              "Color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
-              },
-              "FlipX": false,
-              "FlipY": false,
-              "MaterialId": "",
-              "PlayRate": 1.0,
-              "PreserveAvatar": 0,
-              "RaycastTarget": true,
               "Enable": true
             },
             {
@@ -2024,11 +2145,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": 90.0,
-                "y": 141.0
+                "y": 156.0
               },
               "OffsetMin": {
                 "x": -90.0,
-                "y": 105.0
+                "y": 120.0
               },
               "Pivot": {
                 "x": 0.5,
@@ -2047,11 +2168,11 @@
               "UIVersion": 2,
               "anchoredPosition": {
                 "x": 0.0,
-                "y": 105.0
+                "y": 120.0
               },
               "Position": {
                 "x": 0.0,
-                "y": -85.0,
+                "y": -80.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -2178,7 +2299,7 @@
               },
               "SizeFit": false,
               "SortingLayer": "UI",
-              "Text": "캐릭터2",
+              "Text": "",
               "UseConstraintX": false,
               "UseConstraintY": false,
               "UseOutLine": false,
@@ -2253,7 +2374,7 @@
               },
               "Position": {
                 "x": 0.0,
-                "y": -160.0,
+                "y": -170.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -2441,6 +2562,154 @@
         }
       },
       {
+        "id": "638a93d4-2ad5-408e-899d-ade735479371",
+        "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯1/삭제버튼",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,script.Character_del2",
+        "jsonString": {
+          "name": "삭제버튼",
+          "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯1/삭제버튼",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": true,
+          "displayOrder": 4,
+          "pathConstraints": "/////",
+          "revision": 1,
+          "origin": {
+            "type": "Model",
+            "entry_id": "uibutton",
+            "sub_entity_id": null,
+            "root_entity_id": "08bd738d-5074-4607-a78a-66db451e1ca9",
+            "replaced_model_id": null
+          },
+          "modelId": "uibutton",
+          "@components": [
+            {
+              "@type": "MOD.Core.UITransformComponent",
+              "AlignmentOption": 0,
+              "AnchorsMax": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "AnchorsMin": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "MobileOnly": false,
+              "OffsetMax": {
+                "x": -50.7877846,
+                "y": 199.999939
+              },
+              "OffsetMin": {
+                "x": -100.000015,
+                "y": 142.365875
+              },
+              "Pivot": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "RectSize": {
+                "x": 49.2122269,
+                "y": 57.6340675
+              },
+              "UIMode": 1,
+              "UIScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "UIVersion": 2,
+              "anchoredPosition": {
+                "x": -75.3939,
+                "y": 171.1829
+              },
+              "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "Position": {
+                "x": -75.3939,
+                "y": 171.1829,
+                "z": 0.0
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": -1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "ZRotation": 0.0,
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteGUIRendererComponent",
+              "ImageRUID": {
+                "DataId": "3e828fa1acad40f6a9f8ec4d9fa2bfc0"
+              },
+              "OverrideSorting": false,
+              "SortingLayer": "MapLayer0",
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.ButtonComponent",
+              "Colors": {
+                "NormalColor": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "HighlightedColor": {
+                  "r": 0.9607843,
+                  "g": 0.9607843,
+                  "b": 0.9607843,
+                  "a": 1.0
+                },
+                "PressedColor": {
+                  "r": 0.784313738,
+                  "g": 0.784313738,
+                  "b": 0.784313738,
+                  "a": 1.0
+                },
+                "SelectedColor": {
+                  "r": 0.9607843,
+                  "g": 0.9607843,
+                  "b": 0.9607843,
+                  "a": 1.0
+                },
+                "DisabledColor": {
+                  "r": 0.784313738,
+                  "g": 0.784313738,
+                  "b": 0.784313738,
+                  "a": 0.5019608
+                },
+                "ColorMultiplier": 1.0,
+                "FadeDuration": 0.1
+              },
+              "ImageRUIDs": {
+                "HighlightedSprite": null,
+                "PressedSprite": null,
+                "SelectedSprite": null,
+                "DisabledSprite": null
+              },
+              "OverrideSorting": false,
+              "Enable": true
+            },
+            {
+              "@type": "script.Character_del2",
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
         "id": "6b636744-fdfd-4acd-8f30-5e6e2beabedd",
         "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯2",
         "componentNames": "MOD.Core.UITransformComponent",
@@ -2477,12 +2746,12 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": 216.0,
-                "y": 190.0
+                "x": 215.9998,
+                "y": 189.4604
               },
               "OffsetMin": {
-                "x": 16.0,
-                "y": -190.0
+                "x": 15.9998016,
+                "y": -210.5396
               },
               "Pivot": {
                 "x": 0.5,
@@ -2490,7 +2759,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -2500,12 +2769,12 @@
               },
               "UIVersion": 2,
               "anchoredPosition": {
-                "x": 116.0,
-                "y": 0.0
+                "x": 115.9998,
+                "y": -10.5396
               },
               "Position": {
-                "x": 116.0,
-                "y": 0.0,
+                "x": 115.9998,
+                "y": -10.5396,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -2575,7 +2844,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -2673,7 +2942,7 @@
       {
         "id": "6157812c-3d1b-431a-b52a-26d8ab6aa4b3",
         "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯2/아바타",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.AvatarGUIRendererComponent,MOD.Core.SpriteGUIRendererComponent",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
           "name": "아바타",
           "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯2/아바타",
@@ -2735,7 +3004,7 @@
               },
               "Position": {
                 "x": 0.0,
-                "y": 174.0,
+                "y": 184.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -2749,22 +3018,6 @@
                 "y": 1.0,
                 "z": 1.0
               },
-              "Enable": true
-            },
-            {
-              "@type": "MOD.Core.AvatarGUIRendererComponent",
-              "Color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
-              },
-              "FlipX": false,
-              "FlipY": false,
-              "MaterialId": "",
-              "PlayRate": 1.0,
-              "PreserveAvatar": 0,
-              "RaycastTarget": true,
               "Enable": true
             },
             {
@@ -2869,11 +3122,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": 90.0,
-                "y": 141.0
+                "y": 156.0
               },
               "OffsetMin": {
                 "x": -90.0,
-                "y": 105.0
+                "y": 120.0
               },
               "Pivot": {
                 "x": 0.5,
@@ -2892,11 +3145,11 @@
               "UIVersion": 2,
               "anchoredPosition": {
                 "x": 0.0,
-                "y": 105.0
+                "y": 120.0
               },
               "Position": {
                 "x": 0.0,
-                "y": -85.0,
+                "y": -80.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -3023,7 +3276,7 @@
               },
               "SizeFit": false,
               "SortingLayer": "UI",
-              "Text": "캐릭터3",
+              "Text": "",
               "UseConstraintX": false,
               "UseConstraintY": false,
               "UseOutLine": false,
@@ -3098,7 +3351,7 @@
               },
               "Position": {
                 "x": 0.0,
-                "y": -160.0,
+                "y": -170.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -3286,6 +3539,154 @@
         }
       },
       {
+        "id": "45134608-5ccf-4c89-b43f-3603d2dbaf4c",
+        "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯2/삭제버튼",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,script.Character_del3",
+        "jsonString": {
+          "name": "삭제버튼",
+          "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯2/삭제버튼",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": true,
+          "displayOrder": 4,
+          "pathConstraints": "/////",
+          "revision": 1,
+          "origin": {
+            "type": "Model",
+            "entry_id": "uibutton",
+            "sub_entity_id": null,
+            "root_entity_id": "08bd738d-5074-4607-a78a-66db451e1ca9",
+            "replaced_model_id": null
+          },
+          "modelId": "uibutton",
+          "@components": [
+            {
+              "@type": "MOD.Core.UITransformComponent",
+              "AlignmentOption": 0,
+              "AnchorsMax": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "AnchorsMin": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "MobileOnly": false,
+              "OffsetMax": {
+                "x": -50.7878838,
+                "y": 198.829132
+              },
+              "OffsetMin": {
+                "x": -100.000107,
+                "y": 141.195068
+              },
+              "Pivot": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "RectSize": {
+                "x": 49.2122269,
+                "y": 57.6340675
+              },
+              "UIMode": 1,
+              "UIScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "UIVersion": 2,
+              "anchoredPosition": {
+                "x": -75.394,
+                "y": 170.0121
+              },
+              "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "Position": {
+                "x": -75.394,
+                "y": 170.0121,
+                "z": 0.0
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": -1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "ZRotation": 0.0,
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteGUIRendererComponent",
+              "ImageRUID": {
+                "DataId": "3e828fa1acad40f6a9f8ec4d9fa2bfc0"
+              },
+              "OverrideSorting": false,
+              "SortingLayer": "MapLayer0",
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.ButtonComponent",
+              "Colors": {
+                "NormalColor": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "HighlightedColor": {
+                  "r": 0.9607843,
+                  "g": 0.9607843,
+                  "b": 0.9607843,
+                  "a": 1.0
+                },
+                "PressedColor": {
+                  "r": 0.784313738,
+                  "g": 0.784313738,
+                  "b": 0.784313738,
+                  "a": 1.0
+                },
+                "SelectedColor": {
+                  "r": 0.9607843,
+                  "g": 0.9607843,
+                  "b": 0.9607843,
+                  "a": 1.0
+                },
+                "DisabledColor": {
+                  "r": 0.784313738,
+                  "g": 0.784313738,
+                  "b": 0.784313738,
+                  "a": 0.5019608
+                },
+                "ColorMultiplier": 1.0,
+                "FadeDuration": 0.1
+              },
+              "ImageRUIDs": {
+                "HighlightedSprite": null,
+                "PressedSprite": null,
+                "SelectedSprite": null,
+                "DisabledSprite": null
+              },
+              "OverrideSorting": false,
+              "Enable": true
+            },
+            {
+              "@type": "script.Character_del3",
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
         "id": "bb91d534-60d9-4d2e-973e-048da1a3d8a9",
         "path": "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯3",
         "componentNames": "MOD.Core.UITransformComponent",
@@ -3322,12 +3723,12 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": 448.0,
-                "y": 190.0
+                "x": 453.2694,
+                "y": 188.2894
               },
               "OffsetMin": {
-                "x": 248.0,
-                "y": -190.0
+                "x": 253.269409,
+                "y": -211.7106
               },
               "Pivot": {
                 "x": 0.5,
@@ -3335,7 +3736,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -3345,12 +3746,12 @@
               },
               "UIVersion": 2,
               "anchoredPosition": {
-                "x": 348.0,
-                "y": 0.0
+                "x": 353.2694,
+                "y": -11.7106
               },
               "Position": {
-                "x": 348.0,
-                "y": 0.0,
+                "x": 353.2694,
+                "y": -11.7106,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -3420,7 +3821,7 @@
               },
               "RectSize": {
                 "x": 200.0,
-                "y": 380.0
+                "y": 400.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -3984,7 +4385,7 @@
               },
               "Position": {
                 "x": 0.0,
-                "y": -160.0,
+                "y": -170.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
