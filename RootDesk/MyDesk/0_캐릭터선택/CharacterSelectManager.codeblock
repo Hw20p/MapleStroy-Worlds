@@ -1,0 +1,98 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://d1e2f3a4-b5c6-7890-dcba-fedcba987654",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "캐릭터 선택 UI 관리 - 저장된 캐릭터 불러와서 슬롯 표시",
+      "Id": "d1e2f3a4-b5c6-7890-dcba-fedcba987654",
+      "Language": 1,
+      "Name": "CharacterSelectManager",
+      "Type": 1,
+      "Source": 0,
+      "Target": null,
+      "Properties": [
+        {
+          "Type": "integer",
+          "DefaultValue": "0",
+          "SyncDirection": 0,
+          "Attributes": [],
+          "Name": "charCount"
+        }
+      ],
+      "Methods": [
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": null,
+          "Code": "log(\"[CharacterSelect] Manager initialized\")\n\n-- 서버에 캐릭터 목록 요청\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then\n\tlog(\"[CharacterSelect] mapEntity not found\")\n\treturn\nend\n\nmapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "OnBeginPlay"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"[]\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "charsJson"
+            }
+          ],
+          "Code": "log(\"[CharacterSelect] PopulateSlots json=\" .. tostring(charsJson))\n\n-- JSON 직접 파싱 (패턴 매칭)\nlocal chars = {}\nif type(charsJson) == \"string\" and charsJson:sub(1,1) == \"[\" then\n\tfor nickname, job in charsJson:gmatch('\"nickname\":\"([^\"]*)\",\"job\":\"([^\"]*)\"') do\n\t\ttable.insert(chars, { nickname = nickname, job = job })\n\tend\nend\n\nlog(\"[CharacterSelect] char count=\" .. tostring(#chars))\n\n-- 직업별 이미지 (새 직업 추가 시 여기에 추가)\nlocal jobImages = {\n\twarrior = \"68e039b7fcfb454ead4913ad4b39d7ad\",\n\tmage    = \"9e4c760841b84e7a819b48616ef1ef80\",\n}\n\n-- 슬롯 0~2 처리\nfor i = 0, 2 do\n\tlocal slotPath = \"/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯\" .. i\n\tlocal slot = _EntityService:GetEntityByPath(slotPath)\n\tlog(\"[CharacterSelect] slot\" .. i .. \" valid=\" .. tostring(isvalid(slot)))\n\tif isvalid(slot) then\n\t\tlocal char = chars[i + 1]  -- Lua 배열은 1-based\n\t\tif char ~= nil then\n\t\t\t-- 캐릭터 있음: 이름 표시\n\t\t\tslot.Enable = true\n\t\t\tlocal nameEntity = _EntityService:GetEntityByPath(slotPath .. \"/이름\")\n\t\t\tif isvalid(nameEntity) then\n\t\t\t\tnameEntity.TextComponent.Text = char.nickname\n\t\t\tend\n\t\t\t-- 직업 이미지 표시\n\t\t\tlocal avatarEntity = _EntityService:GetEntityByPath(slotPath .. \"/아바타\")\n\t\t\tif isvalid(avatarEntity) and jobImages[char.job] ~= nil then\n\t\t\t\tavatarEntity.SpriteGUIRendererComponent.ImageRUID = jobImages[char.job]\n\t\t\tend\n\t\t\tlog(\"[CharacterSelect] slot\" .. i .. \" = \" .. tostring(char.nickname) .. \" / \" .. tostring(char.job))\n\t\telse\n\t\t\tslot.Enable = false\n\t\t\tlog(\"[CharacterSelect] slot\" .. i .. \" empty, hidden\")\n\t\tend\n\tend\nend\n\n-- 슬롯3(만들기버튼): 항상 표시, charCount 저장\nself.charCount = #chars\nlocal slot3 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯3\")\nif isvalid(slot3) then\n\tslot3.Enable = true\nend",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "PopulateSlots"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": null,
+          "Code": "if self.charCount >= 3 then\n\tlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\n\tlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\n\tif isvalid(toastGroup) and isvalid(toastMsg) then\n\t\ttoastGroup.Enable = true\n\t\ttoastMsg.TextComponent.Text = \"캐릭터 슬롯이 가득 찼습니다. (최대 3개)\"\n\t\t_TimerService:SetTimer(function()\n\t\t\tif isvalid(toastGroup) then\n\t\t\t\ttoastGroup.Enable = false\n\t\t\tend\n\t\tend, 2)\n\tend\n\treturn\nend\n\n-- 캐릭터 생성 UI 열기\nlocal selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.Enable = false\nend\nlocal createUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nif isvalid(createUI) then\n\tcreateUI.Enable = true\nend",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "TryOpenCreate"
+        }
+      ],
+      "EntityEventHandlers": []
+    }
+  }
+}

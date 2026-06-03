@@ -73,8 +73,8 @@
           },
           "Arguments": [
             {
-              "Type": "number",
-              "DefaultValue": "0",
+              "Type": "string",
+              "DefaultValue": "\"\"",
               "SyncDirection": 0,
               "Attributes": [],
               "Name": "userId"
@@ -94,7 +94,7 @@
               "Name": "job"
             }
           ],
-          "Code": "log(\"[CharacterCreate][Server] RequestCreate userId=\" .. userId .. \" nickname=\" .. nickname .. \" job=\" .. job)\n\nlocal storage = _DataStorageService:GetUserDataStorage(\"characters\")\n\n-- 기존 캐릭터 목록 불러오기\nlocal errCode, raw = storage:GetAndWait(userId)\nlocal chars = {}\nif errCode == 0 and raw ~= nil then\n\tlocal loaded = _UtilLogic:StringToTable(raw)\n\t-- 구 포맷(단일 객체) → 새 포맷(배열) 자동 변환\n\tif loaded.nickname ~= nil then\n\t\tchars = { loaded }\n\telse\n\t\tchars = loaded\n\tend\nelseif errCode ~= 0 and errCode ~= 1000002 then\n\t-- 1000002 = NotFound (첫 생성, 정상)\n\tlog(\"[CharacterCreate][Server] GetAndWait error: \" .. tostring(errCode))\n\tself:NotifyResult(userId, false, \"서버 오류가 발생했습니다. (\" .. tostring(errCode) .. \")\")\n\treturn\nend\n\n-- 슬롯 초과 확인 (최대 3개)\nif #chars >= 3 then\n\tself:NotifyResult(userId, false, \"캐릭터는 최대 3개까지 생성 가능합니다.\")\n\treturn\nend\n\n-- 닉네임 중복 확인 (본인 캐릭터 내)\nfor _, c in ipairs(chars) do\n\tif c.nickname == nickname then\n\t\tself:NotifyResult(userId, false, \"이미 사용 중인 닉네임입니다.\")\n\t\treturn\n\tend\nend\n\n-- TODO: 전체 유저 닉네임 중복 확인 (world-level DataStorage 필요)\n\n-- 새 캐릭터 추가 후 저장\ntable.insert(chars, { nickname = nickname, job = job })\nlocal newJson = _UtilLogic:TableToString(chars)\nlocal setErr = storage:SetAndWait(userId, newJson)\nif setErr ~= 0 then\n\tlog(\"[CharacterCreate][Server] SetAndWait error: \" .. tostring(setErr))\n\tself:NotifyResult(userId, false, \"저장 중 오류가 발생했습니다. (\" .. tostring(setErr) .. \")\")\n\treturn\nend\n\nlog(\"[CharacterCreate][Server] Saved OK. total chars=\" .. tostring(#chars))\nself:NotifyResult(userId, true, nickname .. \"|\" .. job)",
+          "Code": "log(\"[CharacterCreate][Server] RequestCreate userId=\" .. userId .. \" nickname=\" .. nickname .. \" job=\" .. job)\n\nlocal storage = _DataStorageService:GetUserDataStorage(\"characters\")\n\n-- JSON 파싱 헬퍼: 저장된 문자열에서 캐릭터 배열 복원\nlocal function parseChars(raw)\n\tif type(raw) ~= \"string\" then return {} end\n\tif raw:sub(1,1) ~= \"[\" then return {} end\n\tlocal result = {}\n\tfor nickname, job in raw:gmatch('\"nickname\":\"([^\"]*)\",\"job\":\"([^\"]*)\"') do\n\t\ttable.insert(result, { nickname = nickname, job = job })\n\tend\n\treturn result\nend\n\n-- JSON 직렬화 헬퍼\nlocal function serializeChars(chars)\n\tlocal parts = {}\n\tfor _, c in ipairs(chars) do\n\t\ttable.insert(parts, '{\"nickname\":\"' .. c.nickname .. '\",\"job\":\"' .. c.job .. '\"}')\n\tend\n\treturn \"[\" .. table.concat(parts, \",\") .. \"]\"\nend\n\nlocal errCode, raw = storage:GetAndWait(userId)\nlog(\"[CharacterCreate][Server] raw type=\" .. type(raw) .. \" val=\" .. tostring(raw))\n\nlocal chars = {}\nif errCode == 0 and raw ~= nil then\n\tchars = parseChars(raw)\nelseif errCode ~= 0 and errCode ~= 1000002 then\n\tlog(\"[CharacterCreate][Server] GetAndWait error: \" .. tostring(errCode))\n\tself:NotifyResult(userId, false, \"서버 오류가 발생했습니다. (\" .. tostring(errCode) .. \")\")\n\treturn\nend\n\nlog(\"[CharacterCreate][Server] loaded chars=\" .. tostring(#chars))\n\nif #chars >= 3 then\n\tself:NotifyResult(userId, false, \"캐릭터는 최대 3개까지 생성 가능합니다.\")\n\treturn\nend\n\nfor _, c in ipairs(chars) do\n\tif c.nickname == nickname then\n\t\tself:NotifyResult(userId, false, \"이미 사용 중인 닉네임입니다.\")\n\t\treturn\n\tend\nend\n\ntable.insert(chars, { nickname = nickname, job = job })\nlocal newJson = serializeChars(chars)\nlocal setErr = storage:SetAndWait(userId, newJson)\nif setErr ~= 0 then\n\tlog(\"[CharacterCreate][Server] SetAndWait error: \" .. tostring(setErr))\n\tself:NotifyResult(userId, false, \"저장 중 오류가 발생했습니다. (\" .. tostring(setErr) .. \")\")\n\treturn\nend\n\nlog(\"[CharacterCreate][Server] Saved OK. total chars=\" .. tostring(#chars))\nself:NotifyResult(userId, true, nickname .. \"|\" .. job)",
           "Scope": 1,
           "ExecSpace": 5,
           "Attributes": [],
@@ -110,8 +110,61 @@
           },
           "Arguments": [
             {
-              "Type": "number",
-              "DefaultValue": "0",
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            }
+          ],
+          "Code": "log(\"[CharacterSelect][Server] RequestLoadChars userId=\" .. userId)\n\nlocal storage = _DataStorageService:GetUserDataStorage(\"characters\")\nlocal errCode, raw = storage:GetAndWait(userId)\n\nlog(\"[CharacterSelect][Server] raw type=\" .. type(raw) .. \" val=\" .. tostring(raw))\n\n-- JSON 파싱 헬퍼\nlocal function parseChars(raw)\n\tif type(raw) ~= \"string\" then return {} end\n\tif raw:sub(1,1) ~= \"[\" then return {} end\n\tlocal result = {}\n\tfor nickname, job in raw:gmatch('\"nickname\":\"([^\"]*)\",\"job\":\"([^\"]*)\"') do\n\t\ttable.insert(result, { nickname = nickname, job = job })\n\tend\n\treturn result\nend\n\nlocal charsJson = \"[]\"\nif errCode == 0 and raw ~= nil then\n\tif type(raw) == \"string\" and raw:sub(1,1) == \"[\" then\n\t\tcharsJson = raw\n\tend\n\t-- 잘못된 형식(이전 버전 데이터)은 [] 반환\nelseif errCode ~= 0 and errCode ~= 1000002 then\n\tlog(\"[CharacterSelect][Server] GetAndWait error: \" .. tostring(errCode))\nend\n\nlog(\"[CharacterSelect][Server] charsJson=\" .. charsJson)\nself:NotifyChars(userId, charsJson)",
+          "Scope": 1,
+          "ExecSpace": 5,
+          "Attributes": [],
+          "Name": "RequestLoadChars"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "string",
+              "DefaultValue": "\"[]\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "charsJson"
+            }
+          ],
+          "Code": "log(\"[CharacterSelect] NotifyChars client, json=\" .. tostring(charsJson))\nlocal selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif not isvalid(selectUI) then return end\nif not selectUI.Enable then return end\n\nselectUI.CharacterSelectManager:PopulateSlots(charsJson)",
+          "Scope": 2,
+          "ExecSpace": 6,
+          "Attributes": [],
+          "Name": "NotifyChars"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
               "SyncDirection": 0,
               "Attributes": [],
               "Name": "userId"
