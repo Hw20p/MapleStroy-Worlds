@@ -1,7 +1,7 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "codeblock://76800acb-56bc-4263-bbca-096ea265cd76",
+  "EntryKey": "codeblock://cf40a5f5-4684-47b0-afe2-6584b67e695c",
   "ContentType": "x-mod/codeblock",
   "Content": "",
   "Usage": 0,
@@ -22,21 +22,13 @@
         "Minor": 1
       },
       "Description": "",
-      "Id": "76800acb-56bc-4263-bbca-096ea265cd76",
+      "Id": "cf40a5f5-4684-47b0-afe2-6584b67e695c",
       "Language": 1,
-      "Name": "CardMageJob",
+      "Name": "UI_Enable_0",
       "Type": 1,
       "Source": 0,
       "Target": null,
-      "Properties": [
-        {
-          "Type": "Entity",
-          "DefaultValue": "ee302cb6-5249-4d2f-98cb-8e732931fff3",
-          "SyncDirection": 0,
-          "Attributes": [],
-          "Name": "avatarBgEntity"
-        }
-      ],
+      "Properties": [],
       "Methods": [],
       "EntityEventHandlers": [
         {
@@ -44,7 +36,7 @@
           "EventName": "ButtonClickEvent",
           "ParameterName": "event",
           "Target": "self",
-          "Code": "if self.avatarBgEntity ~= nil then\n\tself.avatarBgEntity.SpriteGUIRendererComponent.ImageRUID = \"9e4c760841b84e7a819b48616ef1ef80\"\nend",
+          "Code": "-- 버튼이 클릭되었을 때 실행됩니다.\nlocal ui_1 = _EntityService:GetEntityByPath(\"/ui/0_로그인-UI\")\nlocal ui_2 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nlocal myPlayer = _UserService.LocalPlayer\n\nui_1.Enable = true\nui_2.Enable = false",
           "Scope": 0,
           "ExecSpace": 0
         }

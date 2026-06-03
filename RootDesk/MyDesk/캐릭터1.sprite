@@ -1,0 +1,23 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "sprite://68e039b7fcfb454ead4913ad4b39d7ad",
+  "ContentType": "x-mod/sprite",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "upload_keyname": "0d/bc/0dbce49947ea4dc09bf8e1a903c1c617/sprite/68e039b7fcfb454ead4913ad4b39d7ad/639160631668863644",
+      "upload_hash": "6DC42371500588B636A07CFBB01042B5578C6949091F76D14D4BB5CA2B46B8D9",
+      "name": "캐릭터1",
+      "resource_guid": "68e039b7fcfb454ead4913ad4b39d7ad",
+      "resource_version": "6a1fc2be73087c0493268f2f"
+    }
+  }
+}

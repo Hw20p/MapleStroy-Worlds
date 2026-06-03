@@ -31,7 +31,7 @@
       "Properties": [
         {
           "Type": "Entity",
-          "DefaultValue": "76e7ff7f-9d83-4f7d-a512-3c06a901b413",
+          "DefaultValue": "ee302cb6-5249-4d2f-98cb-8e732931fff3",
           "SyncDirection": 0,
           "Attributes": [],
           "Name": "avatarBgEntity"
