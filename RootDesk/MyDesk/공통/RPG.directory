@@ -14,7 +14,7 @@
     "Use": "Json",
     "Json": {
       "entry_id": "directory://622bbf273cd7467287cd98436303ba51",
-      "name": "공통_RPG",
+      "name": "RPG",
       "lock": false,
       "folding": false,
       "nameEditable": true

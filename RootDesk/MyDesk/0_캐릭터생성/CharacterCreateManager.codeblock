@@ -61,6 +61,21 @@
             "Attributes": [],
             "Name": null
           },
+          "Arguments": null,
+          "Code": "-- 직업 선택 초기화\nself.selectedJob = \"\"\n\n-- 닉네임 입력 초기화\nlocal nickInput = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI/BottomBar/NickInput\")\nif isvalid(nickInput) then\n\tnickInput.TextInputComponent.Text = \"\"\nend\n\n-- 아바타 배경 초기화\nlocal avatarBg = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI/LeftPanel/AvatarWrap/Bg\")\nif isvalid(avatarBg) then\n\tavatarBg.SpriteGUIRendererComponent.ImageRUID = \"\"\nend\n\n-- 카드 하이라이트 초기화\nlocal allJobs = {\"warrior\", \"mage\"}\nfor _, job in ipairs(allJobs) do\n\tlocal cardName = \"Card\" .. job:sub(1,1):upper() .. job:sub(2)\n\tlocal card = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI/RightPanel/\" .. cardName)\n\tif isvalid(card) then\n\t\tlocal col = card.SpriteGUIRendererComponent.Color\n\t\tcol.r = 0.06\n\t\tcol.g = 0.08\n\t\tcol.b = 0.14\n\t\tcol.a = 1.0\n\t\tcard.SpriteGUIRendererComponent.Color = col\n\tend\nend\n\nlog(\"[CharacterCreate] Reset\")",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "Reset"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
           "Arguments": [
             {
               "Type": "string",
@@ -85,7 +100,7 @@
             "Name": null
           },
           "Arguments": null,
-          "Code": "log(\"[CharacterCreate] TryCreate called, selectedJob=\" .. tostring(self.selectedJob))\nlocal function showToast(msg)\n\tlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\n\tlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\n\tif isvalid(toastGroup) and isvalid(toastMsg) then\n\t\ttoastGroup.Enable = true\n\t\ttoastMsg.TextComponent.Text = msg\n\t\t_TimerService:SetTimer(function()\n\t\t\tif isvalid(toastGroup) then\n\t\t\t\ttoastGroup.Enable = false\n\t\t\tend\n\t\tend, 2)\n\tend\nend\n\n-- 직업 선택 확인\nif self.selectedJob == \"\" then\n\tshowToast(\"직업을 선택해주세요.\")\n\treturn\nend\n\n-- 닉네임 확인\nlocal nickInput = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI/BottomBar/NickInput\")\nif not isvalid(nickInput) then\n\tlog(\"[CharacterCreate] NickInput entity not found\")\n\treturn\nend\n\nlocal nickname = nickInput.TextInputComponent.Text\nif nickname == nil or nickname == \"\" then\n\tshowToast(\"닉네임을 입력해주세요.\")\n\treturn\nend\n\nif #nickname > 12 then\n\tshowToast(\"닉네임은 최대 12자까지 입력 가능합니다.\")\n\treturn\nend\n\nlog(\"[CharacterCreate] Requesting create: \" .. nickname .. \" / \" .. self.selectedJob)\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\n-- 맵 루트 엔티티의 init 컴포넌트로 서버 저장 요청\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then\n\tlog(\"[CharacterCreate] mapEntity not found\")\n\treturn\nend\nmapEntity.init:RequestCreate(tostring(player.PlayerComponent.UserId), nickname, self.selectedJob)",
+          "Code": "log(\"[CharacterCreate] TryCreate called, selectedJob=\" .. tostring(self.selectedJob))\nlocal function showToast(msg)\n\tlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\n\tif isvalid(toastGroup) then\n\t\ttoastGroup.ToastController:ShowToast(msg)\n\tend\nend\n\n-- 직업 선택 확인\nif self.selectedJob == \"\" then\n\tshowToast(\"직업을 선택해주세요.\")\n\treturn\nend\n\n-- 닉네임 확인\nlocal nickInput = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI/BottomBar/NickInput\")\nif not isvalid(nickInput) then\n\tlog(\"[CharacterCreate] NickInput entity not found\")\n\treturn\nend\n\nlocal nickname = nickInput.TextInputComponent.Text\nif nickname == nil or nickname == \"\" then\n\tshowToast(\"닉네임을 입력해주세요.\")\n\treturn\nend\n\n-- UTF-8 글자 수 계산 (한글 등 멀티바이트 대응)\nlocal charCount = 0\nfor i = 1, #nickname do\n\tlocal b = string.byte(nickname, i)\n\tif b < 0x80 or b >= 0xC0 then charCount = charCount + 1 end\nend\nif charCount > 12 then\n\tshowToast(\"닉네임은 최대 12자까지 입력 가능합니다.\")\n\treturn\nend\n\nlog(\"[CharacterCreate] Requesting create: \" .. nickname .. \" / \" .. self.selectedJob)\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\n-- 맵 루트 엔티티의 init 컴포넌트로 서버 저장 요청\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then\n\tlog(\"[CharacterCreate] mapEntity not found\")\n\treturn\nend\nmapEntity.init:RequestCreate(tostring(player.PlayerComponent.UserId), nickname, self.selectedJob)",
           "Scope": 2,
           "ExecSpace": 0,
           "Attributes": [],
@@ -131,7 +146,7 @@
               "Name": "reason"
             }
           ],
-          "Code": "log(\"[CharacterCreate] OnCreateFail: \" .. reason)\nlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\nlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\nif isvalid(toastGroup) and isvalid(toastMsg) then\n\ttoastGroup.Enable = true\n\ttoastMsg.TextComponent.Text = reason\n\t_TimerService:SetTimer(2, function()\n\t\tif isvalid(toastGroup) then\n\t\t\ttoastGroup.Enable = false\n\t\tend\n\tend)\nend",
+          "Code": "log(\"[CharacterCreate] OnCreateFail: \" .. reason)\nlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\nif isvalid(toastGroup) then\n\ttoastGroup.ToastController:ShowToast(reason)\nend",
           "Scope": 2,
           "ExecSpace": 0,
           "Attributes": [],

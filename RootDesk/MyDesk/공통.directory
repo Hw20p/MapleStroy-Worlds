@@ -1,7 +1,7 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "directory://8bad7ef03beb4974accd4404c1388f63",
+  "EntryKey": "directory://0a30336a5ded444dbb31a7e29c0d5060",
   "ContentType": "x-mod/directory",
   "Content": "",
   "Usage": 0,
@@ -13,8 +13,8 @@
   "ContentProto": {
     "Use": "Json",
     "Json": {
-      "entry_id": "directory://8bad7ef03beb4974accd4404c1388f63",
-      "name": "공통_UI",
+      "entry_id": "directory://0a30336a5ded444dbb31a7e29c0d5060",
+      "name": "공통",
       "lock": false,
       "folding": false,
       "nameEditable": true

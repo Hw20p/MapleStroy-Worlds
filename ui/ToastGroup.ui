@@ -16,7 +16,7 @@
       {
         "id": "0bc398f9-29cb-4d89-a78d-f24742b117e8",
         "path": "/ui/ToastGroup",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.UIGroupComponent,MOD.Core.CanvasGroupComponent",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.UIGroupComponent,MOD.Core.CanvasGroupComponent,script.ToastController",
         "jsonString": {
           "name": "ToastGroup",
           "path": "/ui/ToastGroup",
@@ -107,6 +107,13 @@
               "GroupAlpha": 1.0,
               "Interactable": true,
               "Enable": true
+            },
+            {
+              "@type": "script.ToastController",
+              "Enable": true,
+              "isShowing": false,
+              "timer": 0.0,
+              "duration": 2.0
             }
           ],
           "@version": 1

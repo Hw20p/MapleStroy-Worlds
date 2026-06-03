@@ -36,7 +36,7 @@
           "EventName": "ButtonClickEvent",
           "ParameterName": "event",
           "Target": "self",
-          "Code": "local ui_1 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nui_1.Enable = false\n\nlocal selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.CharacterSelectManager:TrySelectChar(0)\nend",
+          "Code": "local selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.CharacterSelectManager:TrySelectChar(0)\nend",
           "Scope": 0,
           "ExecSpace": 0
         }

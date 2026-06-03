@@ -1,7 +1,7 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "directory://8bad7ef03beb4974accd4404c1388f63",
+  "EntryKey": "directory://4d0ab90aee8f4f70b99c1420d0c70202",
   "ContentType": "x-mod/directory",
   "Content": "",
   "Usage": 0,
@@ -13,8 +13,8 @@
   "ContentProto": {
     "Use": "Json",
     "Json": {
-      "entry_id": "directory://8bad7ef03beb4974accd4404c1388f63",
-      "name": "공통_UI",
+      "entry_id": "directory://4d0ab90aee8f4f70b99c1420d0c70202",
+      "name": "UI",
       "lock": false,
       "folding": false,
       "nameEditable": true

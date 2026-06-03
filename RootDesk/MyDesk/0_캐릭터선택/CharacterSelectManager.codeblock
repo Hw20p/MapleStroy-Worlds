@@ -85,7 +85,7 @@
             "Name": null
           },
           "Arguments": null,
-          "Code": "if self.charCount >= 3 then\n\tlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\n\tlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\n\tif isvalid(toastGroup) and isvalid(toastMsg) then\n\t\ttoastGroup.Enable = true\n\t\ttoastMsg.TextComponent.Text = \"캐릭터 슬롯이 가득 찼습니다. (최대 3개)\"\n\t\t_TimerService:SetTimer(2, function()\n\t\t\tif isvalid(toastGroup) then\n\t\t\t\ttoastGroup.Enable = false\n\t\t\tend\n\t\tend)\n\tend\n\treturn\nend\n\n-- 캐릭터 생성 UI 열기\nlocal selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.Enable = false\nend\nlocal createUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nif isvalid(createUI) then\n\tcreateUI.Enable = true\nend",
+          "Code": "if self.charCount >= 3 then\n\tlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\n\tif isvalid(toastGroup) then\n\t\ttoastGroup.ToastController:ShowToast(\"캐릭터 슬롯이 가득 찼습니다. (최대 3개)\")\n\tend\n\treturn\nend\n\n-- 캐릭터 생성 UI 열기\nlocal selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.Enable = false\nend\nlocal createUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nif isvalid(createUI) then\n\tcreateUI.Enable = true\n\tcreateUI.CharacterCreateManager:Reset()\nend",
           "Scope": 2,
           "ExecSpace": 0,
           "Attributes": [],
@@ -108,7 +108,7 @@
               "Name": "slotIndex"
             }
           ],
-          "Code": "-- 빈 슬롯 선택 방지\nif slotIndex + 1 > self.charCount then return end\n\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then return end\n\nlog(\"[CharacterSelect] TrySelectChar slot=\" .. slotIndex)\nmapEntity.init:RequestSelectChar(tostring(player.PlayerComponent.UserId), slotIndex)",
+          "Code": "-- 빈 슬롯 선택 방지\nif slotIndex + 1 > self.charCount then return end\n\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\n\nlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\nif not isvalid(mapEntity) then return end\n\n-- 선택 UI 비활성화\nself.Entity.Enable = false\n\nlog(\"[CharacterSelect] TrySelectChar slot=\" .. slotIndex)\nmapEntity.init:RequestSelectChar(tostring(player.PlayerComponent.UserId), slotIndex)",
           "Scope": 2,
           "ExecSpace": 0,
           "Attributes": [],
