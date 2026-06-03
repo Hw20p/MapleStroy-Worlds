@@ -36,7 +36,7 @@
           "EventName": "ButtonClickEvent",
           "ParameterName": "event",
           "Target": "self",
-          "Code": "-- 버튼이 클릭되었을 때 실행됩니다.\nlocal ui_1 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nlocal ui_2 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\n\nui_1.Enable = true\nui_2.Enable = false",
+          "Code": "local selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.CharacterSelectManager:TryOpenCreate()\nend",
           "Scope": 0,
           "ExecSpace": 0
         }
