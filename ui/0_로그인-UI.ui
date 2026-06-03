@@ -21,7 +21,7 @@
           "name": "0_로그인-UI",
           "path": "/ui/0_로그인-UI",
           "nameEditable": true,
-          "enable": true,
+          "enable": false,
           "visible": true,
           "localize": true,
           "displayOrder": 5,
