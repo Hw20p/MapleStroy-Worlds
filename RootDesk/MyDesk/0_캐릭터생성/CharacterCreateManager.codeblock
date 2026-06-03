@@ -131,7 +131,7 @@
               "Name": "reason"
             }
           ],
-          "Code": "log(\"[CharacterCreate] OnCreateFail: \" .. reason)\nlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\nlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\nif isvalid(toastGroup) and isvalid(toastMsg) then\n\ttoastGroup.Enable = true\n\ttoastMsg.TextComponent.Text = reason\n\t_TimerService:SetTimer(function()\n\t\tif isvalid(toastGroup) then\n\t\t\ttoastGroup.Enable = false\n\t\tend\n\tend, 2)\nend",
+          "Code": "log(\"[CharacterCreate] OnCreateFail: \" .. reason)\nlocal toastGroup = _EntityService:GetEntityByPath(\"/ui/ToastGroup\")\nlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\nif isvalid(toastGroup) and isvalid(toastMsg) then\n\ttoastGroup.Enable = true\n\ttoastMsg.TextComponent.Text = reason\n\t_TimerService:SetTimer(2, function()\n\t\tif isvalid(toastGroup) then\n\t\t\ttoastGroup.Enable = false\n\t\tend\n\tend)\nend",
           "Scope": 2,
           "ExecSpace": 0,
           "Attributes": [],
