@@ -21,22 +21,14 @@
         "Major": 1,
         "Minor": 1
       },
-      "Description": "",
+      "Description": "마법사 직업 카드 클릭 처리",
       "Id": "76800acb-56bc-4263-bbca-096ea265cd76",
       "Language": 1,
       "Name": "CardMageJob",
       "Type": 1,
       "Source": 0,
       "Target": null,
-      "Properties": [
-        {
-          "Type": "Entity",
-          "DefaultValue": "ee302cb6-5249-4d2f-98cb-8e732931fff3",
-          "SyncDirection": 0,
-          "Attributes": [],
-          "Name": "avatarBgEntity"
-        }
-      ],
+      "Properties": [],
       "Methods": [],
       "EntityEventHandlers": [
         {
@@ -44,7 +36,7 @@
           "EventName": "ButtonClickEvent",
           "ParameterName": "event",
           "Target": "self",
-          "Code": "if self.avatarBgEntity ~= nil then\n\tself.avatarBgEntity.SpriteGUIRendererComponent.ImageRUID = \"9e4c760841b84e7a819b48616ef1ef80\"\nend",
+          "Code": "local uiRoot = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nif isvalid(uiRoot) then\n\tuiRoot.CharacterCreateManager:SelectJob(\"mage\")\nend",
           "Scope": 0,
           "ExecSpace": 0
         }

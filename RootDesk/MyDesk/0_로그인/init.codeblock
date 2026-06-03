@@ -46,7 +46,98 @@
           "Name": "OnBeginPlay"
         }
       ],
-      "EntityEventHandlers": []
+      "EntityEventHandlers": [],
+      "Methods": [
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": null,
+          "Code": "local player = _UserService.LocalPlayer\nif not isvalid(player) then\n\treturn\nend\n\nlocal playerComp = player.PlayerComponent\nif not isvalid(playerComp) then\n\treturn\nend\n\nlocal nickname = playerComp.Nickname\nlocal profileCode = playerComp.ProfileCode\n\nlog(\"[LoginUI] Nickname: \" .. tostring(nickname) .. \", UserId: \" .. tostring(profileCode))\n\nlocal nameText = _EntityService:GetEntityByPath(\"/ui/0_로그인-UI/사용자정보/계정이름_text\")\nif isvalid(nameText) then\n\tnameText.TextComponent.Text = nickname\nend\n\nlocal codeText = _EntityService:GetEntityByPath(\"/ui/0_로그인-UI/사용자정보/계정코드_text\")\nif isvalid(codeText) then\n\tcodeText.TextComponent.Text = \"#\" .. profileCode\nend",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "OnBeginPlay"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "number",
+              "DefaultValue": "0",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "nickname"
+            },
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "job"
+            }
+          ],
+          "Code": "log(\"[CharacterCreate][Server] RequestCreate userId=\" .. userId .. \" nickname=\" .. nickname .. \" job=\" .. job)\n\nlocal storage = _DataStorageService:GetUserDataStorage(\"characters\")\n\n-- 기존 캐릭터 목록 불러오기\nlocal errCode, raw = storage:GetAndWait(userId)\nlocal chars = {}\nif errCode == 0 and raw ~= nil then\n\tlocal loaded = _UtilLogic:StringToTable(raw)\n\t-- 구 포맷(단일 객체) → 새 포맷(배열) 자동 변환\n\tif loaded.nickname ~= nil then\n\t\tchars = { loaded }\n\telse\n\t\tchars = loaded\n\tend\nelseif errCode ~= 0 and errCode ~= 1000002 then\n\t-- 1000002 = NotFound (첫 생성, 정상)\n\tlog(\"[CharacterCreate][Server] GetAndWait error: \" .. tostring(errCode))\n\tself:NotifyResult(userId, false, \"서버 오류가 발생했습니다. (\" .. tostring(errCode) .. \")\")\n\treturn\nend\n\n-- 슬롯 초과 확인 (최대 3개)\nif #chars >= 3 then\n\tself:NotifyResult(userId, false, \"캐릭터는 최대 3개까지 생성 가능합니다.\")\n\treturn\nend\n\n-- 닉네임 중복 확인 (본인 캐릭터 내)\nfor _, c in ipairs(chars) do\n\tif c.nickname == nickname then\n\t\tself:NotifyResult(userId, false, \"이미 사용 중인 닉네임입니다.\")\n\t\treturn\n\tend\nend\n\n-- TODO: 전체 유저 닉네임 중복 확인 (world-level DataStorage 필요)\n\n-- 새 캐릭터 추가 후 저장\ntable.insert(chars, { nickname = nickname, job = job })\nlocal newJson = _UtilLogic:TableToString(chars)\nlocal setErr = storage:SetAndWait(userId, newJson)\nif setErr ~= 0 then\n\tlog(\"[CharacterCreate][Server] SetAndWait error: \" .. tostring(setErr))\n\tself:NotifyResult(userId, false, \"저장 중 오류가 발생했습니다. (\" .. tostring(setErr) .. \")\")\n\treturn\nend\n\nlog(\"[CharacterCreate][Server] Saved OK. total chars=\" .. tostring(#chars))\nself:NotifyResult(userId, true, nickname .. \"|\" .. job)",
+          "Scope": 1,
+          "ExecSpace": 5,
+          "Attributes": [],
+          "Name": "RequestCreate"
+        },
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "number",
+              "DefaultValue": "0",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "userId"
+            },
+            {
+              "Type": "boolean",
+              "DefaultValue": "false",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "success"
+            },
+            {
+              "Type": "string",
+              "DefaultValue": "\"\"",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "payload"
+            }
+          ],
+          "Code": "log(\"[CharacterCreate] NotifyResult called client, success=\" .. tostring(success))\nlocal uiRoot = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nlog(\"[CharacterCreate] uiRoot valid=\" .. tostring(isvalid(uiRoot)))\nif not isvalid(uiRoot) then return end\n\nif success then\n\tuiRoot.CharacterCreateManager:OnCreateSuccess(payload)\nelse\n\tuiRoot.CharacterCreateManager:OnCreateFail(payload)\nend",
+          "Scope": 2,
+          "ExecSpace": 6,
+          "Attributes": [],
+          "Name": "NotifyResult"
+        }
+      ]
     }
   }
 }

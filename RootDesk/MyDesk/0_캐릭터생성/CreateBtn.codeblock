@@ -1,7 +1,7 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "codeblock://469685b3-b825-4549-862f-70e9f059432a",
+  "EntryKey": "codeblock://f1e2d3c4-b5a6-9780-fedc-ba9876543210",
   "ContentType": "x-mod/codeblock",
   "Content": "",
   "Usage": 0,
@@ -21,10 +21,10 @@
         "Major": 1,
         "Minor": 1
       },
-      "Description": "전사 직업 카드 클릭 처리",
-      "Id": "469685b3-b825-4549-862f-70e9f059432a",
+      "Description": "캐릭터 생성 버튼 클릭 처리",
+      "Id": "f1e2d3c4-b5a6-9780-fedc-ba9876543210",
       "Language": 1,
-      "Name": "CardWarriorJob",
+      "Name": "CreateBtn",
       "Type": 1,
       "Source": 0,
       "Target": null,
@@ -36,7 +36,7 @@
           "EventName": "ButtonClickEvent",
           "ParameterName": "event",
           "Target": "self",
-          "Code": "local uiRoot = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nif isvalid(uiRoot) then\n\tuiRoot.CharacterCreateManager:SelectJob(\"warrior\")\nend",
+          "Code": "local uiRoot = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nif isvalid(uiRoot) then\n\tuiRoot.CharacterCreateManager:TryCreate()\nend",
           "Scope": 0,
           "ExecSpace": 0
         }

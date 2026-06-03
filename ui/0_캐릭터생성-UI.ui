@@ -16,7 +16,7 @@
       {
         "id": "015ea320-b03b-4226-bfb4-0ad4aa272f59",
         "path": "/ui/0_캐릭터생성-UI",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.UIGroupComponent,MOD.Core.CanvasGroupComponent",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.UIGroupComponent,MOD.Core.CanvasGroupComponent,script.CharacterCreateManager",
         "jsonString": {
           "name": "0_캐릭터생성-UI",
           "path": "/ui/0_캐릭터생성-UI",
@@ -106,6 +106,10 @@
               "BlocksRaycasts": true,
               "GroupAlpha": 1.0,
               "Interactable": true,
+              "Enable": true
+            },
+            {
+              "@type": "script.CharacterCreateManager",
               "Enable": true
             }
           ],
@@ -5010,9 +5014,9 @@
               "SortingLayer": "UI",
               "StartFrameIndex": 0,
               "Color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0,
+                "r": 0.146484375,
+                "g": 0.137043,
+                "b": 0.137043,
                 "a": 1.0
               },
               "DropShadow": false,
@@ -5072,7 +5076,7 @@
               },
               "FontSize": 24,
               "IgnoreMapLayerCheck": false,
-              "IsLocalizationKey": false,
+              "IsLocalizationKey": true,
               "MaxSize": 40,
               "MinSize": 10,
               "OrderInLayer": 0,
@@ -5116,9 +5120,9 @@
               "OverrideSorting": false,
               "PlaceHolder": "닉네임을 입력하세요  (최대 12자)",
               "PlaceHolderColor": {
-                "r": 0.0,
-                "g": 0.0,
-                "b": 0.0,
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
                 "a": 0.5
               },
               "SortingLayer": "UI",
@@ -5132,7 +5136,7 @@
       {
         "id": "3030a133-7e04-4c7d-98f3-c8ba376e8fcc",
         "path": "/ui/0_캐릭터생성-UI/BottomBar/CreateBtn",
-        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,script.CreateBtn",
         "jsonString": {
           "name": "CreateBtn",
           "path": "/ui/0_캐릭터생성-UI/BottomBar/CreateBtn",
@@ -5319,6 +5323,10 @@
               "SortingLayer": "UI",
               "Transition": 1,
               "Enable": true
+            },
+            {
+              "@type": "script.CreateBtn",
+              "Enable": true
             }
           ],
           "@version": 1
@@ -5326,11 +5334,11 @@
       },
       {
         "id": "ce8fd0ab-9978-489f-944d-bd95c895dabb",
-        "path": "/ui/0_캐릭터생성-UI/BottomBar/CreateBtn_1",
+        "path": "/ui/0_캐릭터생성-UI/BottomBar/backBtn",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.ButtonComponent,script.UI_Enable_3",
         "jsonString": {
-          "name": "CreateBtn_1",
-          "path": "/ui/0_캐릭터생성-UI/BottomBar/CreateBtn_1",
+          "name": "backBtn",
+          "path": "/ui/0_캐릭터생성-UI/BottomBar/backBtn",
           "nameEditable": true,
           "enable": true,
           "visible": true,
