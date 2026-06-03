@@ -1,7 +1,7 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "directory://076456cd4f7d4cb195f981e977106e5a",
+  "EntryKey": "directory://f4e9e28a3b574641a2b9b85fb876296c",
   "ContentType": "x-mod/directory",
   "Content": "",
   "Usage": 0,
@@ -13,11 +13,11 @@
   "ContentProto": {
     "Use": "Json",
     "Json": {
-      "entry_id": "directory://076456cd4f7d4cb195f981e977106e5a",
-      "name": "MyDesk",
+      "entry_id": "directory://f4e9e28a3b574641a2b9b85fb876296c",
+      "name": "맵_이동_버튼",
       "lock": false,
       "folding": false,
-      "nameEditable": false
+      "nameEditable": true
     }
   }
 }

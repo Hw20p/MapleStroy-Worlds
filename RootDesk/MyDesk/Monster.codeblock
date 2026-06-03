@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "1.21.0.0",
+  "CoreVersion": "26.3.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -127,6 +127,7 @@
         {
           "Name": "HandleHitEvent",
           "EventName": "HitEvent",
+          "ParameterName": "event",
           "Target": "self",
           "Code": "-- Parameters\n-- local AttackCenter = event.AttackCenter\n-- local AttackerEntity = event.AttackerEntity\n-- local Damages = event.Damages\n-- local Extra = event.Extra\n-- local IsCritical = event.IsCritical\nlocal TotalDamage = event.TotalDamage\n--------------------------------------------------------\n\nlocal originalHp = self.Hp\nself.Hp = self.Hp - TotalDamage\n\nif self.Hp > 0 or originalHp <= 0 then\n\treturn\t\nend\n\nself:Dead()\nlocal timerFunc = function() self:Respawn() end\n\nif self.RespawnOn then\n\t_TimerService:SetTimerOnce(timerFunc, self.RespawnDelay)\nend",
           "Scope": 1,

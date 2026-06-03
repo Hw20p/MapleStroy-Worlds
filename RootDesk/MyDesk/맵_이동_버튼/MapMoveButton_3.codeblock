@@ -1,0 +1,70 @@
+{
+  "Id": "",
+  "GameId": "",
+  "EntryKey": "codeblock://f451c7d7-8792-40f5-a4fd-bb1887d2de7f",
+  "ContentType": "x-mod/codeblock",
+  "Content": "",
+  "Usage": 0,
+  "UsePublish": 1,
+  "UseService": 0,
+  "CoreVersion": "26.3.0.0",
+  "StudioVersion": "0.1.0.0",
+  "DynamicLoading": 0,
+  "ContentProto": {
+    "Use": "Json",
+    "Json": {
+      "CoreVersion": {
+        "Major": 0,
+        "Minor": 2
+      },
+      "ScriptVersion": {
+        "Major": 1,
+        "Minor": 1
+      },
+      "Description": "",
+      "Id": "f451c7d7-8792-40f5-a4fd-bb1887d2de7f",
+      "Language": 1,
+      "Name": "MapMoveButton_3",
+      "Type": 1,
+      "Source": 0,
+      "Target": null,
+      "Properties": [],
+      "Methods": [
+        {
+          "Return": {
+            "Type": "void",
+            "DefaultValue": null,
+            "SyncDirection": 0,
+            "Attributes": [],
+            "Name": null
+          },
+          "Arguments": [
+            {
+              "Type": "Entity",
+              "DefaultValue": "nil",
+              "SyncDirection": 0,
+              "Attributes": [],
+              "Name": "player"
+            }
+          ],
+          "Code": "-- TeleportService를 이용해 플레이어를 해당 맵의 기본 위치로 이동시킵니다.\n_TeleportService:TeleportToEntityPath(player, '/maps/1_메인로비')",
+          "Scope": 2,
+          "ExecSpace": 0,
+          "Attributes": [],
+          "Name": "MoveToDestination"
+        }
+      ],
+      "EntityEventHandlers": [
+        {
+          "Name": "HandleButtonClickEvent",
+          "EventName": "ButtonClickEvent",
+          "ParameterName": "event",
+          "Target": "self",
+          "Code": "-- 버튼이 클릭되었을 때 실행됩니다.\nlocal ui_1 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nlocal myPlayer = _UserService.LocalPlayer\n\nui_1.Enable = false\nself:MoveToDestination(myPlayer)",
+          "Scope": 0,
+          "ExecSpace": 0
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "msw-ai-coding-plugins-official": {
+      "source": {
+        "source": "directory",
+        "path": "/mnt/c/MapleStroy Worlds/msw-ai-coding-plugins-official-main"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "msw-maker-base-skill@msw-ai-coding-plugins-official": true
+  }
+}
