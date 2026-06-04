@@ -1,0 +1,12 @@
+@Component
+script CardWarriorJob extends Component
+
+	@EventSender("Self")
+	handler HandleButtonClickEvent(ButtonClickEvent event)
+		local uiRoot = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI")
+		if isvalid(uiRoot) then
+			uiRoot.CharacterCreateManager:SelectJob("warrior")
+		end
+	end
+
+end

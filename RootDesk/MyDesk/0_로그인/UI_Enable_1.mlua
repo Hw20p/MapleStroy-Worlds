@@ -1,0 +1,22 @@
+@Component
+script UI_Enable_1 extends Component
+
+	@EventSender("Self")
+	handler HandleButtonClickEvent(ButtonClickEvent event)
+		local ui_1 = _EntityService:GetEntityByPath("/ui/0_로그인-UI")
+		local ui_2 = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		
+		ui_1.Enable = false
+		ui_2.Enable = true
+		
+		-- 캐릭터 목록 새로 불러오기
+		local player = _UserService.LocalPlayer
+		if isvalid(player) then
+			local mapEntity = _EntityService:GetEntityByPath("/maps/0_로그인")
+			if isvalid(mapEntity) then
+				mapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))
+			end
+		end
+	end
+
+end

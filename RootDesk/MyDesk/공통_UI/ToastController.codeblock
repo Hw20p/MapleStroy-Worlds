@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "26.3.0.0",
+  "CoreVersion": "26.5.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -27,94 +27,7 @@
       "Name": "ToastController",
       "Type": 1,
       "Source": 0,
-      "Target": null,
-      "Properties": [
-        {
-          "Type": "boolean",
-          "DefaultValue": "false",
-          "SyncDirection": 0,
-          "Attributes": [],
-          "Name": "isShowing"
-        },
-        {
-          "Type": "number",
-          "DefaultValue": "0",
-          "SyncDirection": 0,
-          "Attributes": [],
-          "Name": "timer"
-        },
-        {
-          "Type": "number",
-          "DefaultValue": "2",
-          "SyncDirection": 0,
-          "Attributes": [],
-          "Name": "duration"
-        }
-      ],
-      "Methods": [
-        {
-          "Return": {
-            "Type": "void",
-            "DefaultValue": null,
-            "SyncDirection": 0,
-            "Attributes": [],
-            "Name": null
-          },
-          "Arguments": null,
-          "Code": "self.isShowing = false\nself.timer = 0\nself.Entity.Enable = false",
-          "Scope": 2,
-          "ExecSpace": 0,
-          "Attributes": [],
-          "Name": "OnBeginPlay"
-        },
-        {
-          "Return": {
-            "Type": "void",
-            "DefaultValue": null,
-            "SyncDirection": 0,
-            "Attributes": [],
-            "Name": null
-          },
-          "Arguments": [
-            {
-              "Type": "number",
-              "DefaultValue": "0",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "delta"
-            }
-          ],
-          "Code": "if not self.isShowing then return end\n\nself.timer = self.timer + delta\nif self.timer >= self.duration then\n\tself.isShowing = false\n\tself.timer = 0\n\tself.Entity.Enable = false\nend",
-          "Scope": 2,
-          "ExecSpace": 0,
-          "Attributes": [],
-          "Name": "OnUpdate"
-        },
-        {
-          "Return": {
-            "Type": "void",
-            "DefaultValue": null,
-            "SyncDirection": 0,
-            "Attributes": [],
-            "Name": null
-          },
-          "Arguments": [
-            {
-              "Type": "string",
-              "DefaultValue": "\"\"",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "message"
-            }
-          ],
-          "Code": "self.Entity.Enable = false\nlocal toastMsg = _EntityService:GetEntityByPath(\"/ui/ToastGroup/Toast_message\")\nif isvalid(toastMsg) then\n\ttoastMsg.TextComponent.Text = message\nend\nself.timer = 0\nself.isShowing = true\nself.Entity.Enable = true\nlog(\"[Toast] Show: \" .. message)",
-          "Scope": 2,
-          "ExecSpace": 0,
-          "Attributes": [],
-          "Name": "ShowToast"
-        }
-      ],
-      "EntityEventHandlers": []
+      "Target": null
     }
   }
 }

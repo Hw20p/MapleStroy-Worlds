@@ -1,0 +1,322 @@
+@Component
+script init extends Component
+
+	method void OnBeginPlay()
+		_SoundService:PlayBGM("654017d34f30461dbfaaa766a573d1ba", 1.0)
+		
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then
+			return
+		end
+		
+		local playerComp = player.PlayerComponent
+		if not isvalid(playerComp) then
+			return
+		end
+		
+		local nickname = playerComp.Nickname
+		local profileCode = playerComp.ProfileCode
+		
+		log("[LoginUI] Nickname: " .. tostring(nickname) .. ", UserId: " .. tostring(profileCode))
+		
+		local nameText = _EntityService:GetEntityByPath("/ui/0_로그인-UI/사용자정보/계정이름_text")
+		if isvalid(nameText) then
+			nameText.TextComponent.Text = nickname
+		end
+		
+		local codeText = _EntityService:GetEntityByPath("/ui/0_로그인-UI/사용자정보/계정코드_text")
+		if isvalid(codeText) then
+			codeText.TextComponent.Text = "#" .. profileCode
+		end
+		
+		local ui_1 = _EntityService:GetEntityByPath("/ui/0_로그인-UI")
+		ui_1.Enable = true
+	end
+
+	@ExecSpace("Server")
+	method void RequestCreate(string userId, string nickname, string job)
+		log("[CharacterCreate][Server] RequestCreate userId=" .. userId .. " nickname=" .. nickname .. " job=" .. job)
+		
+		local storage = _DataStorageService:GetUserDataStorage("characters")
+		local nicknameStorage = _DataStorageService:GetUserDataStorage("nicknames")
+		
+		-- 헬퍼 함수들
+		local function parseChars(raw)
+			if type(raw) ~= "string" or raw:sub(1,1) ~= "[" then return {} end
+			local result = {}
+			for n, j in raw:gmatch('"nickname":"([^"]*)","job":"([^"]*)"') do
+				table.insert(result, { nickname = n, job = j })
+			end
+			return result
+		end
+		
+		local function serializeChars(chars)
+			local parts = {}
+			for _, c in ipairs(chars) do
+				table.insert(parts, '{"nickname":"' .. c.nickname .. '","job":"' .. c.job .. '"}')
+			end
+			return "[" .. table.concat(parts, ",") .. "]"
+		end
+		
+		local function getNicknameList()
+			local e, raw = nicknameStorage:GetAndWait("_all")
+			if e == 0 and type(raw) == "string" and raw:sub(1,1) == "[" then
+				local list = {}
+				for n in raw:gmatch('"([^"]+)"') do table.insert(list, n) end
+				return list
+			end
+			return {}
+		end
+		
+		local function saveNicknameList(list)
+			local parts = {}
+			for _, n in ipairs(list) do table.insert(parts, '"' .. n .. '"') end
+			nicknameStorage:SetAndWait("_all", "[" .. table.concat(parts, ",") .. "]")
+		end
+		
+		-- 캐릭터 목록 불러오기
+		local errCode, raw = storage:GetAndWait(userId)
+		local chars = {}
+		if errCode == 0 and raw ~= nil then
+			chars = parseChars(raw)
+		elseif errCode ~= 0 and errCode ~= 1000002 then
+			self:NotifyResult(userId, false, "서버 오류가 발생했습니다. (" .. tostring(errCode) .. ")")
+			return
+		end
+		
+		if #chars >= 3 then
+			self:NotifyResult(userId, false, "캐릭터는 최대 3개까지 생성 가능합니다.")
+			return
+		end
+		
+		-- 글로벌 닉네임 중복 확인
+		local nickErrCode, existingOwner = nicknameStorage:GetAndWait(nickname)
+		if nickErrCode == 0 and existingOwner ~= nil then
+			self:NotifyResult(userId, false, "이미 사용 중인 닉네임입니다.")
+			return
+		elseif nickErrCode ~= 0 and nickErrCode ~= 1000002 then
+			self:NotifyResult(userId, false, "서버 오류가 발생했습니다. (" .. tostring(nickErrCode) .. ")")
+			return
+		end
+		
+		-- 닉네임 등록
+		local nickSetErr = nicknameStorage:SetAndWait(nickname, userId)
+		if nickSetErr ~= 0 then
+			self:NotifyResult(userId, false, "저장 중 오류가 발생했습니다. (" .. tostring(nickSetErr) .. ")")
+			return
+		end
+		
+		-- _all 목록 업데이트
+		local allList = getNicknameList()
+		table.insert(allList, nickname)
+		saveNicknameList(allList)
+		
+		-- 캐릭터 저장
+		table.insert(chars, { nickname = nickname, job = job })
+		local newJson = serializeChars(chars)
+		local setErr = storage:SetAndWait(userId, newJson)
+		if setErr ~= 0 then
+			nicknameStorage:DeleteAndWait(nickname)
+			self:NotifyResult(userId, false, "저장 중 오류가 발생했습니다. (" .. tostring(setErr) .. ")")
+			return
+		end
+		
+		log("[CharacterCreate][Server] Saved OK. total chars=" .. tostring(#chars))
+		self:NotifyResult(userId, true, nickname .. "|" .. job)
+	end
+
+	@ExecSpace("Server")
+	method void RequestLoadChars(string userId)
+		local storage = _DataStorageService:GetUserDataStorage("characters")
+		local errCode, raw = storage:GetAndWait(userId)
+		
+		local charsJson = "[]"
+		if errCode == 0 and raw ~= nil then
+			if type(raw) == "string" and raw:sub(1,1) == "[" then
+				charsJson = raw
+			end
+		elseif errCode ~= 0 and errCode ~= 1000002 then
+			log("[CharacterSelect][Server] GetAndWait error: " .. tostring(errCode))
+		end
+		
+		log("[DB] userId=" .. userId .. " chars=" .. charsJson)
+		
+		-- 글로벌 닉네임 목록 로그
+		local nicknameStorage = _DataStorageService:GetUserDataStorage("nicknames")
+		local ne, nraw = nicknameStorage:GetAndWait("_all")
+		log("[DB][nicknames] all=" .. tostring(nraw))
+		
+		self:NotifyChars(userId, charsJson)
+	end
+
+	@ExecSpace("Client")
+	method void NotifyChars(string userId, string charsJson)
+		local selectUI = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		if not isvalid(selectUI) then return end
+		if not selectUI.Enable then return end
+		
+		selectUI.CharacterSelectManager:PopulateSlots(charsJson)
+	end
+
+	@ExecSpace("Client")
+	method void NotifyResult(string userId, boolean success, string payload)
+		log("[CharacterCreate] NotifyResult called client, success=" .. tostring(success))
+		local uiRoot = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI")
+		log("[CharacterCreate] uiRoot valid=" .. tostring(isvalid(uiRoot)))
+		if not isvalid(uiRoot) then return end
+		
+		if success then
+			uiRoot.CharacterCreateManager:OnCreateSuccess(payload)
+		else
+			uiRoot.CharacterCreateManager:OnCreateFail(payload)
+		end
+	end
+
+	@ExecSpace("Server")
+	method void RequestDeleteChar(string userId, integer slotIndex)
+		log("[CharacterDelete][Server] RequestDeleteChar userId=" .. userId .. " slot=" .. slotIndex)
+		
+		local storage = _DataStorageService:GetUserDataStorage("characters")
+		local errCode, raw = storage:GetAndWait(userId)
+		
+		local function parseChars(r)
+			if type(r) ~= "string" then return {} end
+			if r:sub(1,1) ~= "[" then return {} end
+			local result = {}
+			for nickname, job in r:gmatch('"nickname":"([^"]*)","job":"([^"]*)"') do
+				table.insert(result, { nickname = nickname, job = job })
+			end
+			return result
+		end
+		
+		local function serializeChars(chars)
+			local parts = {}
+			for _, c in ipairs(chars) do
+				table.insert(parts, '{"nickname":"' .. c.nickname .. '","job":"' .. c.job .. '"}')
+			end
+			return "[" .. table.concat(parts, ",") .. "]"
+		end
+		
+		if errCode ~= 0 then
+			log("[CharacterDelete][Server] GetAndWait error: " .. tostring(errCode))
+			self:NotifyDelete(userId, false, slotIndex)
+			return
+		end
+		
+		local chars = parseChars(raw)
+		local luaIndex = slotIndex + 1  -- 0-based → 1-based
+		
+		if luaIndex < 1 or luaIndex > #chars then
+			log("[CharacterDelete][Server] invalid slot: " .. slotIndex)
+			self:NotifyDelete(userId, false, slotIndex)
+			return
+		end
+		
+		local deleted = chars[luaIndex].nickname
+		table.remove(chars, luaIndex)
+		
+		local newJson = serializeChars(chars)
+		local setErr = storage:SetAndWait(userId, newJson)
+		if setErr ~= 0 then
+			log("[CharacterDelete][Server] SetAndWait error: " .. tostring(setErr))
+			self:NotifyDelete(userId, false, slotIndex)
+			return
+		end
+		
+		-- 글로벌 닉네임 레지스트리에서 삭제
+		local nicknameStorage = _DataStorageService:GetUserDataStorage("nicknames")
+		nicknameStorage:DeleteAndWait(deleted)
+		
+		-- _all 목록에서 제거
+		local e, raw = nicknameStorage:GetAndWait("_all")
+		if e == 0 and type(raw) == "string" and raw:sub(1,1) == "[" then
+			local list = {}
+			for n in raw:gmatch('"([^"]+)"') do
+				if n ~= deleted then table.insert(list, n) end
+			end
+			local parts = {}
+			for _, n in ipairs(list) do table.insert(parts, '"' .. n .. '"') end
+			nicknameStorage:SetAndWait("_all", "[" .. table.concat(parts, ",") .. "]")
+		end
+		
+		log("[CharacterDelete][Server] Deleted nickname=" .. deleted)
+		self:NotifyDelete(userId, true, slotIndex)
+	end
+
+	@ExecSpace("Client")
+	method void NotifyDelete(string userId, boolean success, integer slotIndex)
+		log("[CharacterDelete] NotifyDelete client success=" .. tostring(success))
+		local selectUI = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		if not isvalid(selectUI) then return end
+		if not selectUI.Enable then return end
+		
+		if success then
+			-- 삭제 성공: 목록 새로고침
+			local player = _UserService.LocalPlayer
+			if isvalid(player) then
+				local mapEntity = _EntityService:GetEntityByPath("/maps/0_로그인")
+				if isvalid(mapEntity) then
+					mapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))
+				end
+			end
+		else
+			-- 삭제 실패 토스트
+			local toastGroup = _EntityService:GetEntityByPath("/ui/ToastGroup")
+			if isvalid(toastGroup) then
+				toastGroup.ToastController:ShowToast("캐릭터 삭제에 실패했습니다.")
+			end
+		end
+	end
+
+	@ExecSpace("Server")
+	method void RequestSelectChar(string userId, integer slotIndex)
+		log("[CharacterSelect][Server] RequestSelectChar userId=" .. userId .. " slot=" .. slotIndex)
+		
+		local storage = _DataStorageService:GetUserDataStorage("characters")
+		local errCode, raw = storage:GetAndWait(userId)
+		
+		local function parseChars(r)
+			if type(r) ~= "string" then return {} end
+			if r:sub(1,1) ~= "[" then return {} end
+			local result = {}
+			for n, j in r:gmatch('"nickname":"([^"]*)","job":"([^"]*)"') do
+				table.insert(result, { nickname = n, job = j })
+			end
+			return result
+		end
+		
+		if errCode ~= 0 then
+			log("[CharacterSelect][Server] GetAndWait error: " .. tostring(errCode))
+			return
+		end
+		
+		local chars = parseChars(raw)
+		local luaIndex = slotIndex + 1
+		
+		if luaIndex < 1 or luaIndex > #chars then
+			log("[CharacterSelect][Server] invalid slot: " .. tostring(slotIndex))
+			return
+		end
+		
+		local char = chars[luaIndex]
+		
+		-- 선택된 캐릭터를 DataStorage에 저장 (로비에서 참조용)
+		local selectedStorage = _DataStorageService:GetUserDataStorage("selectedChar")
+		local selJson = '{"nickname":"' .. char.nickname .. '","job":"' .. char.job .. '"}'
+		selectedStorage:SetAndWait(userId, selJson)
+		
+		log("[CharacterSelect][Server] Selected: " .. char.nickname .. " / " .. char.job)
+		self:NotifySelect(userId, char.nickname, char.job)
+	end
+
+	@ExecSpace("Client")
+	method void NotifySelect(string userId, string nickname, string job)
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		if tostring(player.PlayerComponent.UserId) ~= userId then return end
+		
+		log("[CharacterSelect] Teleporting to 1_메인로비 as " .. nickname .. " / " .. job)
+		_TeleportService:TeleportToEntityPath(player, "/maps/1_메인로비")
+	end
+
+end

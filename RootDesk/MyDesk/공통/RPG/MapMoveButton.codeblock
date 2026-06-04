@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "26.3.0.0",
+  "CoreVersion": "26.5.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -27,44 +27,7 @@
       "Name": "MapMoveButton",
       "Type": 1,
       "Source": 0,
-      "Target": null,
-      "Properties": [],
-      "Methods": [
-        {
-          "Return": {
-            "Type": "void",
-            "DefaultValue": null,
-            "SyncDirection": 0,
-            "Attributes": [],
-            "Name": null
-          },
-          "Arguments": [
-            {
-              "Type": "Entity",
-              "DefaultValue": "nil",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "player"
-            }
-          ],
-          "Code": "-- TeleportService를 이용해 플레이어를 해당 맵의 기본 위치로 이동시킵니다.\n_TeleportService:TeleportToEntityPath(player, '/maps/0_캐릭터선택')",
-          "Scope": 2,
-          "ExecSpace": 0,
-          "Attributes": [],
-          "Name": "MoveToDestination"
-        }
-      ],
-      "EntityEventHandlers": [
-        {
-          "Name": "HandleButtonClickEvent",
-          "EventName": "ButtonClickEvent",
-          "ParameterName": "event",
-          "Target": "self",
-          "Code": "-- 버튼이 클릭되었을 때 실행됩니다.\nlocal ui_1 = _EntityService:GetEntityByPath(\"/ui/0_로그인-UI\")\nlocal ui_2 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nlocal myPlayer = _UserService.LocalPlayer\n\nui_1.Enable = false\nui_2.Enable = true\nself:MoveToDestination(myPlayer)",
-          "Scope": 0,
-          "ExecSpace": 0
-        }
-      ]
+      "Target": null
     }
   }
 }

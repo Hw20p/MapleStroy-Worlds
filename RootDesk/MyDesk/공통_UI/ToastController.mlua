@@ -1,0 +1,39 @@
+@Component
+script ToastController extends Component
+
+	property boolean isShowing = false
+
+	property number timer = 0
+
+	property number duration = 2
+
+	method void OnBeginPlay()
+		self.isShowing = false
+		self.timer = 0
+		self.Entity.Enable = false
+	end
+
+	method void OnUpdate(number delta)
+		if not self.isShowing then return end
+		
+		self.timer = self.timer + delta
+		if self.timer >= self.duration then
+			self.isShowing = false
+			self.timer = 0
+			self.Entity.Enable = false
+		end
+	end
+
+	method void ShowToast(string message)
+		self.Entity.Enable = false
+		local toastMsg = _EntityService:GetEntityByPath("/ui/ToastGroup/Toast_message")
+		if isvalid(toastMsg) then
+			toastMsg.TextComponent.Text = message
+		end
+		self.timer = 0
+		self.isShowing = true
+		self.Entity.Enable = true
+		log("[Toast] Show: " .. message)
+	end
+
+end

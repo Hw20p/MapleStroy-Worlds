@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "26.3.0.0",
+  "CoreVersion": "26.5.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -1046,11 +1046,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": -0.000102728249,
-                "y": -0.000213623047
+                "y": -0.000244140625
               },
               "OffsetMin": {
                 "x": -0.000102728249,
-                "y": -0.000213623047
+                "y": -0.000183105469
               },
               "Pivot": {
                 "x": 0.5,
@@ -1058,7 +1058,7 @@
               },
               "RectSize": {
                 "x": 669.1932,
-                "y": 604.8731
+                "y": 604.873047
               },
               "UIMode": 1,
               "UIScale": {
@@ -1191,11 +1191,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": 5.722046E-06,
-                "y": 1.00004578
+                "y": 1.000061
               },
               "OffsetMin": {
                 "x": 5.722046E-06,
-                "y": -0.140914917
+                "y": -0.140930176
               },
               "Pivot": {
                 "x": 0.5,
@@ -1203,7 +1203,7 @@
               },
               "RectSize": {
                 "x": 669.1932,
-                "y": 606.014038
+                "y": 606.0141
               },
               "UIMode": 1,
               "UIScale": {

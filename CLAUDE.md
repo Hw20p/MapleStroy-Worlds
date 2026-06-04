@@ -1,3 +1,7 @@
+<!-- >>> managed by mswai >>> -->
+@AGENTS.md
+<!-- <<< managed by mswai <<< -->
+
 @AGENTS.md
 
 # 프로젝트 개발 방향

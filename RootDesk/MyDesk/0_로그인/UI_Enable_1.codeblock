@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "26.3.0.0",
+  "CoreVersion": "26.5.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -27,20 +27,7 @@
       "Name": "UI_Enable_1",
       "Type": 1,
       "Source": 0,
-      "Target": null,
-      "Properties": [],
-      "Methods": [],
-      "EntityEventHandlers": [
-        {
-          "Name": "HandleButtonClickEvent",
-          "EventName": "ButtonClickEvent",
-          "ParameterName": "event",
-          "Target": "self",
-          "Code": "local ui_1 = _EntityService:GetEntityByPath(\"/ui/0_로그인-UI\")\nlocal ui_2 = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\n\nui_1.Enable = false\nui_2.Enable = true\n\n-- 캐릭터 목록 새로 불러오기\nlocal player = _UserService.LocalPlayer\nif isvalid(player) then\n\tlocal mapEntity = _EntityService:GetEntityByPath(\"/maps/0_로그인\")\n\tif isvalid(mapEntity) then\n\t\tmapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))\n\tend\nend",
-          "Scope": 0,
-          "ExecSpace": 0
-        }
-      ]
+      "Target": null
     }
   }
 }

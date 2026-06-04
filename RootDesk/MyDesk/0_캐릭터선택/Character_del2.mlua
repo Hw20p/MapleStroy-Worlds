@@ -1,0 +1,12 @@
+@Component
+script Character_del2 extends Component
+
+	@EventSender("Self")
+	handler HandleButtonClickEvent(ButtonClickEvent event)
+		local selectUI = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		if isvalid(selectUI) then
+			selectUI.CharacterSelectManager:TryDeleteChar(1)
+		end
+	end
+
+end

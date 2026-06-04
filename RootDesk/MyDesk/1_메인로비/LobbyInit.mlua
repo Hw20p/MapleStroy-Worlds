@@ -1,0 +1,52 @@
+@Component
+script LobbyInit extends Component
+
+	method void OnBeginPlay()
+		_SoundService:PlayBGM("1b9988e57879481f970bf12bb0aa59fc", 1.0)
+		
+		log("[LobbyInit] OnBeginPlay")
+		
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		
+		local userId = tostring(player.PlayerComponent.UserId)
+		log("[LobbyInit] Requesting nameTag for userId=" .. userId)
+		self:RequestNameTag(userId)
+		
+		local ui_1 = _EntityService:GetEntityByPath("/ui/1_공통-UI")
+		ui_1.Enable = true
+	end
+
+	@ExecSpace("Server")
+	method void RequestNameTag(string userId)
+		log("[LobbyInit][Server] RequestNameTag userId=" .. userId)
+		
+		local selectedStorage = _DataStorageService:GetUserDataStorage("selectedChar")
+		local errCode, raw = selectedStorage:GetAndWait(userId)
+		
+		if errCode ~= 0 or raw == nil then
+			log("[LobbyInit][Server] No selectedChar for userId=" .. userId)
+			return
+		end
+		
+		local nickname = raw:match('"nickname":"([^"]*)')
+		if not nickname or nickname == "" then
+			log("[LobbyInit][Server] nickname parse failed, raw=" .. tostring(raw))
+			return
+		end
+		
+		log("[LobbyInit][Server] Found nickname=" .. nickname)
+		self:NotifyNameTag(userId, nickname)
+	end
+
+	@ExecSpace("Client")
+	method void NotifyNameTag(string userId, string nickname)
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		if tostring(player.PlayerComponent.UserId) ~= userId then return end
+		
+		player.NameTagComponent.Name = nickname
+		log("[LobbyInit] NameTag set to " .. nickname)
+	end
+
+end

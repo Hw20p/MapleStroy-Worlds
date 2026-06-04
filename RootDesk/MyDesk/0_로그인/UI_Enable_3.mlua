@@ -1,0 +1,14 @@
+@Component
+script UI_Enable_3 extends Component
+
+	@EventSender("Self")
+	handler HandleButtonClickEvent(ButtonClickEvent event)
+		-- 버튼이 클릭되었을 때 실행됩니다.
+		local ui_1 = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI")
+		local ui_2 = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		
+		ui_1.Enable = false
+		ui_2.Enable = true
+	end
+
+end

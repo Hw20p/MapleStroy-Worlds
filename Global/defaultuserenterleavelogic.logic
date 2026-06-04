@@ -15,7 +15,7 @@
     "Json": {
       "Name": "defaultuserenterleavelogic",
       "PlayerUri": "model://defaultplayer",
-      "StartPoint": "/maps/123"
+      "StartPoint": "/maps/0_로그인"
     }
   }
 }

@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "26.3.0.0",
+  "CoreVersion": "26.5.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -27,85 +27,7 @@
       "Name": "CharacterCreateLogic",
       "Type": 1,
       "Source": 0,
-      "Target": null,
-      "Properties": [],
-      "Methods": [
-        {
-          "Return": {
-            "Type": "void",
-            "DefaultValue": null,
-            "SyncDirection": 0,
-            "Attributes": [],
-            "Name": null
-          },
-          "Arguments": [
-            {
-              "Type": "number",
-              "DefaultValue": "0",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "userId"
-            },
-            {
-              "Type": "string",
-              "DefaultValue": "\"\"",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "nickname"
-            },
-            {
-              "Type": "string",
-              "DefaultValue": "\"\"",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "job"
-            }
-          ],
-          "Code": "log(\"[CharacterCreate][Server] RequestCreate userId=\" .. tostring(userId) .. \" nickname=\" .. nickname .. \" job=\" .. job)\n\n-- 이미 캐릭터가 있는지 확인\nlocal existing = _DataStorageService:GetData(tostring(userId), \"character\")\nif existing ~= nil then\n\tlog(\"[CharacterCreate][Server] Already has character\")\n\tself:NotifyResult(userId, false, \"이미 캐릭터가 존재합니다.\")\n\treturn\nend\n\n-- TODO: 전체 유저 닉네임 중복 확인 (world-level DataStorage 필요)\n\n-- 캐릭터 데이터 저장\nlocal charData = {\n\tnickname = nickname,\n\tjob = job,\n}\n_DataStorageService:SetData(tostring(userId), \"character\", charData)\nlog(\"[CharacterCreate][Server] Saved. userId=\" .. tostring(userId))\n\nself:NotifyResult(userId, true, nickname .. \"|\" .. job)",
-          "Scope": 1,
-          "ExecSpace": 5,
-          "Attributes": [],
-          "Name": "RequestCreate"
-        },
-        {
-          "Return": {
-            "Type": "void",
-            "DefaultValue": null,
-            "SyncDirection": 0,
-            "Attributes": [],
-            "Name": null
-          },
-          "Arguments": [
-            {
-              "Type": "number",
-              "DefaultValue": "0",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "userId"
-            },
-            {
-              "Type": "boolean",
-              "DefaultValue": "false",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "success"
-            },
-            {
-              "Type": "string",
-              "DefaultValue": "\"\"",
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "payload"
-            }
-          ],
-          "Code": "-- 내 플레이어인지 확인\nlocal player = _UserService.LocalPlayer\nif not isvalid(player) then return end\nif player.PlayerComponent.UserId ~= userId then return end\n\nlocal uiRoot = _EntityService:GetEntityByPath(\"/ui/0_캐릭터생성-UI\")\nif not isvalid(uiRoot) then\n\tlog(\"[CharacterCreate] uiRoot not found on client\")\n\treturn\nend\n\nif success then\n\tuiRoot.CharacterCreateManager:OnCreateSuccess(payload)\nelse\n\tuiRoot.CharacterCreateManager:OnCreateFail(payload)\nend",
-          "Scope": 2,
-          "ExecSpace": 6,
-          "Attributes": [],
-          "Name": "NotifyResult"
-        }
-      ],
-      "EntityEventHandlers": []
+      "Target": null
     }
   }
 }

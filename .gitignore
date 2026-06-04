@@ -1,1 +1,7 @@
-msw-ai-coding-plugins-official-main/
+# Claude Code
+.claude/hooks/
+.claude/skills/
+
+# MSW - 자동 생성 파일
+Environment/
+msw-ai-coding-plugins-official*/

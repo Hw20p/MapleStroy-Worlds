@@ -1,0 +1,21 @@
+@Component
+script MapMoveButton extends Component
+
+	method void MoveToDestination(Entity player)
+		-- TeleportService를 이용해 플레이어를 해당 맵의 기본 위치로 이동시킵니다.
+		_TeleportService:TeleportToEntityPath(player, '/maps/0_캐릭터선택')
+	end
+
+	@EventSender("Self")
+	handler HandleButtonClickEvent(ButtonClickEvent event)
+		-- 버튼이 클릭되었을 때 실행됩니다.
+		local ui_1 = _EntityService:GetEntityByPath("/ui/0_로그인-UI")
+		local ui_2 = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		local myPlayer = _UserService.LocalPlayer
+		
+		ui_1.Enable = false
+		ui_2.Enable = true
+		self:MoveToDestination(myPlayer)
+	end
+
+end

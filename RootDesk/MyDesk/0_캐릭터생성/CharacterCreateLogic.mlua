@@ -1,0 +1,49 @@
+@Component
+script CharacterCreateLogic extends Component
+
+	@ExecSpace("Server")
+	method void RequestCreate(number userId, string nickname, string job)
+		log("[CharacterCreate][Server] RequestCreate userId=" .. tostring(userId) .. " nickname=" .. nickname .. " job=" .. job)
+		
+		-- 이미 캐릭터가 있는지 확인
+		local existing = _DataStorageService:GetData(tostring(userId), "character")
+		if existing ~= nil then
+			log("[CharacterCreate][Server] Already has character")
+			self:NotifyResult(userId, false, "이미 캐릭터가 존재합니다.")
+			return
+		end
+		
+		-- TODO: 전체 유저 닉네임 중복 확인 (world-level DataStorage 필요)
+		
+		-- 캐릭터 데이터 저장
+		local charData = {
+			nickname = nickname,
+			job = job,
+		}
+		_DataStorageService:SetData(tostring(userId), "character", charData)
+		log("[CharacterCreate][Server] Saved. userId=" .. tostring(userId))
+		
+		self:NotifyResult(userId, true, nickname .. "|" .. job)
+	end
+
+	@ExecSpace("Client")
+	method void NotifyResult(number userId, boolean success, string payload)
+		-- 내 플레이어인지 확인
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		if player.PlayerComponent.UserId ~= userId then return end
+		
+		local uiRoot = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI")
+		if not isvalid(uiRoot) then
+			log("[CharacterCreate] uiRoot not found on client")
+			return
+		end
+		
+		if success then
+			uiRoot.CharacterCreateManager:OnCreateSuccess(payload)
+		else
+			uiRoot.CharacterCreateManager:OnCreateFail(payload)
+		end
+	end
+
+end

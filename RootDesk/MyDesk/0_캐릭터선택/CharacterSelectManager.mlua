@@ -1,0 +1,175 @@
+@Component
+script CharacterSelectManager extends Component
+
+	property integer charCount = 0
+
+	method void OnBeginPlay()
+		log("[CharacterSelect] Manager initialized")
+		
+		-- 서버에 캐릭터 목록 요청
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		
+		local mapEntity = _EntityService:GetEntityByPath("/maps/0_로그인")
+		if not isvalid(mapEntity) then return end
+		
+		mapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))
+	end
+
+	method void PopulateSlots(string charsJson)
+		-- JSON 직접 파싱 (패턴 매칭)
+		local chars = {}
+		if type(charsJson) == "string" and charsJson:sub(1,1) == "[" then
+			for nickname, job in charsJson:gmatch('"nickname":"([^"]*)","job":"([^"]*)"') do
+				table.insert(chars, { nickname = nickname, job = job })
+			end
+		end
+		
+		-- 직업별 이미지 (새 직업 추가 시 여기에 추가)
+		local jobImages = {
+			warrior = "68e039b7fcfb454ead4913ad4b39d7ad",
+			mage    = "9e4c760841b84e7a819b48616ef1ef80",
+		}
+		
+		-- 슬롯 0~2 처리 (항상 활성화)
+		for i = 0, 2 do
+			local slotPath = "/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯" .. i
+			local slot = _EntityService:GetEntityByPath(slotPath)
+			if isvalid(slot) then
+				slot.Enable = true
+				local char = chars[i + 1]  -- Lua 배열은 1-based
+				local nameEntity = _EntityService:GetEntityByPath(slotPath .. "/이름")
+				local avatarEntity = _EntityService:GetEntityByPath(slotPath .. "/아바타")
+				local deleteBtn = _EntityService:GetEntityByPath(slotPath .. "/삭제버튼")
+				if char ~= nil then
+					-- 캐릭터 있음: 이름/이미지 표시, 삭제버튼 활성화
+					if isvalid(nameEntity) then
+						nameEntity.TextComponent.Text = char.nickname
+					end
+					if isvalid(avatarEntity) and jobImages[char.job] ~= nil then
+						avatarEntity.SpriteGUIRendererComponent.ImageRUID = jobImages[char.job]
+					end
+					if isvalid(deleteBtn) then
+						deleteBtn.Enable = true
+					end
+					log("[CharacterSelect] slot" .. i .. " = " .. tostring(char.nickname) .. " / " .. tostring(char.job))
+				else
+					-- 빈 슬롯: 이름/이미지 초기화, 삭제버튼 비활성화
+					if isvalid(nameEntity) then
+						nameEntity.TextComponent.Text = ""
+					end
+					if isvalid(avatarEntity) then
+						avatarEntity.SpriteGUIRendererComponent.ImageRUID = ""
+					end
+					if isvalid(deleteBtn) then
+						deleteBtn.Enable = false
+					end
+					log("[CharacterSelect] slot" .. i .. " empty")
+				end
+			end
+		end
+		
+		-- 슬롯3(만들기버튼): 항상 표시, charCount 저장
+		self.charCount = #chars
+		local slot3 = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI/슬롯컨테이너/슬롯3")
+		if isvalid(slot3) then
+			slot3.Enable = true
+		end
+	end
+
+	method void TryOpenCreate()
+		if self.charCount >= 3 then
+			local toastGroup = _EntityService:GetEntityByPath("/ui/ToastGroup")
+			if isvalid(toastGroup) then
+				toastGroup.ToastController:ShowToast("캐릭터 슬롯이 가득 찼습니다. (최대 3개)")
+			end
+			return
+		end
+		
+		-- 캐릭터 생성 UI 열기
+		local selectUI = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		if isvalid(selectUI) then
+			selectUI.Enable = false
+		end
+		local createUI = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI")
+		if isvalid(createUI) then
+			createUI.Enable = true
+			createUI.CharacterCreateManager:Reset()
+		end
+	end
+
+	method void TrySelectChar(integer slotIndex)
+		-- 빈 슬롯 선택 방지
+		if slotIndex + 1 > self.charCount then return end
+		
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		
+		local mapEntity = _EntityService:GetEntityByPath("/maps/0_로그인")
+		if not isvalid(mapEntity) then return end
+		
+		-- 선택 UI 비활성화
+		self.Entity.Enable = false
+		
+		log("[CharacterSelect] TrySelectChar slot=" .. slotIndex)
+		mapEntity.init:RequestSelectChar(tostring(player.PlayerComponent.UserId), slotIndex)
+	end
+
+	method void TryDeleteChar(integer slotIndex)
+		-- 빈 슬롯 삭제 방지
+		if slotIndex + 1 > self.charCount then return end
+		
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		local mapEntity = _EntityService:GetEntityByPath("/maps/0_로그인")
+		if not isvalid(mapEntity) then return end
+		
+		-- UIPopup 컴포넌트가 있으면 사용, 없으면 직접 팝업 표시
+		local popupGroup = _EntityService:GetEntityByPath("/ui/PopupGroup")
+		local userId = tostring(player.PlayerComponent.UserId)
+		
+		if isvalid(popupGroup) and popupGroup.UIPopup ~= nil then
+			popupGroup.UIPopup:Open(
+				"캐릭터를 삭제하시겠습니까?\n삭제된 캐릭터는 복구할 수 없습니다.",
+				function()
+					mapEntity.init:RequestDeleteChar(userId, slotIndex)
+				end,
+				nil
+			)
+		else
+			-- 팝업 직접 조작 (fallback)
+			local msgEntity = _EntityService:GetEntityByPath("/ui/PopupGroup/PopupBack/PopupPanel/PopupMessage")
+			local btnOk = _EntityService:GetEntityByPath("/ui/PopupGroup/PopupBack/PopupPanel/PopupBtnOK")
+			local btnCancel = _EntityService:GetEntityByPath("/ui/PopupGroup/PopupBack/PopupPanel/PopupBtnCancel")
+		
+			if not isvalid(popupGroup) then return end
+		
+			if isvalid(msgEntity) then
+				msgEntity.TextComponent.Text = "캐릭터를 삭제하시겠습니까?\n삭제된 캐릭터는 복구할 수 없습니다."
+			end
+		
+			-- 캐릭터선택 UI를 숨기고 팝업 표시
+			local selectUI = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+			if isvalid(selectUI) then selectUI.Enable = false end
+			popupGroup.Enable = true
+		
+			local okHandler, cancelHandler
+			local function closePopup()
+				popupGroup.Enable = false
+				if isvalid(selectUI) then selectUI.Enable = true end
+				if okHandler then btnOk:DisconnectEvent(ButtonClickEvent, okHandler) end
+				if cancelHandler then btnCancel:DisconnectEvent(ButtonClickEvent, cancelHandler) end
+			end
+		
+			okHandler = btnOk:ConnectEvent(ButtonClickEvent, function()
+				closePopup()
+				mapEntity.init:RequestDeleteChar(userId, slotIndex)
+			end)
+		
+			cancelHandler = btnCancel:ConnectEvent(ButtonClickEvent, function()
+				closePopup()
+			end)
+		end
+	end
+
+end

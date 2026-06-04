@@ -1,0 +1,187 @@
+@Component
+script CharacterCreateManager extends Component
+
+	property string selectedJob = ""
+
+	method void OnBeginPlay()
+		self.selectedJob = ""
+		log("[CharacterCreate] Manager initialized")
+	end
+
+	method void Reset()
+		-- 직업 선택 초기화
+		self.selectedJob = ""
+		
+		-- 닉네임 입력 초기화
+		local nickInput = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI/BottomBar/NickInput")
+		if isvalid(nickInput) then
+			nickInput.TextInputComponent.Text = ""
+		end
+		
+		-- 아바타 배경 초기화
+		local avatarBg = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI/LeftPanel/AvatarWrap/Bg")
+		if isvalid(avatarBg) then
+			avatarBg.SpriteGUIRendererComponent.ImageRUID = ""
+		end
+		
+		-- 카드 하이라이트 초기화
+		local allJobs = {"warrior", "mage"}
+		for _, job in ipairs(allJobs) do
+			local cardName = "Card" .. job:sub(1,1):upper() .. job:sub(2)
+			local card = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI/RightPanel/" .. cardName)
+			if isvalid(card) then
+				local col = card.SpriteGUIRendererComponent.Color
+				col.r = 0.06
+				col.g = 0.08
+				col.b = 0.14
+				col.a = 1.0
+				card.SpriteGUIRendererComponent.Color = col
+			end
+		end
+		
+		log("[CharacterCreate] Reset")
+	end
+
+	method void SelectJob(string jobName)
+		self.selectedJob = jobName
+		log("[CharacterCreate] SelectJob start: " .. jobName)
+		
+		-- 직업별 아바타 배경 이미지 (새 직업 추가 시 여기에 추가)
+		local jobImages = {
+			warrior = "68e039b7fcfb454ead4913ad4b39d7ad",
+			mage    = "9e4c760841b84e7a819b48616ef1ef80",
+		}
+		
+		-- 아바타 배경 이미지 변경
+		local avatarBg = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI/LeftPanel/AvatarWrap/Bg")
+		log("[CharacterCreate] avatarBg valid: " .. tostring(isvalid(avatarBg)))
+		if isvalid(avatarBg) and jobImages[jobName] ~= nil then
+			log("[CharacterCreate] Setting ImageRUID: " .. jobImages[jobName])
+			avatarBg.SpriteGUIRendererComponent.ImageRUID = jobImages[jobName]
+			-- Color가 검정이면 이미지가 안 보이므로 흰색으로 설정
+			local bgCol = avatarBg.SpriteGUIRendererComponent.Color
+			bgCol.r = 1.0
+			bgCol.g = 1.0
+			bgCol.b = 1.0
+			bgCol.a = 1.0
+			avatarBg.SpriteGUIRendererComponent.Color = bgCol
+		end
+		
+		-- 카드 하이라이트 (새 직업 추가 시 여기에 추가)
+		local allJobs = {"warrior", "mage"}
+		for _, job in ipairs(allJobs) do
+			local cardName = "Card" .. job:sub(1,1):upper() .. job:sub(2)
+			local cardPath = "/ui/0_캐릭터생성-UI/RightPanel/" .. cardName
+			local card = _EntityService:GetEntityByPath(cardPath)
+			log("[CharacterCreate] card " .. cardName .. " valid: " .. tostring(isvalid(card)))
+			if isvalid(card) then
+				local col = card.SpriteGUIRendererComponent.Color
+				if job == jobName then
+					col.r = 0.2
+					col.g = 0.26
+					col.b = 0.44
+				else
+					col.r = 0.06
+					col.g = 0.08
+					col.b = 0.14
+				end
+				col.a = 1.0
+				card.SpriteGUIRendererComponent.Color = col
+				log("[CharacterCreate] color set for " .. cardName)
+			end
+		end
+		log("[CharacterCreate] SelectJob done")
+	end
+
+	method void TryCreate()
+		log("[CharacterCreate] TryCreate called, selectedJob=" .. tostring(self.selectedJob))
+		local function showToast(msg)
+			local toastGroup = _EntityService:GetEntityByPath("/ui/ToastGroup")
+			if isvalid(toastGroup) then
+				toastGroup.ToastController:ShowToast(msg)
+			end
+		end
+		
+		-- 직업 선택 확인
+		if self.selectedJob == "" then
+			showToast("직업을 선택해주세요.")
+			return
+		end
+		
+		-- 닉네임 확인
+		local nickInput = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI/BottomBar/NickInput")
+		if not isvalid(nickInput) then
+			log("[CharacterCreate] NickInput entity not found")
+			return
+		end
+		
+		local nickname = nickInput.TextInputComponent.Text
+		if nickname == nil or nickname == "" then
+			showToast("닉네임을 입력해주세요.")
+			return
+		end
+		
+		-- UTF-8 글자 수 계산 (한글 등 멀티바이트 대응)
+		local charCount = 0
+		for i = 1, #nickname do
+			local b = string.byte(nickname, i)
+			if b < 0x80 or b >= 0xC0 then charCount = charCount + 1 end
+		end
+		if charCount > 12 then
+			showToast("닉네임은 최대 12자까지 입력 가능합니다.")
+			return
+		end
+		
+		log("[CharacterCreate] Requesting create: " .. nickname .. " / " .. self.selectedJob)
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+		
+		-- 맵 루트 엔티티의 init 컴포넌트로 서버 저장 요청
+		local mapEntity = _EntityService:GetEntityByPath("/maps/0_로그인")
+		if not isvalid(mapEntity) then
+			log("[CharacterCreate] mapEntity not found")
+			return
+		end
+		mapEntity.init:RequestCreate(tostring(player.PlayerComponent.UserId), nickname, self.selectedJob)
+	end
+
+	method void OnCreateSuccess(string payload)
+		log("[CharacterCreate] OnCreateSuccess payload=" .. payload)
+		-- payload = "nickname|job"
+		local sep = payload:find("|")
+		local nickname = payload:sub(1, sep - 1)
+		local job = payload:sub(sep + 1)
+		log("[CharacterCreate] Success: " .. nickname .. " / " .. job)
+		
+		-- 캐릭터 생성 UI 닫기
+		local createUI = _EntityService:GetEntityByPath("/ui/0_캐릭터생성-UI")
+		if isvalid(createUI) then
+			createUI.Enable = false
+		end
+		
+		-- 캐릭터 선택 UI 열기
+		local selectUI = _EntityService:GetEntityByPath("/ui/0_캐릭터선택-UI")
+		if isvalid(selectUI) then
+			selectUI.Enable = true
+		end
+		
+		-- UI가 Enable=false로 시작해서 OnBeginPlay가 안 실행됨
+		-- → 직접 캐릭터 목록 로드 요청
+		local player = _UserService.LocalPlayer
+		if isvalid(player) then
+			local mapEntity = _EntityService:GetEntityByPath("/maps/0_로그인")
+			if isvalid(mapEntity) then
+				mapEntity.init:RequestLoadChars(tostring(player.PlayerComponent.UserId))
+			end
+		end
+	end
+
+	method void OnCreateFail(string reason)
+		log("[CharacterCreate] OnCreateFail: " .. reason)
+		local toastGroup = _EntityService:GetEntityByPath("/ui/ToastGroup")
+		if isvalid(toastGroup) then
+			toastGroup.ToastController:ShowToast(reason)
+		end
+	end
+
+end

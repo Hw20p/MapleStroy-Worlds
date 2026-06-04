@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "26.3.0.0",
+  "CoreVersion": "26.5.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -27,20 +27,7 @@
       "Name": "Character_sel3",
       "Type": 1,
       "Source": 0,
-      "Target": null,
-      "Properties": [],
-      "Methods": [],
-      "EntityEventHandlers": [
-        {
-          "Name": "HandleButtonClickEvent",
-          "EventName": "ButtonClickEvent",
-          "ParameterName": "event",
-          "Target": "self",
-          "Code": "local selectUI = _EntityService:GetEntityByPath(\"/ui/0_캐릭터선택-UI\")\nif isvalid(selectUI) then\n\tselectUI.CharacterSelectManager:TrySelectChar(2)\nend",
-          "Scope": 0,
-          "ExecSpace": 0
-        }
-      ]
+      "Target": null
     }
   }
 }

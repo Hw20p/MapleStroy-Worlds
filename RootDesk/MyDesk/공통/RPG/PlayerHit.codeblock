@@ -7,7 +7,7 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "1.21.0.0",
+  "CoreVersion": "26.5.0.0",
   "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
@@ -27,58 +27,7 @@
       "Name": "PlayerHit",
       "Type": 4,
       "Source": 1,
-      "Target": "MOD.Core.HitComponent",
-      "Properties": [
-        {
-          "Type": "number",
-          "DefaultValue": "1",
-          "SyncDirection": 0,
-          "Attributes": [
-            {
-              "$type": "MOD.Core.Script.MinValueScriptAttribute, MOD.Core",
-              "Value": 0.0
-            }
-          ],
-          "Name": "ImmuneCooldown"
-        },
-        {
-          "Type": "number",
-          "DefaultValue": "0",
-          "SyncDirection": 0,
-          "Attributes": [
-            {
-              "$type": "MOD.Core.Script.HideFromInspectorScriptAttribute, MOD.Core"
-            }
-          ],
-          "Name": "LastHitTime"
-        }
-      ],
-      "Methods": [
-        {
-          "Return": {
-            "Type": "boolean",
-            "DefaultValue": null,
-            "SyncDirection": 0,
-            "Attributes": [],
-            "Name": null
-          },
-          "Arguments": [
-            {
-              "Type": "string",
-              "DefaultValue": null,
-              "SyncDirection": 0,
-              "Attributes": [],
-              "Name": "attackInfo"
-            }
-          ],
-          "Code": "local currentTime = _UtilLogic.ElapsedSeconds\nif self.LastHitTime + self.ImmuneCooldown < currentTime then\n\tself.LastHitTime = _UtilLogic.ElapsedSeconds\n\treturn true\nend\n\nreturn false",
-          "Scope": 2,
-          "ExecSpace": 0,
-          "Attributes": [],
-          "Name": "IsHitTarget"
-        }
-      ],
-      "EntityEventHandlers": []
+      "Target": "MOD.Core.HitComponent"
     }
   }
 }
