@@ -383,11 +383,11 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": 380.0,
+                "x": 429.8113,
                 "y": 260.0
               },
               "OffsetMin": {
-                "x": -380.0,
+                "x": -380.000336,
                 "y": -260.0
               },
               "Pivot": {
@@ -395,7 +395,7 @@
                 "y": 0.5
               },
               "RectSize": {
-                "x": 760.0,
+                "x": 809.811646,
                 "y": 520.0
               },
               "UIMode": 1,
@@ -406,11 +406,11 @@
               },
               "UIVersion": 2,
               "anchoredPosition": {
-                "x": 0.0,
+                "x": 24.9055,
                 "y": 0.0
               },
               "Position": {
-                "x": 0.0,
+                "x": 24.9055,
                 "y": 0.0,
                 "z": 0.0
               },
@@ -433,7 +433,7 @@
               "EndFrameIndex": 2147483647,
               "IgnoreMapLayerCheck": false,
               "ImageRUID": {
-                "DataId": "4fea64a3307cda641809ad8be0d4890b"
+                "DataId": "e15f27460f204184b0b08b2a6404f628"
               },
               "LocalPosition": {
                 "x": 0.0,
@@ -451,9 +451,9 @@
               "SortingLayer": "UI",
               "StartFrameIndex": 0,
               "Color": {
-                "r": 0.117647059,
-                "g": 0.117647059,
-                "b": 0.180392161,
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
                 "a": 1.0
               },
               "DropShadow": false,
@@ -649,7 +649,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 1.0,
                 "g": 0.894117653,
@@ -851,7 +851,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 1.0,
                 "g": 0.4,
@@ -885,7 +885,7 @@
               },
               "SizeFit": false,
               "SortingLayer": "UI",
-              "Text": "15초",
+              "Text": "30초",
               "UseConstraintX": false,
               "UseConstraintY": false,
               "UseOutLine": false,
@@ -978,11 +978,11 @@
             },
             {
               "@type": "MOD.Core.SpriteGUIRendererComponent",
-              "AnimClipPlayType": 0,
+              "AnimClipPlayType": 1,
               "EndFrameIndex": 2147483647,
               "IgnoreMapLayerCheck": false,
               "ImageRUID": {
-                "DataId": "4fea64a3307cda641809ad8be0d4890b"
+                "DataId": "8b28f783f0594f2f83d3b845a800a25c"
               },
               "LocalPosition": {
                 "x": 0.0,
@@ -1000,9 +1000,9 @@
               "SortingLayer": "UI",
               "StartFrameIndex": 0,
               "Color": {
-                "r": 0.2,
-                "g": 0.2509804,
-                "b": 0.3529412,
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
                 "a": 1.0
               },
               "DropShadow": false,
@@ -1198,7 +1198,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 1.0,
                 "g": 1.0,
@@ -1400,7 +1400,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 0.8,
                 "g": 0.854901969,
@@ -1779,11 +1779,11 @@
             },
             {
               "@type": "MOD.Core.SpriteGUIRendererComponent",
-              "AnimClipPlayType": 0,
+              "AnimClipPlayType": 1,
               "EndFrameIndex": 2147483647,
               "IgnoreMapLayerCheck": false,
               "ImageRUID": {
-                "DataId": "4fea64a3307cda641809ad8be0d4890b"
+                "DataId": "8b28f783f0594f2f83d3b845a800a25c"
               },
               "LocalPosition": {
                 "x": 0.0,
@@ -1801,9 +1801,9 @@
               "SortingLayer": "UI",
               "StartFrameIndex": 0,
               "Color": {
-                "r": 0.2,
-                "g": 0.2509804,
-                "b": 0.3529412,
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
                 "a": 1.0
               },
               "DropShadow": false,
@@ -1999,7 +1999,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 1.0,
                 "g": 1.0,
@@ -2201,7 +2201,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 0.8,
                 "g": 0.854901969,
@@ -2535,11 +2535,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": -20.0,
-                "y": 15.0
+                "y": -19.485
               },
               "OffsetMin": {
                 "x": -360.0,
-                "y": -95.0
+                "y": -129.485
               },
               "Pivot": {
                 "x": 0.5,
@@ -2558,11 +2558,11 @@
               "UIVersion": 2,
               "anchoredPosition": {
                 "x": -190.0,
-                "y": -40.0
+                "y": -74.485
               },
               "Position": {
                 "x": -190.0,
-                "y": -40.0,
+                "y": -74.485,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -2580,11 +2580,11 @@
             },
             {
               "@type": "MOD.Core.SpriteGUIRendererComponent",
-              "AnimClipPlayType": 0,
+              "AnimClipPlayType": 1,
               "EndFrameIndex": 2147483647,
               "IgnoreMapLayerCheck": false,
               "ImageRUID": {
-                "DataId": "4fea64a3307cda641809ad8be0d4890b"
+                "DataId": "8b28f783f0594f2f83d3b845a800a25c"
               },
               "LocalPosition": {
                 "x": 0.0,
@@ -2602,9 +2602,9 @@
               "SortingLayer": "UI",
               "StartFrameIndex": 0,
               "Color": {
-                "r": 0.2,
-                "g": 0.2509804,
-                "b": 0.3529412,
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
                 "a": 1.0
               },
               "DropShadow": false,
@@ -2800,7 +2800,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 1.0,
                 "g": 1.0,
@@ -3002,7 +3002,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 0.8,
                 "g": 0.854901969,
@@ -3336,11 +3336,11 @@
               "MobileOnly": false,
               "OffsetMax": {
                 "x": 360.0,
-                "y": 15.0
+                "y": -19.485
               },
               "OffsetMin": {
                 "x": 20.0,
-                "y": -95.0
+                "y": -129.485
               },
               "Pivot": {
                 "x": 0.5,
@@ -3359,11 +3359,11 @@
               "UIVersion": 2,
               "anchoredPosition": {
                 "x": 190.0,
-                "y": -40.0
+                "y": -74.485
               },
               "Position": {
                 "x": 190.0,
-                "y": -40.0,
+                "y": -74.485,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -3381,11 +3381,11 @@
             },
             {
               "@type": "MOD.Core.SpriteGUIRendererComponent",
-              "AnimClipPlayType": 0,
+              "AnimClipPlayType": 1,
               "EndFrameIndex": 2147483647,
               "IgnoreMapLayerCheck": false,
               "ImageRUID": {
-                "DataId": "4fea64a3307cda641809ad8be0d4890b"
+                "DataId": "8b28f783f0594f2f83d3b845a800a25c"
               },
               "LocalPosition": {
                 "x": 0.0,
@@ -3403,9 +3403,9 @@
               "SortingLayer": "UI",
               "StartFrameIndex": 0,
               "Color": {
-                "r": 0.2,
-                "g": 0.2509804,
-                "b": 0.3529412,
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
                 "a": 1.0
               },
               "DropShadow": false,
@@ -3601,7 +3601,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 1.0,
                 "g": 1.0,
@@ -3803,7 +3803,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 0.8,
                 "g": 0.854901969,
@@ -4257,7 +4257,7 @@
                 "a": 0.72
               },
               "DropShadowDistance": 3.0,
-              "Font": 0,
+              "Font": 1,
               "FontColor": {
                 "r": 0.7019608,
                 "g": 0.9019608,

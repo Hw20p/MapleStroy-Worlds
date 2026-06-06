@@ -57,18 +57,18 @@ script BattleHUD extends Component
     end
 
     @ExecSpace("ClientOnly")
-    method void UpdateScore(number myScore, number enemyScore)
-        -- 점수 텍스트 업데이트
+    method void UpdateScore(number mySurv, number myAtk, number enemySurv, number enemyAtk)
+        -- 생존 점수 / 공격 점수 각각 표시
         if isvalid(self.myScoreText) then
             local txt = self.myScoreText.TextComponent
             if isvalid(txt) then
-                txt.Text = "점수: " .. tostring(math.floor(myScore))
+                txt.Text = "생존: " .. tostring(math.floor(mySurv)) .. "  공격: " .. tostring(math.floor(myAtk))
             end
         end
         if isvalid(self.enemyScoreText) then
             local txt = self.enemyScoreText.TextComponent
             if isvalid(txt) then
-                txt.Text = "점수: " .. tostring(math.floor(enemyScore))
+                txt.Text = "생존: " .. tostring(math.floor(enemySurv)) .. "  공격: " .. tostring(math.floor(enemyAtk))
             end
         end
     end

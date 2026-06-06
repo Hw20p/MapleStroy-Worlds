@@ -7030,7 +7030,7 @@
       {
         "id": "c83b49e8-5904-49e5-810a-0b9d332a2807",
         "path": "/maps/랭킹전_배틀/RankingBoss",
-        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent,script.BossAI,script.BossHitComponent",
+        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent,script.BossAI,script.BossHitComponent,MOD.Core.HitEffectSpawnerComponent,MOD.Core.DamageSkinSpawnerComponent",
         "jsonString": {
           "name": "RankingBoss",
           "path": "/maps/랭킹전_배틀/RankingBoss",
@@ -7132,6 +7132,14 @@
                   "y": -1.46
                 }
               ],
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.HitEffectSpawnerComponent",
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.DamageSkinSpawnerComponent",
               "Enable": true
             }
           ],

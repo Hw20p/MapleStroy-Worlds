@@ -7,7 +7,7 @@ script BattleManager extends Component
     property number BossHitScore     = 5.0
     property number BossHpBase       = 50.0   -- 1스테이지 보스 HP
     property number BossHpPerStage   = 30.0   -- 스테이지당 HP 증가
-    property number AugmentSelectTime = 15.0  -- 증강 선택 제한 시간
+    property number AugmentSelectTime = 30.0  -- 증강 선택 제한 시간
 
     -- ── 증강 정의 (인덱스 1~4, 클라이언트 AugmentSelectHUD와 동기화) ──
     -- 1: 탄속 강화   speed  +1.0
@@ -17,9 +17,10 @@ script BattleManager extends Component
 
     method void OnBeginPlay()
         if self:IsServer() then
-            self._T.hpMap    = {}
-            self._T.nameMap  = {}
-            self._T.scoreMap = {}
+            self._T.hpMap             = {}
+            self._T.nameMap           = {}
+            self._T.survivalScoreMap  = {}   -- 초당 생존 점수
+            self._T.attackScoreMap    = {}   -- 보스 공격 점수
             self._T.players  = {}
             -- 스테이지 상태
             self._T.stage      = 1
@@ -77,17 +78,27 @@ script BattleManager extends Component
                 if isvalid(pc) then
                     local uid = tostring(pc.UserId)
                     if self._T.hpMap[uid] == nil then
-                        self._T.hpMap[uid]    = self.MaxHp
-                        self._T.nameMap[uid]  = pc.Nickname
-                        self._T.scoreMap[uid] = 0.0
+                        self._T.hpMap[uid]            = self.MaxHp
+                        self._T.nameMap[uid]          = pc.Nickname
+                        self._T.survivalScoreMap[uid] = 0.0
+                        self._T.attackScoreMap[uid]   = 0.0
                         table.insert(self._T.players, uid)
                         log("[BattleManager] 플레이어 등록: " .. uid .. " (" .. pc.Nickname .. ")")
                     end
-                    -- 배틀 중이고 HP > 0이면 점수 적립
+                    -- 배틀 중이고 HP > 0이면 생존 점수 적립
                     if self._T.phase == "battle" and (self._T.hpMap[uid] or 0.0) > 0.0 then
-                        self._T.scoreMap[uid] = (self._T.scoreMap[uid] or 0.0) + self.ScorePerSecond
+                        self._T.survivalScoreMap[uid] = (self._T.survivalScoreMap[uid] or 0.0) + self.ScorePerSecond
                     end
                 end
+            end
+        end
+
+        -- 보스 자동 HP 감소 (배틀 중 초당 1)
+        if self._T.phase == "battle" then
+            self._T.bossHp = math.max(0.0, (self._T.bossHp or 0.0) - 1.0)
+            if self._T.bossHp <= 0.0 then
+                self:OnStageClear()
+                return
             end
         end
 
@@ -121,8 +132,8 @@ script BattleManager extends Component
         local pc = player.PlayerComponent
         if not isvalid(pc) then return end
         local uid = tostring(pc.UserId)
-        if self._T.scoreMap[uid] == nil then return end
-        self._T.scoreMap[uid] = self._T.scoreMap[uid] + self.BossHitScore
+        if self._T.attackScoreMap[uid] == nil then return end
+        self._T.attackScoreMap[uid] = self._T.attackScoreMap[uid] + self.BossHitScore
     end
 
     -- ── 플레이어 피격 처리 ────────────────────────────────────────────
@@ -287,13 +298,16 @@ script BattleManager extends Component
         local hp2    = self._T.hpMap[uid2]    or self.MaxHp
         local name1  = self._T.nameMap[uid1]  or "P1"
         local name2  = self._T.nameMap[uid2]  or "P2"
-        local score1 = self._T.scoreMap[uid1] or 0.0
-        local score2 = self._T.scoreMap[uid2] or 0.0
+        -- 생존 점수 / 공격 점수 분리 전달
+        local surv1   = self._T.survivalScoreMap[uid1] or 0.0
+        local atk1    = self._T.attackScoreMap[uid1]   or 0.0
+        local surv2   = self._T.survivalScoreMap[uid2] or 0.0
+        local atk2    = self._T.attackScoreMap[uid2]   or 0.0
         local bossHp    = self._T.bossHp    or self.BossHpBase
         local bossMaxHp = self._T.bossMaxHp or self.BossHpBase
         local stage     = self._T.stage     or 1
 
-        self:MulticastBattleUpdate(uid1, hp1, score1, uid2, hp2, score2, name1, name2, bossHp, bossMaxHp, stage)
+        self:MulticastBattleUpdate(uid1, hp1, surv1, atk1, uid2, hp2, surv2, atk2, name1, name2, bossHp, bossMaxHp, stage)
     end
 
     -- 하위 호환
@@ -351,18 +365,22 @@ script BattleManager extends Component
 
     -- ── 배틀 상태 통합 Multicast ──────────────────────────────────────
     @ExecSpace("Multicast")
-    method void MulticastBattleUpdate(string uid1, number hp1, number score1, string uid2, number hp2, number score2, string name1, string name2, number bossHp, number bossMaxHp, integer stage)
+    method void MulticastBattleUpdate(string uid1, number hp1, number surv1, number atk1, string uid2, number hp2, number surv2, number atk2, string name1, string name2, number bossHp, number bossMaxHp, integer stage)
         local localPlayer = _UserService.LocalPlayer
         if not isvalid(localPlayer) then return end
 
         local myId = tostring(localPlayer.PlayerComponent.UserId)
-        local myHp, enemyHp, myScore, enemyScore, myName, enemyName
+        local myHp, enemyHp, mySurv, myAtk, enemySurv, enemyAtk, myName, enemyName
 
         if myId == uid1 then
-            myHp = hp1; enemyHp = hp2; myScore = score1; enemyScore = score2
+            myHp = hp1; enemyHp = hp2
+            mySurv = surv1; myAtk = atk1
+            enemySurv = surv2; enemyAtk = atk2
             myName = name1; enemyName = name2
         else
-            myHp = hp2; enemyHp = hp1; myScore = score2; enemyScore = score1
+            myHp = hp2; enemyHp = hp1
+            mySurv = surv2; myAtk = atk2
+            enemySurv = surv1; enemyAtk = atk1
             myName = name2; enemyName = name1
         end
 
@@ -371,7 +389,7 @@ script BattleManager extends Component
         local hud = hudEntity:GetComponent("script.BattleHUD")
         if isvalid(hud) then
             hud:UpdateHp(myHp, enemyHp, myName, enemyName)
-            hud:UpdateScore(myScore, enemyScore)
+            hud:UpdateScore(mySurv, myAtk, enemySurv, enemyAtk)
             hud:UpdateBoss(bossHp, bossMaxHp, stage)
         end
     end

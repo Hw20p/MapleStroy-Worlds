@@ -2044,8 +2044,8 @@
             {
               "@type": "MOD.Core.TransformComponent",
               "Position": {
-                "x": -0.0471339226,
-                "y": 0.4397536,
+                "x": -2.591515,
+                "y": 0.09990561,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -2071,7 +2071,7 @@
               "OrderInLayer": 2,
               "PlayRate": 1.0,
               "RenderSetting": 0,
-              "SpriteRUID": "",
+              "SpriteRUID": "0851310a5ef942b980a9fd03a1f81b94",
               "StartFrameIndex": 0,
               "Color": {
                 "r": 1.0,
@@ -2127,8 +2127,8 @@
                 "z": 0.0
               },
               "Position": {
-                "x": 0.0,
-                "y": 0.3,
+                "x": 0.961650848,
+                "y": 0.199845612,
                 "z": 999.999
               },
               "QuaternionRotation": {
