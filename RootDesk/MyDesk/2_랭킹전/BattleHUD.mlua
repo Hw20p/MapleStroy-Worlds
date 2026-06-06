@@ -1,12 +1,14 @@
 @Component
 script BattleHUD extends Component
 
-    property Entity myHPFill      = "5517b3bd-5eae-44df-a5ff-7ba7accbfe90"
-    property Entity enemyHPFill   = "5a710938-516b-4898-997c-8f77e8d5230f"
-    property Entity myNameText    = "3854b4de-bccf-4706-83b1-759a316e35e5"
-    property Entity enemyNameText = "444e9d3b-c2f6-4620-9aa2-74f985ee4335"
-    property Entity myHPText      = "059482ac-c497-49fe-8225-62542bdba65b"
-    property Entity enemyHPText   = "5f09f054-e84c-47f2-957d-582f43c1e7ff"
+    property Entity myHPFill      = "f9b3224e-abe2-4727-a676-ac33a19bd8bc"
+    property Entity enemyHPFill   = "72887ca3-9e31-46fa-9ba7-21d7afcd181f"
+    property Entity myNameText    = "575c0c9c-35ad-4031-b8d2-68057296fae7"
+    property Entity enemyNameText = "4f6a5016-1d8f-4491-9c79-345483d038c4"
+    property Entity myHPText      = "a3035364-7d1b-43d9-9c82-e1c3241b5f98"
+    property Entity enemyHPText   = "1e5e5dcf-fdc8-4621-86d6-9d9399474cdc"
+    property Entity myScoreText   = "fc43f66a-8abc-4ad3-8acf-a992d2a2658f"
+    property Entity enemyScoreText = "5fc550fe-08dc-457b-aa72-549fd8a4ac49"
     property number MaxHp = 100.0
 
     @ExecSpace("ClientOnly")
@@ -47,6 +49,23 @@ script BattleHUD extends Component
             local txt = self.enemyHPText.TextComponent
             if isvalid(txt) then
                 txt.Text = tostring(math.floor(math.max(0.0, enemyHp))) .. "/" .. maxInt
+            end
+        end
+    end
+
+    @ExecSpace("ClientOnly")
+    method void UpdateScore(number myScore, number enemyScore)
+        -- 점수 텍스트 업데이트
+        if isvalid(self.myScoreText) then
+            local txt = self.myScoreText.TextComponent
+            if isvalid(txt) then
+                txt.Text = "점수: " .. tostring(math.floor(myScore))
+            end
+        end
+        if isvalid(self.enemyScoreText) then
+            local txt = self.enemyScoreText.TextComponent
+            if isvalid(txt) then
+                txt.Text = "점수: " .. tostring(math.floor(enemyScore))
             end
         end
     end

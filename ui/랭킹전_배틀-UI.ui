@@ -1,7 +1,7 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "ui://5e88ce01-82a2-4141-91a3-3e0a7dd7f9b6",
+  "EntryKey": "ui://e6e4bc50-cc5d-474c-baec-cd8dc0c0aec2",
   "ContentType": "x-mod/ui",
   "Content": "",
   "Usage": 0,
@@ -14,7 +14,7 @@
     "Use": "Binary",
     "Entities": [
       {
-        "id": "5e88ce01-82a2-4141-91a3-3e0a7dd7f9b6",
+        "id": "e6e4bc50-cc5d-474c-baec-cd8dc0c0aec2",
         "path": "/ui/랭킹전_배틀-UI",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.UIGroupComponent,MOD.Core.CanvasGroupComponent",
         "jsonString": {
@@ -113,7 +113,7 @@
         }
       },
       {
-        "id": "9fe5ca28-3848-4ab4-aa13-38920a82f93f",
+        "id": "23cb60ad-ae85-4471-8396-4bd07e635bea",
         "path": "/ui/랭킹전_배틀-UI/MyHPPanel",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
@@ -149,12 +149,12 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": 961.915833,
-                "y": 115.747406
+                "x": 960.0,
+                "y": 130.0
               },
               "OffsetMin": {
-                "x": 1.91583252,
-                "y": 5.747406
+                "x": 0.0,
+                "y": 0.0
               },
               "Pivot": {
                 "x": 0.0,
@@ -162,7 +162,7 @@
               },
               "RectSize": {
                 "x": 960.0,
-                "y": 110.0
+                "y": 130.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -172,12 +172,12 @@
               },
               "UIVersion": 2,
               "anchoredPosition": {
-                "x": 1.91583252,
-                "y": 5.747406
+                "x": 0.0,
+                "y": 0.0
               },
               "Position": {
-                "x": -958.084167,
-                "y": -534.252563,
+                "x": -960.0,
+                "y": -540.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -258,7 +258,7 @@
         }
       },
       {
-        "id": "3854b4de-bccf-4706-83b1-759a316e35e5",
+        "id": "575c0c9c-35ad-4031-b8d2-68057296fae7",
         "path": "/ui/랭킹전_배틀-UI/MyHPPanel/MyNameText",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.TextComponent",
         "jsonString": {
@@ -294,7 +294,7 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": 520.0,
+                "x": 420.0,
                 "y": -8.0
               },
               "OffsetMin": {
@@ -306,7 +306,7 @@
                 "y": 1.0
               },
               "RectSize": {
-                "x": 500.0,
+                "x": 400.0,
                 "y": 30.0
               },
               "UIMode": 1,
@@ -322,7 +322,7 @@
               },
               "Position": {
                 "x": 20.0,
-                "y": 102.0,
+                "y": 122.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -460,7 +460,209 @@
         }
       },
       {
-        "id": "4ea68514-31a0-4c14-90d3-404daec356ca",
+        "id": "fc43f66a-8abc-4ad3-8acf-a992d2a2658f",
+        "path": "/ui/랭킹전_배틀-UI/MyHPPanel/MyScoreText",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.TextComponent",
+        "jsonString": {
+          "name": "MyScoreText",
+          "path": "/ui/랭킹전_배틀-UI/MyHPPanel/MyScoreText",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": true,
+          "displayOrder": 1,
+          "pathConstraints": "////",
+          "revision": 0,
+          "origin": {
+            "type": "Model",
+            "entry_id": "UIText",
+            "sub_entity_id": null,
+            "root_entity_id": null,
+            "replaced_model_id": null
+          },
+          "modelId": "uitext",
+          "@components": [
+            {
+              "@type": "MOD.Core.UITransformComponent",
+              "ActivePlatform": 255,
+              "AlignmentOption": 5,
+              "AnchorsMax": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "AnchorsMin": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "MobileOnly": false,
+              "OffsetMax": {
+                "x": -16.0,
+                "y": -8.0
+              },
+              "OffsetMin": {
+                "x": -276.0,
+                "y": -38.0
+              },
+              "Pivot": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "RectSize": {
+                "x": 260.0,
+                "y": 30.0
+              },
+              "UIMode": 1,
+              "UIScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "UIVersion": 2,
+              "anchoredPosition": {
+                "x": -16.0,
+                "y": -8.0
+              },
+              "Position": {
+                "x": 944.0,
+                "y": 122.0,
+                "z": 0.0
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteGUIRendererComponent",
+              "AnimClipPlayType": 0,
+              "EndFrameIndex": 2147483647,
+              "IgnoreMapLayerCheck": false,
+              "ImageRUID": {
+                "DataId": ""
+              },
+              "LocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "LocalScale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "MaterialId": "",
+              "OrderInLayer": 0,
+              "OverrideSorting": false,
+              "PlayRate": 1.0,
+              "PreserveSprite": 0,
+              "SortingLayer": "UI",
+              "StartFrameIndex": 0,
+              "Color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 0.0
+              },
+              "DropShadow": false,
+              "DropShadowAngle": 120.0,
+              "DropShadowColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.72
+              },
+              "DropShadowDistance": 3.0,
+              "FillAmount": 1.0,
+              "FillCenter": true,
+              "FillClockWise": true,
+              "FillMethod": 0,
+              "FillOrigin": 0,
+              "FlipX": false,
+              "FlipY": false,
+              "FrameColumn": 1,
+              "FrameRate": 0,
+              "FrameRow": 1,
+              "Outline": false,
+              "OutlineColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              },
+              "OutlineWidth": 3.0,
+              "RaycastTarget": false,
+              "Type": 0,
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.TextComponent",
+              "Alignment": 2,
+              "AllowAutomaticTranslation": true,
+              "BestFit": false,
+              "Bold": false,
+              "ConstraintX": 100.0,
+              "ConstraintY": 100.0,
+              "DropShadow": false,
+              "DropShadowAngle": 120.0,
+              "DropShadowColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.72
+              },
+              "DropShadowDistance": 3.0,
+              "Font": 0,
+              "FontColor": {
+                "r": 1.0,
+                "g": 0.843137264,
+                "b": 0.0,
+                "a": 1.0
+              },
+              "FontSize": 20,
+              "IgnoreMapLayerCheck": false,
+              "IsLocalizationKey": false,
+              "MaxSize": 40,
+              "MinSize": 10,
+              "OrderInLayer": 0,
+              "OutlineColor": {
+                "r": 0.698039234,
+                "g": 0.698039234,
+                "b": 0.698039234,
+                "a": 1.0
+              },
+              "OutlineDistance": {
+                "x": 1.0,
+                "y": -1.0
+              },
+              "OutlineWidth": 1.0,
+              "Overflow": 0,
+              "OverrideSorting": false,
+              "Padding": {
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "bottom": 0
+              },
+              "SizeFit": false,
+              "SortingLayer": "UI",
+              "Text": "점수: 0",
+              "UseConstraintX": false,
+              "UseConstraintY": false,
+              "UseOutLine": false,
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
+        "id": "72f1da88-c87d-4bf0-9ff4-509c3908421d",
         "path": "/ui/랭킹전_배틀-UI/MyHPPanel/MyHPBarBg",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
@@ -470,7 +672,7 @@
           "enable": true,
           "visible": true,
           "localize": true,
-          "displayOrder": 1,
+          "displayOrder": 2,
           "pathConstraints": "////",
           "revision": 0,
           "origin": {
@@ -605,7 +807,7 @@
         }
       },
       {
-        "id": "5517b3bd-5eae-44df-a5ff-7ba7accbfe90",
+        "id": "f9b3224e-abe2-4727-a676-ac33a19bd8bc",
         "path": "/ui/랭킹전_배틀-UI/MyHPPanel/MyHPFill",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
@@ -615,7 +817,7 @@
           "enable": true,
           "visible": true,
           "localize": true,
-          "displayOrder": 2,
+          "displayOrder": 3,
           "pathConstraints": "////",
           "revision": 0,
           "origin": {
@@ -750,7 +952,7 @@
         }
       },
       {
-        "id": "059482ac-c497-49fe-8225-62542bdba65b",
+        "id": "a3035364-7d1b-43d9-9c82-e1c3241b5f98",
         "path": "/ui/랭킹전_배틀-UI/MyHPPanel/MyHPText",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.TextComponent",
         "jsonString": {
@@ -760,7 +962,7 @@
           "enable": true,
           "visible": true,
           "localize": true,
-          "displayOrder": 3,
+          "displayOrder": 4,
           "pathConstraints": "////",
           "revision": 0,
           "origin": {
@@ -952,7 +1154,7 @@
         }
       },
       {
-        "id": "4e578425-a331-4f7b-b5e3-8dbe7320b098",
+        "id": "6d4ee6aa-d4a5-401c-b356-504c80a30114",
         "path": "/ui/랭킹전_배틀-UI/EnemyHPPanel",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
@@ -988,12 +1190,12 @@
               },
               "MobileOnly": false,
               "OffsetMax": {
-                "x": 1.91583252,
-                "y": 115.747406
+                "x": 0.0,
+                "y": 130.0
               },
               "OffsetMin": {
-                "x": -958.084167,
-                "y": 5.747406
+                "x": -960.0,
+                "y": 0.0
               },
               "Pivot": {
                 "x": 1.0,
@@ -1001,7 +1203,7 @@
               },
               "RectSize": {
                 "x": 960.0,
-                "y": 110.0
+                "y": 130.0
               },
               "UIMode": 1,
               "UIScale": {
@@ -1011,12 +1213,12 @@
               },
               "UIVersion": 2,
               "anchoredPosition": {
-                "x": 1.91583252,
-                "y": 5.747406
+                "x": 0.0,
+                "y": 0.0
               },
               "Position": {
-                "x": 961.915833,
-                "y": -534.252563,
+                "x": 960.0,
+                "y": -540.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -1097,7 +1299,7 @@
         }
       },
       {
-        "id": "444e9d3b-c2f6-4620-9aa2-74f985ee4335",
+        "id": "4f6a5016-1d8f-4491-9c79-345483d038c4",
         "path": "/ui/랭킹전_배틀-UI/EnemyHPPanel/EnemyNameText",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.TextComponent",
         "jsonString": {
@@ -1137,7 +1339,7 @@
                 "y": -8.0
               },
               "OffsetMin": {
-                "x": -520.0,
+                "x": -420.0,
                 "y": -38.0
               },
               "Pivot": {
@@ -1145,7 +1347,7 @@
                 "y": 1.0
               },
               "RectSize": {
-                "x": 500.0,
+                "x": 400.0,
                 "y": 30.0
               },
               "UIMode": 1,
@@ -1161,7 +1363,7 @@
               },
               "Position": {
                 "x": -20.0,
-                "y": 102.0,
+                "y": 122.0,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -1299,7 +1501,209 @@
         }
       },
       {
-        "id": "083b5a51-a870-45fd-9c12-57c88f882341",
+        "id": "5fc550fe-08dc-457b-aa72-549fd8a4ac49",
+        "path": "/ui/랭킹전_배틀-UI/EnemyHPPanel/EnemyScoreText",
+        "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.TextComponent",
+        "jsonString": {
+          "name": "EnemyScoreText",
+          "path": "/ui/랭킹전_배틀-UI/EnemyHPPanel/EnemyScoreText",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": true,
+          "displayOrder": 1,
+          "pathConstraints": "////",
+          "revision": 0,
+          "origin": {
+            "type": "Model",
+            "entry_id": "UIText",
+            "sub_entity_id": null,
+            "root_entity_id": null,
+            "replaced_model_id": null
+          },
+          "modelId": "uitext",
+          "@components": [
+            {
+              "@type": "MOD.Core.UITransformComponent",
+              "ActivePlatform": 255,
+              "AlignmentOption": 4,
+              "AnchorsMax": {
+                "x": 0.0,
+                "y": 1.0
+              },
+              "AnchorsMin": {
+                "x": 0.0,
+                "y": 1.0
+              },
+              "MobileOnly": false,
+              "OffsetMax": {
+                "x": 276.0,
+                "y": -8.0
+              },
+              "OffsetMin": {
+                "x": 16.0,
+                "y": -38.0
+              },
+              "Pivot": {
+                "x": 0.0,
+                "y": 1.0
+              },
+              "RectSize": {
+                "x": 260.0,
+                "y": 30.0
+              },
+              "UIMode": 1,
+              "UIScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "UIVersion": 2,
+              "anchoredPosition": {
+                "x": 16.0,
+                "y": -8.0
+              },
+              "Position": {
+                "x": -944.0,
+                "y": 122.0,
+                "z": 0.0
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteGUIRendererComponent",
+              "AnimClipPlayType": 0,
+              "EndFrameIndex": 2147483647,
+              "IgnoreMapLayerCheck": false,
+              "ImageRUID": {
+                "DataId": ""
+              },
+              "LocalPosition": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "LocalScale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "MaterialId": "",
+              "OrderInLayer": 0,
+              "OverrideSorting": false,
+              "PlayRate": 1.0,
+              "PreserveSprite": 0,
+              "SortingLayer": "UI",
+              "StartFrameIndex": 0,
+              "Color": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 0.0
+              },
+              "DropShadow": false,
+              "DropShadowAngle": 120.0,
+              "DropShadowColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.72
+              },
+              "DropShadowDistance": 3.0,
+              "FillAmount": 1.0,
+              "FillCenter": true,
+              "FillClockWise": true,
+              "FillMethod": 0,
+              "FillOrigin": 0,
+              "FlipX": false,
+              "FlipY": false,
+              "FrameColumn": 1,
+              "FrameRate": 0,
+              "FrameRow": 1,
+              "Outline": false,
+              "OutlineColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+              },
+              "OutlineWidth": 3.0,
+              "RaycastTarget": false,
+              "Type": 0,
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.TextComponent",
+              "Alignment": 0,
+              "AllowAutomaticTranslation": true,
+              "BestFit": false,
+              "Bold": false,
+              "ConstraintX": 100.0,
+              "ConstraintY": 100.0,
+              "DropShadow": false,
+              "DropShadowAngle": 120.0,
+              "DropShadowColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.72
+              },
+              "DropShadowDistance": 3.0,
+              "Font": 0,
+              "FontColor": {
+                "r": 1.0,
+                "g": 0.843137264,
+                "b": 0.0,
+                "a": 1.0
+              },
+              "FontSize": 20,
+              "IgnoreMapLayerCheck": false,
+              "IsLocalizationKey": false,
+              "MaxSize": 40,
+              "MinSize": 10,
+              "OrderInLayer": 0,
+              "OutlineColor": {
+                "r": 0.698039234,
+                "g": 0.698039234,
+                "b": 0.698039234,
+                "a": 1.0
+              },
+              "OutlineDistance": {
+                "x": 1.0,
+                "y": -1.0
+              },
+              "OutlineWidth": 1.0,
+              "Overflow": 0,
+              "OverrideSorting": false,
+              "Padding": {
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "bottom": 0
+              },
+              "SizeFit": false,
+              "SortingLayer": "UI",
+              "Text": "점수: 0",
+              "UseConstraintX": false,
+              "UseConstraintY": false,
+              "UseOutLine": false,
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
+        "id": "c04a8e4c-a352-4e5b-b1ae-5f1fde21a7a8",
         "path": "/ui/랭킹전_배틀-UI/EnemyHPPanel/EnemyHPBarBg",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
@@ -1309,7 +1713,7 @@
           "enable": true,
           "visible": true,
           "localize": true,
-          "displayOrder": 1,
+          "displayOrder": 2,
           "pathConstraints": "////",
           "revision": 0,
           "origin": {
@@ -1444,7 +1848,7 @@
         }
       },
       {
-        "id": "5a710938-516b-4898-997c-8f77e8d5230f",
+        "id": "72887ca3-9e31-46fa-9ba7-21d7afcd181f",
         "path": "/ui/랭킹전_배틀-UI/EnemyHPPanel/EnemyHPFill",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent",
         "jsonString": {
@@ -1454,7 +1858,7 @@
           "enable": true,
           "visible": true,
           "localize": true,
-          "displayOrder": 2,
+          "displayOrder": 3,
           "pathConstraints": "////",
           "revision": 0,
           "origin": {
@@ -1589,7 +1993,7 @@
         }
       },
       {
-        "id": "5f09f054-e84c-47f2-957d-582f43c1e7ff",
+        "id": "1e5e5dcf-fdc8-4621-86d6-9d9399474cdc",
         "path": "/ui/랭킹전_배틀-UI/EnemyHPPanel/EnemyHPText",
         "componentNames": "MOD.Core.UITransformComponent,MOD.Core.SpriteGUIRendererComponent,MOD.Core.TextComponent",
         "jsonString": {
@@ -1599,7 +2003,7 @@
           "enable": true,
           "visible": true,
           "localize": true,
-          "displayOrder": 3,
+          "displayOrder": 4,
           "pathConstraints": "////",
           "revision": 0,
           "origin": {
@@ -1791,7 +2195,7 @@
         }
       },
       {
-        "id": "b012af29-0459-4d3c-a694-ace0a62179e5",
+        "id": "d0e60de9-f353-472f-bce9-1945557f3656",
         "path": "/ui/랭킹전_배틀-UI/BattleHUD",
         "componentNames": "MOD.Core.UITransformComponent,script.BattleHUD",
         "jsonString": {
