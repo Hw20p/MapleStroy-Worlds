@@ -125,9 +125,9 @@
             {
               "@type": "MOD.Core.TransformComponent",
               "Rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 0,
+                "y": 0,
+                "z": 0
               },
               "Position": {
                 "x": 0.0801363,
@@ -135,17 +135,17 @@
                 "z": 999.999
               },
               "QuaternionRotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
               },
               "Scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+                "x": 1,
+                "y": 1,
+                "z": 1
               },
-              "ZRotation": 0.0,
+              "ZRotation": 0,
               "Enable": true
             },
             {
@@ -157,20 +157,20 @@
               "FlipY": false,
               "IgnoreMapLayerCheck": false,
               "OrderInLayer": 0,
-              "PlayRate": 1.0,
+              "PlayRate": 1,
               "RenderSetting": 0,
               "SortingLayer": "MapLayer0",
               "SpriteRUID": "8ef238e0d0ca4bb783aca526cff35d11",
               "StartFrameIndex": 0,
               "TiledSize": {
-                "x": 1.0,
-                "y": 1.0
+                "x": 1,
+                "y": 1
               },
               "Color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
               },
               "Enable": true
             },
@@ -210,13 +210,13 @@
               "Position": {
                 "x": -0.225,
                 "y": -0.15,
-                "z": 1000.0
+                "z": 1000
               },
               "QuaternionRotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
               },
               "Enable": true
             },
@@ -233,6 +233,80 @@
             }
           ],
           "@version": 1
+        }
+      },
+      {
+        "id": "c83b49e8-5904-49e5-810a-0b9d332a2807",
+        "path": "/maps/랭킹전_배틀/RankingBoss",
+        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent,script.BossAI",
+        "jsonString": {
+          "name": "RankingBoss",
+          "path": "/maps/랭킹전_배틀/RankingBoss",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": false,
+          "displayOrder": 4,
+          "pathConstraints": "///",
+          "revision": 1,
+          "modelId": "rankingboss",
+          "@components": [
+            {
+              "@type": "MOD.Core.TransformComponent",
+              "Position": {
+                "x": 0,
+                "y": 5,
+                "z": 0
+              },
+              "QuaternionRotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+              },
+              "Scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+              },
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteRendererComponent",
+              "SpriteRUID": "1705e3c5b2c146ac9a699f96fb067408",
+              "Color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              },
+              "DrawMode": 0,
+              "FlipX": false,
+              "FlipY": false,
+              "PlayRate": 1,
+              "OrderInLayer": 5,
+              "StartFrameIndex": 0,
+              "EndFrameIndex": 2147483647,
+              "Enable": true,
+              "SortingLayer": "MapLayer0"
+            },
+            {
+              "@type": "script.BossAI",
+              "Enable": true,
+              "BulletSpeed": 5,
+              "AttackInterval": 2.5,
+              "BulletCount": 8,
+              "ProjectileModelId": "bossprojectile"
+            }
+          ],
+          "@version": 1,
+          "origin": {
+            "type": "Model",
+            "entry_id": "rankingboss",
+            "sub_entity_id": null,
+            "root_entity_id": "c83b49e8-5904-49e5-810a-0b9d332a2807",
+            "replaced_model_id": null
+          }
         }
       }
     ]

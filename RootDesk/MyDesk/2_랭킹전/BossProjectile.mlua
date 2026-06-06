@@ -1,0 +1,103 @@
+@Component
+script BossProjectile extends Component
+
+    property number Speed = 6.0
+    property number MaxLifetime = 4.0
+    property number HitRadius = 0.4
+
+    method void OnBeginPlay()
+        -- 양쪽에서 초기화
+        self._T.fired = false
+        self._T.lifetime = 0.0
+        self._T.dirX = 0.0
+        self._T.dirY = 0.0
+    end
+
+    @ExecSpace("ServerOnly")
+    method void Fire(number dirX, number dirY)
+        -- 방향 설정 및 발사 시작
+        self._T.dirX = dirX
+        self._T.dirY = dirY
+        self._T.fired = true
+
+        local transform = self.Entity.TransformComponent
+        if isvalid(transform) then
+            transform.ZRotation = math.atan(dirY, dirX) * (180.0 / math.pi)
+        end
+
+        log("[BossProjectile] 발사 dir=(" .. tostring(dirX) .. "," .. tostring(dirY) .. ")")
+    end
+
+    @ExecSpace("ServerOnly")
+    method void OnUpdate(number delta)
+        -- 발사 전이면 무시
+        if not self._T.fired then return end
+
+        self._T.lifetime += delta
+        if self._T.lifetime >= self.MaxLifetime then
+            self.Entity:Destroy()
+            return
+        end
+
+        -- 매 프레임 이동
+        self.Entity.TransformComponent:Translate(
+            self._T.dirX * self.Speed * delta,
+            self._T.dirY * self.Speed * delta
+        )
+
+        -- 플레이어 충돌 판정 (3단계에서 데미지 연결)
+        local map = self.Entity.CurrentMap
+        if not isvalid(map) then return end
+
+        local mapComp = map.MapComponent
+        if not isvalid(mapComp) then return end
+
+        local users = _UserService:GetUsersByMapComponent(mapComp)
+        if users == nil then return end
+
+        local myPos = self.Entity.TransformComponent.Position
+        local r = self.HitRadius
+
+        for _, user in ipairs(users) do
+            if isvalid(user) then
+                local uPos = user.TransformComponent.Position
+                local dx = uPos.x - myPos.x
+                local dy = uPos.y - myPos.y
+                if (dx * dx + dy * dy) <= (r * r) then
+                    self:OnHitPlayer(user)
+                    return
+                end
+            end
+        end
+    end
+
+    @ExecSpace("ServerOnly")
+    method void OnHitPlayer(Entity player)
+        -- TODO: 3단계에서 player.PlayerComponent.Hp 데미지 연결
+        local pos = self.Entity.TransformComponent.Position
+        self:ShowHitEffect(pos.x, pos.y)
+        log("[BossProjectile] 플레이어 적중!")
+        self.Entity:Destroy()
+    end
+
+    @ExecSpace("Client")
+    method void ShowHitEffect(number px, number py)
+        -- 피격 파티클 효과
+        local map = self.Entity.CurrentMap
+        if not isvalid(map) then return end
+        _ParticleService:PlayBasicParticle(
+            BasicParticleType.SparkExplosion,
+            map,
+            Vector3(px, py, 0),
+            0,
+            Vector3(0.5, 0.5, 0.5),
+            false,
+            {}
+        )
+    end
+
+    method void OnEndPlay()
+        -- 정리 불필요 (타이머 없음)
+    end
+
+end

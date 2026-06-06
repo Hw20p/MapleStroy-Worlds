@@ -1,0 +1,165 @@
+@Component
+script BossAI extends Component
+
+    property number BulletSpeed = 5.0
+    property number AttackInterval = 2.5
+    property integer BulletCount = 8
+    property string ProjectileModelId = "bossprojectile"
+
+    @HideFromInspector property integer _timerId = 0
+    @HideFromInspector property integer _patternIndex = 0
+    @HideFromInspector property number _spiralAngle = 0.0
+
+    @ExecSpace("ServerOnly")
+    method void OnBeginPlay()
+        -- 탄막 주기 타이머 시작
+        self._timerId = _TimerService:SetTimerRepeat(function() self:FirePattern() end, self.AttackInterval)
+        log("[BossAI] 탄막 시스템 시작, 간격=" .. tostring(self.AttackInterval) .. "s")
+    end
+
+    @ExecSpace("ServerOnly")
+    method void OnEndPlay()
+        -- 타이머 정리
+        if self._timerId ~= 0 then
+            _TimerService:ClearTimer(self._timerId)
+            self._timerId = 0
+        end
+    end
+
+    @ExecSpace("ServerOnly")
+    method void FirePattern()
+        self._patternIndex += 1
+        local pattern = ((self._patternIndex - 1) % 3) + 1
+        log("[BossAI] 패턴 실행: " .. tostring(pattern))
+
+        if pattern == 1 then
+            self:Pattern_Radial()
+        elseif pattern == 2 then
+            self:Pattern_Spiral()
+        else
+            self:Pattern_Aimed()
+        end
+    end
+
+    @ExecSpace("ServerOnly")
+    method void SpawnProjectile(number dirX, number dirY)
+        -- 발사체 스폰 후 Fire() 호출
+        local map = self.Entity.CurrentMap
+        if not isvalid(map) then return end
+
+        if self._T.projCount == nil then self._T.projCount = 0 end
+        self._T.projCount += 1
+
+        local myPos = self.Entity.TransformComponent.Position
+        local proj = _SpawnService:SpawnByModelId(
+            self.ProjectileModelId,
+            "boss_proj_" .. tostring(self._T.projCount),
+            Vector3(myPos.x, myPos.y, 0),
+            map
+        )
+
+        if proj == nil then
+            log_error("[BossAI] 발사체 스폰 실패 - modelId=" .. self.ProjectileModelId)
+            return
+        end
+
+        local pc = proj:GetComponent("script.BossProjectile")
+        if isvalid(pc) then
+            pc:Fire(dirX, dirY)
+        else
+            log_error("[BossAI] BossProjectile 컴포넌트 없음")
+        end
+    end
+
+    @ExecSpace("ServerOnly")
+    method void Pattern_Radial()
+        -- 패턴1: 8방향 동시 방사형
+        local count = self.BulletCount
+        for i = 0, count - 1 do
+            local angle = (i / count) * 2.0 * math.pi
+            self:SpawnProjectile(math.cos(angle), math.sin(angle))
+        end
+        log("[BossAI] 방사형 " .. tostring(count) .. "발 발사")
+    end
+
+    @ExecSpace("ServerOnly")
+    method void Pattern_Spiral()
+        -- 패턴2: 나선형 (12발을 0.1초 간격, 각도 누적)
+        local baseAngle = self._spiralAngle
+        for i = 0, 11 do
+            local capturedI = i
+            local capturedAngle = baseAngle + i * (math.pi * 5 / 6)
+            _TimerService:SetTimerOnce(function()
+                self:SpawnProjectile(math.cos(capturedAngle), math.sin(capturedAngle))
+            end, capturedI * 0.1)
+        end
+        self._spiralAngle = self._spiralAngle + 0.5
+        log("[BossAI] 나선형 12발 발사 시작")
+    end
+
+    @ExecSpace("ServerOnly")
+    method void Pattern_Aimed()
+        -- 패턴3: 가장 가까운 플레이어를 향해 3연발 (부채꼴 스프레드)
+        local map = self.Entity.CurrentMap
+        if not isvalid(map) then return end
+
+        local mapComp = map.MapComponent
+        if not isvalid(mapComp) then return end
+
+        local users = _UserService:GetUsersByMapComponent(mapComp)
+        if users == nil or #users == 0 then
+            -- 플레이어 없으면 랜덤 방향 3연발
+            local randAngle = _UtilLogic:RandomDouble() * 2.0 * math.pi
+            for i = 0, 2 do
+                local spread = (i - 1) * 0.3
+                self:SpawnProjectile(math.cos(randAngle + spread), math.sin(randAngle + spread))
+            end
+            return
+        end
+
+        -- 가장 가까운 플레이어 탐색
+        local myPos = self.Entity.TransformComponent.Position
+        local target = nil
+        local minDistSq = 999999.0
+
+        for _, user in ipairs(users) do
+            if isvalid(user) then
+                local uPos = user.TransformComponent.Position
+                local dx = uPos.x - myPos.x
+                local dy = uPos.y - myPos.y
+                local distSq = dx * dx + dy * dy
+                if distSq < minDistSq then
+                    minDistSq = distSq
+                    target = user
+                end
+            end
+        end
+
+        if target == nil then return end
+
+        local tPos = target.TransformComponent.Position
+        local dx = tPos.x - myPos.x
+        local dy = tPos.y - myPos.y
+        local dist = math.sqrt(dx * dx + dy * dy)
+        if dist < 0.01 then return end
+
+        local ndx = dx / dist
+        local ndy = dy / dist
+
+        -- 중앙 + 좌우 스프레드 0.25rad (약 14도)
+        for i = 0, 2 do
+            local ci = i
+            local spread = (ci - 1) * 0.25
+            local cosS = math.cos(spread)
+            local sinS = math.sin(spread)
+            local fdx = ndx * cosS - ndy * sinS
+            local fdy = ndx * sinS + ndy * cosS
+            _TimerService:SetTimerOnce(function()
+                self:SpawnProjectile(fdx, fdy)
+            end, ci * 0.12)
+        end
+
+        log("[BossAI] 조준 3연발 발사")
+    end
+
+end
