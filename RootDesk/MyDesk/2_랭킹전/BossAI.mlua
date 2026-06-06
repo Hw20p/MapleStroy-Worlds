@@ -12,9 +12,12 @@ script BossAI extends Component
 
     @ExecSpace("ServerOnly")
     method void OnBeginPlay()
-        -- 탄막 주기 타이머 시작
-        self._timerId = _TimerService:SetTimerRepeat(function() self:FirePattern() end, self.AttackInterval)
-        log("[BossAI] 탄막 시스템 시작, 간격=" .. tostring(self.AttackInterval) .. "s")
+        -- 3초 유예 후 탄막 시작 (렉 대비)
+        _TimerService:SetTimerOnce(function()
+            self._timerId = _TimerService:SetTimerRepeat(function() self:FirePattern() end, self.AttackInterval)
+            log("[BossAI] 탄막 시스템 시작 (3초 유예 후), 간격=" .. tostring(self.AttackInterval) .. "s")
+        end, 3.0)
+        log("[BossAI] 3초 후 탄막 시작 예정")
     end
 
     @ExecSpace("ServerOnly")

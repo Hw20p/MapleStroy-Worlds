@@ -176,22 +176,46 @@ script BattleManager extends Component
         local boss = self:GetBossAI()
         if isvalid(boss) then boss:PauseAttack() end
 
-        -- 승리자 uid 결정
-        local winnerUid = ""
+        -- 두 플레이어 uid 확정
+        local survivorUid = ""
         for _, uid in ipairs(self._T.players) do
-            if uid ~= loserUid then
-                winnerUid = uid
-                break
-            end
+            if uid ~= loserUid then survivorUid = uid; break end
+        end
+
+        -- 생존 보너스 500점 지급 (살아남은 쪽)
+        if survivorUid ~= "" then
+            self._T.survivalScoreMap[survivorUid] = (self._T.survivalScoreMap[survivorUid] or 0.0) + 500.0
+            log("[BattleManager] 생존 보너스 +500 지급: " .. survivorUid)
         end
 
         -- 점수 취합
-        local loserSurv  = self._T.survivalScoreMap[loserUid]  or 0.0
-        local loserAtk   = self._T.attackScoreMap[loserUid]    or 0.0
-        local winnerSurv = self._T.survivalScoreMap[winnerUid] or 0.0
-        local winnerAtk  = self._T.attackScoreMap[winnerUid]   or 0.0
-        local loserName  = self._T.nameMap[loserUid]           or "패배자"
-        local winnerName = self._T.nameMap[winnerUid]          or "승리자"
+        local survivorSurv = self._T.survivalScoreMap[survivorUid] or 0.0
+        local survivorAtk  = self._T.attackScoreMap[survivorUid]   or 0.0
+        local defeatedSurv = self._T.survivalScoreMap[loserUid]    or 0.0
+        local defeatedAtk  = self._T.attackScoreMap[loserUid]      or 0.0
+
+        -- 총점 비교로 최종 승자 결정
+        local survivorTotal = survivorSurv + survivorAtk
+        local defeatedTotal = defeatedSurv + defeatedAtk
+
+        local winnerUid, loserActualUid
+        if defeatedTotal > survivorTotal then
+            -- 죽었지만 점수가 더 높으면 역전 승리
+            winnerUid      = loserUid
+            loserActualUid = survivorUid
+        else
+            winnerUid      = survivorUid
+            loserActualUid = loserUid
+        end
+        log("[BattleManager] 최종 점수: 생존자=" .. tostring(survivorTotal) .. " 사망자=" .. tostring(defeatedTotal) .. " 승자=" .. winnerUid)
+
+        local loserSurv  = self._T.survivalScoreMap[loserActualUid] or 0.0
+        local loserAtk   = self._T.attackScoreMap[loserActualUid]   or 0.0
+        local winnerSurv = self._T.survivalScoreMap[winnerUid]      or 0.0
+        local winnerAtk  = self._T.attackScoreMap[winnerUid]        or 0.0
+        local loserName  = self._T.nameMap[loserActualUid]          or "패배자"
+        local winnerName = self._T.nameMap[winnerUid]               or "승리자"
+        local loserUid   = loserActualUid
         local stage      = self._T.stage or 1
 
         -- 증강 UI 숨기기 (혹시 열려 있으면)
@@ -421,24 +445,11 @@ script BattleManager extends Component
     -- ── 대기방 복귀 요청 (클라이언트 → 서버) ────────────────────────
     @ExecSpace("Server")
     method void RequestReturnToLobby()
-        -- senderUserId로 요청한 플레이어를 찾아 대기방으로 이동
-        local map = self.Entity.CurrentMap
-        if not isvalid(map) then return end
-        local mapComp = map.MapComponent
-        if not isvalid(mapComp) then return end
-        local users = _UserService:GetUsersByMapComponent(mapComp)
-        if users == nil then return end
-        for _, user in ipairs(users) do
-            if isvalid(user) then
-                local pc = user.PlayerComponent
-                if isvalid(pc) and tostring(pc.UserId) == tostring(senderUserId) then
-                    log("[BattleManager] 대기방 복귀: " .. pc.Nickname)
-                    _TeleportService:TeleportToEntityPath(user, "/maps/2_랭킹전")
-                    return
-                end
-            end
-        end
-        log_warning("[BattleManager] RequestReturnToLobby - 플레이어 못 찾음: " .. tostring(senderUserId))
+        -- senderUserId로 직접 플레이어를 찾아 텔레포트
+        log("[BattleManager] RequestReturnToLobby 수신 - senderUserId=" .. tostring(senderUserId))
+        -- 인스턴스 맵 → 일반 맵 이동은 RoomService 사용
+        local result = _RoomService:MoveUserToStaticRoom(tostring(senderUserId), "2_던전대기방")
+        log("[BattleManager] 대기방 복귀 결과: " .. tostring(result))
     end
 
     -- ── 결과 화면 Multicast ───────────────────────────────────────────

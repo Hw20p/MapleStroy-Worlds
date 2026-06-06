@@ -18,39 +18,61 @@ script ResultHUD extends Component
     property Entity returnBtn       = "a2b83168-4fd4-46d8-a745-dd5ae3252d77"
 
     method void OnBeginPlay()
-        -- 복귀 버튼 연결 (클라이언트에서 서버 RPC 호출)
-        if self:IsClient() then
-            if isvalid(self.returnBtn) then
-                self._T.returnHandler = self.returnBtn:ConnectEvent(ButtonClickEvent, function()
-                    log("[ResultHUD] 대기방 복귀 요청")
-                    -- BattleManager 서버 RPC로 텔레포트 요청
-                    local mapEntity = _EntityService:GetEntityByPath("/maps/랭킹전_배틀")
-                    if isvalid(mapEntity) then
-                        local bm = mapEntity:GetComponent("script.BattleManager")
-                        if isvalid(bm) then
-                            bm:RequestReturnToLobby()
-                        else
-                            log_warning("[ResultHUD] BattleManager 없음")
-                        end
-                    else
-                        log_warning("[ResultHUD] 랭킹전_배틀 맵 엔티티 없음")
-                    end
-                end)
-            end
+        -- UI 컴포넌트 — 클라이언트에서만 동작
+        -- 결과창이 defaultShow=false라 OnBeginPlay가 호출 안 될 수 있음
+        -- ShowResult에서도 연결하므로 여기선 시도만 함
+        if isvalid(self.returnBtn) and self._T.returnHandler == nil then
+            self._T.returnHandler = self.returnBtn:ConnectEvent(ButtonClickEvent, function()
+                log("[ResultHUD] 대기방 복귀 버튼 클릭됨")
+                local mapEntity = _EntityService:GetEntityByPath("/maps/랭킹전_배틀")
+                if not isvalid(mapEntity) then
+                    log_warning("[ResultHUD] 랭킹전_배틀 맵 엔티티 없음")
+                    return
+                end
+                local bm = mapEntity:GetComponent("script.BattleManager")
+                if not isvalid(bm) then
+                    log_warning("[ResultHUD] BattleManager 없음")
+                    return
+                end
+                bm:RequestReturnToLobby()
+            end)
+            log("[ResultHUD] OnBeginPlay에서 버튼 연결 완료")
         end
     end
 
     method void OnEndPlay()
-        if self:IsClient() then
-            if self._T.returnHandler and isvalid(self.returnBtn) then
-                self.returnBtn:DisconnectEvent(ButtonClickEvent, self._T.returnHandler)
-                self._T.returnHandler = nil
-            end
+        -- 버튼 핸들러 정리
+        if self._T.returnHandler and isvalid(self.returnBtn) then
+            self.returnBtn:DisconnectEvent(ButtonClickEvent, self._T.returnHandler)
+            self._T.returnHandler = nil
         end
     end
 
+    method void ConnectReturnButton()
+        -- ShowResult 시점에 호출 — 중복 연결 방지
+        if self._T.returnHandler ~= nil then return end
+        if not isvalid(self.returnBtn) then
+            log_warning("[ResultHUD] returnBtn 없음")
+            return
+        end
+        self._T.returnHandler = self.returnBtn:ConnectEvent(ButtonClickEvent, function()
+            log("[ResultHUD] 대기방 복귀 버튼 클릭됨")
+            local mapEntity = _EntityService:GetEntityByPath("/maps/랭킹전_배틀")
+            if not isvalid(mapEntity) then
+                log_warning("[ResultHUD] 랭킹전_배틀 맵 엔티티 없음")
+                return
+            end
+            local bm = mapEntity:GetComponent("script.BattleManager")
+            if not isvalid(bm) then
+                log_warning("[ResultHUD] BattleManager 없음")
+                return
+            end
+            bm:RequestReturnToLobby()
+        end)
+        log("[ResultHUD] ConnectReturnButton에서 버튼 연결 완료")
+    end
+
     -- ── 결과 표시 (서버 → Multicast로 호출됨) ────────────────────────
-    @ExecSpace("ClientOnly")
     method void ShowResult(boolean isWin, string myName, number mySurv, number myAtk, string enemyName, number enemySurv, number enemyAtk, integer stage)
         -- 제목
         if isvalid(self.resultTitleText) then
@@ -88,11 +110,13 @@ script ResultHUD extends Component
         self:SetText(self.enemyAtkText,   "공격: " .. tostring(math.floor(enemyAtk)))
         self:SetText(self.enemyTotalText, "합계: " .. tostring(math.floor(enemyTotal)))
 
+        -- 버튼 연결 (ShowResult 시점에 확실히 연결)
+        self:ConnectReturnButton()
+
         log("[ResultHUD] 결과 표시 완료 - 승리=" .. tostring(isWin))
     end
 
     -- ── 헬퍼 ─────────────────────────────────────────────────────────
-    @ExecSpace("ClientOnly")
     method void SetText(Entity entity, string value)
         -- 텍스트 컴포넌트 내용 갱신
         if not isvalid(entity) then return end

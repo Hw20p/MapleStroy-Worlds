@@ -18,6 +18,12 @@ script MatchingUIController extends Component
 		local uiGroup = _EntityService:GetEntityByPath("/ui/2_던전대기방-UI")
 		if isvalid(uiGroup) then uiGroup.Enable = true end
 
+		-- 배틀 관련 UI 숨기기 (결과창/배틀HUD가 남아 있을 수 있음)
+		local resultUI = _EntityService:GetEntityByPath("/ui/랭킹전_결과-UI")
+		if isvalid(resultUI) then resultUI.Enable = false end
+		local battleUI = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
+		if isvalid(battleUI) then battleUI.Enable = false end
+
 		if isvalid(self.matchingPanel) then
 			self.matchingPanel.Enable = true
 		end

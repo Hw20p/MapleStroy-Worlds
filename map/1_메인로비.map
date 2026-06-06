@@ -6390,7 +6390,7 @@
               "@type": "MOD.Core.TransformComponent",
               "Position": {
                 "x": 2.166529,
-                "y": 0.0210205615,
+                "y": -0.120378852,
                 "z": 999.998047
               },
               "QuaternionRotation": {
@@ -6468,7 +6468,7 @@
               "@type": "MOD.Core.TransformComponent",
               "Position": {
                 "x": 2.3132863,
-                "y": 0.69,
+                "y": 0.5596261,
                 "z": 999.999
               },
               "QuaternionRotation": {
