@@ -40,7 +40,7 @@
               "FootholdsByLayer": {
                 "1": [
                   {
-                    "Length": 1.21999979,
+                    "Length": 1.22999954,
                     "NextFootholdId": 2,
                     "PreviousFootholdId": 16,
                     "groupID": 1,
@@ -58,12 +58,12 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 1,
                     "StartPoint": {
-                      "x": -5.27,
-                      "y": 0.07999998
+                      "x": -5.27999973,
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -4.05,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -90,11 +90,11 @@
                     "Id": 2,
                     "StartPoint": {
                       "x": -4.05,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -3.14999986,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -121,11 +121,11 @@
                     "Id": 3,
                     "StartPoint": {
                       "x": -3.14999986,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -2.24999976,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -152,11 +152,11 @@
                     "Id": 4,
                     "StartPoint": {
                       "x": -2.24999976,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -1.34999979,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -183,11 +183,11 @@
                     "Id": 5,
                     "StartPoint": {
                       "x": -1.35,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -0.449999958,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -214,11 +214,11 @@
                     "Id": 6,
                     "StartPoint": {
                       "x": -0.45,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 0.449999958,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -245,11 +245,11 @@
                     "Id": 7,
                     "StartPoint": {
                       "x": 0.450000018,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 1.35,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -276,11 +276,11 @@
                     "Id": 8,
                     "StartPoint": {
                       "x": 1.34999979,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 2.25,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -307,11 +307,11 @@
                     "Id": 9,
                     "StartPoint": {
                       "x": 2.24999976,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 3.14999986,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -319,7 +319,7 @@
                     }
                   },
                   {
-                    "Length": 0.899999857,
+                    "Length": 1.08166564,
                     "NextFootholdId": 11,
                     "PreviousFootholdId": 9,
                     "groupID": 1,
@@ -338,19 +338,19 @@
                     "Id": 10,
                     "StartPoint": {
                       "x": 3.14999986,
-                      "y": 0.07999998
+                      "y": -0.15
                     },
                     "EndPoint": {
-                      "x": 4.04999971,
-                      "y": 0.07999998
+                      "x": 4.05,
+                      "y": 0.450000018
                     },
                     "Variance": {
-                      "x": 1.0,
-                      "y": 0.0
+                      "x": 0.8320504,
+                      "y": 0.5547001
                     }
                   },
                   {
-                    "Length": 0.8999996,
+                    "Length": 1.081665,
                     "NextFootholdId": 12,
                     "PreviousFootholdId": 10,
                     "groupID": 1,
@@ -369,19 +369,19 @@
                     "Id": 11,
                     "StartPoint": {
                       "x": 4.05,
-                      "y": 0.07999998
+                      "y": 0.450000018
                     },
                     "EndPoint": {
                       "x": 4.95,
-                      "y": 0.07999998
+                      "y": 1.05000007
                     },
                     "Variance": {
-                      "x": 1.0,
-                      "y": 0.0
+                      "x": 0.8320502,
+                      "y": 0.5547004
                     }
                   },
                   {
-                    "Length": 0.8999996,
+                    "Length": 1.0816654,
                     "NextFootholdId": 13,
                     "PreviousFootholdId": 11,
                     "groupID": 1,
@@ -400,15 +400,15 @@
                     "Id": 12,
                     "StartPoint": {
                       "x": 4.95,
-                      "y": 0.07999998
+                      "y": 1.05000007
                     },
                     "EndPoint": {
-                      "x": 5.84999943,
-                      "y": 0.07999998
+                      "x": 5.85,
+                      "y": 1.65
                     },
                     "Variance": {
-                      "x": 1.0,
-                      "y": 0.0
+                      "x": 0.8320504,
+                      "y": 0.5547001
                     }
                   },
                   {
@@ -431,15 +431,15 @@
                     "Id": 13,
                     "StartPoint": {
                       "x": 5.85,
-                      "y": 0.07999998
+                      "y": 1.65
                     },
                     "EndPoint": {
                       "x": 6.74999952,
-                      "y": 0.07999998
+                      "y": 1.6500001
                     },
                     "Variance": {
                       "x": 1.0,
-                      "y": 0.0
+                      "y": 1.32454829E-07
                     }
                   },
                   {
@@ -462,11 +462,11 @@
                     "Id": 14,
                     "StartPoint": {
                       "x": 6.75,
-                      "y": 0.07999998
+                      "y": 1.6500001
                     },
                     "EndPoint": {
                       "x": 7.64999962,
-                      "y": 0.07999998
+                      "y": 1.6500001
                     },
                     "Variance": {
                       "x": 1.0,
@@ -474,7 +474,7 @@
                     }
                   },
                   {
-                    "Length": 1.21999979,
+                    "Length": 1.22999907,
                     "NextFootholdId": 18,
                     "PreviousFootholdId": 14,
                     "groupID": 1,
@@ -493,11 +493,11 @@
                     "Id": 15,
                     "StartPoint": {
                       "x": 7.65,
-                      "y": 0.07999998
+                      "y": 1.6500001
                     },
                     "EndPoint": {
-                      "x": 8.87,
-                      "y": 0.07999998
+                      "x": 8.879999,
+                      "y": 1.6500001
                     },
                     "Variance": {
                       "x": 1.0,
@@ -505,7 +505,7 @@
                     }
                   },
                   {
-                    "Length": 0.979999959,
+                    "Length": 0.75,
                     "NextFootholdId": 1,
                     "PreviousFootholdId": 17,
                     "groupID": 1,
@@ -523,12 +523,12 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 16,
                     "StartPoint": {
-                      "x": -5.27,
+                      "x": -5.27999973,
                       "y": -0.9
                     },
                     "EndPoint": {
-                      "x": -5.27,
-                      "y": 0.07999998
+                      "x": -5.27999973,
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 0.0,
@@ -554,11 +554,11 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 17,
                     "StartPoint": {
-                      "x": -5.27,
+                      "x": -5.27999973,
                       "y": -1.50000012
                     },
                     "EndPoint": {
-                      "x": -5.27,
+                      "x": -5.27999973,
                       "y": -0.9000001
                     },
                     "Variance": {
@@ -567,7 +567,7 @@
                     }
                   },
                   {
-                    "Length": 0.979999959,
+                    "Length": 0.7500001,
                     "NextFootholdId": 19,
                     "PreviousFootholdId": 15,
                     "groupID": 1,
@@ -585,12 +585,12 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 18,
                     "StartPoint": {
-                      "x": 8.87,
-                      "y": 0.07999998
+                      "x": 8.879999,
+                      "y": 1.6500001
                     },
                     "EndPoint": {
-                      "x": 8.87,
-                      "y": -0.9
+                      "x": 8.879999,
+                      "y": 0.9
                     },
                     "Variance": {
                       "x": 0.0,
@@ -599,7 +599,7 @@
                   },
                   {
                     "Length": 0.6,
-                    "NextFootholdId": 0,
+                    "NextFootholdId": 20,
                     "PreviousFootholdId": 18,
                     "groupID": 1,
                     "layer": 1,
@@ -616,11 +616,104 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 19,
                     "StartPoint": {
-                      "x": 8.87,
+                      "x": 8.879999,
+                      "y": 0.9
+                    },
+                    "EndPoint": {
+                      "x": 8.879999,
+                      "y": 0.299999982
+                    },
+                    "Variance": {
+                      "x": 0.0,
+                      "y": -1.0
+                    }
+                  },
+                  {
+                    "Length": 0.6,
+                    "NextFootholdId": 21,
+                    "PreviousFootholdId": 19,
+                    "groupID": 1,
+                    "layer": 1,
+                    "sortingLayerName": "MapLayer0",
+                    "attribute": {
+                      "walk": 1.0,
+                      "force": 0.0,
+                      "drag": 1.0,
+                      "isBlockVertical": false,
+                      "isDynamic": false,
+                      "isCustomFoothold": false,
+                      "inertiaOption": 0
+                    },
+                    "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
+                    "Id": 20,
+                    "StartPoint": {
+                      "x": 8.879999,
+                      "y": 0.3
+                    },
+                    "EndPoint": {
+                      "x": 8.879999,
+                      "y": -0.3
+                    },
+                    "Variance": {
+                      "x": 0.0,
+                      "y": -1.0
+                    }
+                  },
+                  {
+                    "Length": 0.599999964,
+                    "NextFootholdId": 22,
+                    "PreviousFootholdId": 20,
+                    "groupID": 1,
+                    "layer": 1,
+                    "sortingLayerName": "MapLayer0",
+                    "attribute": {
+                      "walk": 1.0,
+                      "force": 0.0,
+                      "drag": 1.0,
+                      "isBlockVertical": false,
+                      "isDynamic": false,
+                      "isCustomFoothold": false,
+                      "inertiaOption": 0
+                    },
+                    "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
+                    "Id": 21,
+                    "StartPoint": {
+                      "x": 8.88,
+                      "y": -0.3
+                    },
+                    "EndPoint": {
+                      "x": 8.88,
+                      "y": -0.9
+                    },
+                    "Variance": {
+                      "x": 0.0,
+                      "y": -1.0
+                    }
+                  },
+                  {
+                    "Length": 0.6,
+                    "NextFootholdId": 0,
+                    "PreviousFootholdId": 21,
+                    "groupID": 1,
+                    "layer": 1,
+                    "sortingLayerName": "MapLayer0",
+                    "attribute": {
+                      "walk": 1.0,
+                      "force": 0.0,
+                      "drag": 1.0,
+                      "isBlockVertical": false,
+                      "isDynamic": false,
+                      "isCustomFoothold": false,
+                      "inertiaOption": 0
+                    },
+                    "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
+                    "Id": 22,
+                    "StartPoint": {
+                      "x": 8.88,
                       "y": -0.9000001
                     },
                     "EndPoint": {
-                      "x": 8.87,
+                      "x": 8.88,
                       "y": -1.50000012
                     },
                     "Variance": {
@@ -674,7 +767,7 @@
           "@components": [
             {
               "@type": "MOD.Core.BackgroundComponent",
-              "TemplateRUID": "794ad8421e2543d8a6d2c70307637450",
+              "TemplateRUID": "01fd2c2f35bc45fb84e30bc17ea0f590",
               "Type": 1,
               "Enable": true
             }
@@ -768,7 +861,7 @@
               "SortingLayer": "MapLayer0",
               "TileMapVersion": 1,
               "TileSetRUID": {
-                "DataId": "16eb44298c4048f2a3a8a06cb6a4e2a1"
+                "DataId": "3ca52bc385574e56aaffa15eea5c23aa"
               },
               "Tiles": [
                 {
@@ -1804,7 +1897,7 @@
                   "tileIndex": 3
                 },
                 {
-                  "type": 9,
+                  "type": 0,
                   "position": {
                     "x": 8,
                     "y": -1
@@ -1820,7 +1913,7 @@
                   "tileIndex": 1
                 },
                 {
-                  "type": 9,
+                  "type": 0,
                   "position": {
                     "x": 10,
                     "y": -1
@@ -1884,7 +1977,7 @@
                   "tileIndex": 3
                 },
                 {
-                  "type": 9,
+                  "type": 0,
                   "position": {
                     "x": 12,
                     "y": -1
@@ -1916,7 +2009,7 @@
                   "tileIndex": 2
                 },
                 {
-                  "type": 9,
+                  "type": 0,
                   "position": {
                     "x": 14,
                     "y": -1
@@ -1948,7 +2041,7 @@
                   "tileIndex": 0
                 },
                 {
-                  "type": 9,
+                  "type": 0,
                   "position": {
                     "x": 16,
                     "y": -1
@@ -1964,7 +2057,7 @@
                   "tileIndex": 0
                 },
                 {
-                  "type": 9,
+                  "type": 0,
                   "position": {
                     "x": 18,
                     "y": -1
@@ -1972,7 +2065,7 @@
                   "tileIndex": 2
                 },
                 {
-                  "type": 11,
+                  "type": 0,
                   "position": {
                     "x": 19,
                     "y": -1
@@ -2010,6 +2103,462 @@
                     "y": -2
                   },
                   "tileIndex": 3
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 10,
+                    "y": 0
+                  },
+                  "tileIndex": 2
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 9,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 11,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 9,
+                    "y": 1
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 10,
+                    "y": 1
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 11,
+                    "y": 1
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 12,
+                    "y": 2
+                  },
+                  "tileIndex": 1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 12,
+                    "y": 1
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 13,
+                    "y": 1
+                  },
+                  "tileIndex": -1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 11,
+                    "y": 2
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 13,
+                    "y": 2
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 11,
+                    "y": 3
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 12,
+                    "y": 3
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 13,
+                    "y": 3
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 13,
+                    "y": 4
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 13,
+                    "y": 5
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 14,
+                    "y": 4
+                  },
+                  "tileIndex": 2
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 14,
+                    "y": 3
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 15,
+                    "y": 3
+                  },
+                  "tileIndex": -1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 15,
+                    "y": 4
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 9,
+                  "position": {
+                    "x": 14,
+                    "y": 5
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 15,
+                    "y": 5
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 14,
+                    "y": 2
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 14,
+                    "y": 1
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 15,
+                    "y": 1
+                  },
+                  "tileIndex": -1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 15,
+                    "y": 2
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 12,
+                    "y": 0
+                  },
+                  "tileIndex": 1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 13,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 14,
+                    "y": 0
+                  },
+                  "tileIndex": 2
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 15,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 1,
+                  "position": {
+                    "x": 12,
+                    "y": 4
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 1,
+                  "position": {
+                    "x": 10,
+                    "y": 2
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 1,
+                  "position": {
+                    "x": 8,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 9,
+                  "position": {
+                    "x": 16,
+                    "y": 5
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 17,
+                    "y": 5
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 9,
+                  "position": {
+                    "x": 18,
+                    "y": 5
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 11,
+                  "position": {
+                    "x": 19,
+                    "y": 5
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 18,
+                    "y": 4
+                  },
+                  "tileIndex": 1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 17,
+                    "y": 3
+                  },
+                  "tileIndex": -1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 18,
+                    "y": 3
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 19,
+                    "y": 3
+                  },
+                  "tileIndex": -1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 17,
+                    "y": 4
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 6,
+                  "position": {
+                    "x": 19,
+                    "y": 4
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 18,
+                    "y": 2
+                  },
+                  "tileIndex": 1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 17,
+                    "y": 1
+                  },
+                  "tileIndex": -1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 18,
+                    "y": 1
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 19,
+                    "y": 1
+                  },
+                  "tileIndex": -1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 17,
+                    "y": 2
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 6,
+                  "position": {
+                    "x": 19,
+                    "y": 2
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 6,
+                  "position": {
+                    "x": 19,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 18,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 17,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 16,
+                    "y": 0
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 16,
+                    "y": 1
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 16,
+                    "y": 2
+                  },
+                  "tileIndex": 1
+                },
+                {
+                  "type": 0,
+                  "position": {
+                    "x": 16,
+                    "y": 3
+                  },
+                  "tileIndex": 0
+                },
+                {
+                  "type": 5,
+                  "position": {
+                    "x": 16,
+                    "y": 4
+                  },
+                  "tileIndex": 2
                 }
               ],
               "Enable": true
@@ -2044,8 +2593,8 @@
             {
               "@type": "MOD.Core.TransformComponent",
               "Position": {
-                "x": -2.591515,
-                "y": 0.09990561,
+                "x": -2.57148123,
+                "y": -0.09003106,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -2127,8 +2676,8 @@
                 "z": 0.0
               },
               "Position": {
-                "x": 0.961650848,
-                "y": 0.199845612,
+                "x": 0.7412691,
+                "y": -0.120648086,
                 "z": 999.999
               },
               "QuaternionRotation": {
@@ -2173,6 +2722,120 @@
             },
             {
               "@type": "MOD.Core.SpawnLocationComponent",
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
+        "id": "b3298ef6-154f-4245-8967-6e91bb4204c9",
+        "path": "/maps/2_던전대기방/object-127",
+        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent",
+        "jsonString": {
+          "name": "object-127",
+          "path": "/maps/2_던전대기방/object-127",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": false,
+          "displayOrder": 5,
+          "pathConstraints": "///",
+          "revision": 1,
+          "origin": {
+            "type": "Model",
+            "entry_id": "MapObject",
+            "sub_entity_id": null,
+            "root_entity_id": "b3298ef6-154f-4245-8967-6e91bb4204c9",
+            "replaced_model_id": null
+          },
+          "modelId": "mapobject",
+          "@components": [
+            {
+              "@type": "MOD.Core.TransformComponent",
+              "Position": {
+                "x": 8.126521,
+                "y": 1.90996909,
+                "z": 999.999
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteRendererComponent",
+              "ActionSheet": {},
+              "EndFrameIndex": 2147483647,
+              "RenderSetting": 0,
+              "SortingLayer": "MapLayer0",
+              "SpriteRUID": "78212ec23a3b4ad2a345c294aaa5b73f",
+              "StartFrameIndex": 0,
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
+        "id": "e441b4f2-0a46-4682-b84e-db033427cd4a",
+        "path": "/maps/2_던전대기방/object-153",
+        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent",
+        "jsonString": {
+          "name": "object-153",
+          "path": "/maps/2_던전대기방/object-153",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": false,
+          "displayOrder": 6,
+          "pathConstraints": "///",
+          "revision": 1,
+          "origin": {
+            "type": "Model",
+            "entry_id": "MapObject",
+            "sub_entity_id": null,
+            "root_entity_id": "e441b4f2-0a46-4682-b84e-db033427cd4a",
+            "replaced_model_id": null
+          },
+          "modelId": "mapobject",
+          "@components": [
+            {
+              "@type": "MOD.Core.TransformComponent",
+              "Position": {
+                "x": -1.2896843,
+                "y": 0.5500306,
+                "z": 999.999
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteRendererComponent",
+              "ActionSheet": {},
+              "EndFrameIndex": 2147483647,
+              "RenderSetting": 0,
+              "SortingLayer": "MapLayer0",
+              "SpriteRUID": "1396fee6a65d4e6dac027be0e1662776",
+              "StartFrameIndex": 0,
               "Enable": true
             }
           ],

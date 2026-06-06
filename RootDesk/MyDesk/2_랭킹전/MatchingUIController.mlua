@@ -81,7 +81,10 @@ script MatchingUIController extends Component
 			self._T.minimizeHandler = minimizeBtn:ConnectEvent(ButtonClickEvent, function()
 				log("[MatchingUI] 최소화")
 				if isvalid(self.matchingPanel) then self.matchingPanel.Enable = false end
-				if isvalid(self.miniHUD) then self.miniHUD.Enable = true end
+				if isvalid(self.miniHUD) then
+					self.miniHUD.Enable = true
+					self:UpdateMiniHUDText()
+				end
 			end)
 			self._T.minimizeBtn = minimizeBtn
 		end
@@ -115,6 +118,9 @@ script MatchingUIController extends Component
 	end
 
 	method void SetWaitingState(boolean isWaiting)
+		-- 대기 상태 저장
+		self._T.isWaiting = isWaiting
+
 		local uiRoot = "/ui/2_던전대기방-UI/MatchingPanel"
 		local matchBtn = self._T.matchBtn or _EntityService:GetEntityByPath(uiRoot .. "/RankingMatchBtn")
 		local statusTxt = _EntityService:GetEntityByPath(uiRoot .. "/StatusText")
@@ -123,6 +129,24 @@ script MatchingUIController extends Component
 		if isvalid(matchBtn) then matchBtn.Enable = not isWaiting end
 		if isvalid(statusTxt) then statusTxt.Enable = isWaiting end
 		if isvalid(cancelBtn) then cancelBtn.Enable = isWaiting end
+
+		-- MiniHUD가 열려 있으면 텍스트도 즉시 갱신
+		if isvalid(self.miniHUD) and self.miniHUD.Enable then
+			self:UpdateMiniHUDText()
+		end
+	end
+
+	method void UpdateMiniHUDText()
+		-- 현재 대기 상태에 따라 MiniHUD 상태 텍스트 변경
+		local statusTxt = _EntityService:GetEntityByPath("/ui/2_던전대기방-UI/MiniHUD/StatusText")
+		if not isvalid(statusTxt) then return end
+		local txt = statusTxt.TextComponent
+		if not isvalid(txt) then return end
+		if self._T.isWaiting then
+			txt.Text = "매칭중..."
+		else
+			txt.Text = "매칭하기"
+		end
 	end
 
 end
