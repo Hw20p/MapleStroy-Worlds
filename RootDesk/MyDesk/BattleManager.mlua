@@ -1,9 +1,19 @@
 @Component
 script BattleManager extends Component
 
-    property number MaxHp          = 100.0
-    property number ScorePerSecond = 10.0   -- 초당 점수 (생존 시 적립)
-    property number BossHitScore   = 5.0    -- 보스 피격 보너스
+    -- ── 기본 설정 ──────────────────────────────────────────────────────
+    property number MaxHp            = 100.0
+    property number ScorePerSecond   = 10.0
+    property number BossHitScore     = 5.0
+    property number BossHpBase       = 50.0   -- 1스테이지 보스 HP
+    property number BossHpPerStage   = 30.0   -- 스테이지당 HP 증가
+    property number AugmentSelectTime = 15.0  -- 증강 선택 제한 시간
+
+    -- ── 증강 정의 (인덱스 1~4, 클라이언트 AugmentSelectHUD와 동기화) ──
+    -- 1: 탄속 강화   speed  +1.0
+    -- 2: 탄막 증가   count  +2
+    -- 3: 공격 가속   interval -0.3 (min 1.0)
+    -- 4: 파워 업     speed +0.5 + count +1
 
     method void OnBeginPlay()
         if self:IsServer() then
@@ -11,11 +21,20 @@ script BattleManager extends Component
             self._T.nameMap  = {}
             self._T.scoreMap = {}
             self._T.players  = {}
-            -- 1초마다 플레이어 탐색 + 점수 적립
+            -- 스테이지 상태
+            self._T.stage      = 1
+            self._T.bossHp     = self.BossHpBase
+            self._T.bossMaxHp  = self.BossHpBase
+            self._T.phase      = "battle"   -- "battle" | "selecting" | "starting"
+            self._T.selections = {}         -- uid -> augmentIndex
+            self._T.selectTimerId = 0
+            -- 보스 현재 설정 (누적)
+            self._T.bossConfig = { speed=5.0, count=8, interval=2.5 }
+            -- 점수 타이머
             self._T.scoreTimerId = _TimerService:SetTimerRepeat(function()
                 self:TickScore()
             end, 1.0)
-            log("[BattleManager] 초기화 완료")
+            log("[BattleManager] 초기화 완료 (1스테이지)")
         else
             local uiGroup = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
             if isvalid(uiGroup) then
@@ -31,7 +50,9 @@ script BattleManager extends Component
         if self:IsServer() then
             if self._T.scoreTimerId and self._T.scoreTimerId ~= 0 then
                 _TimerService:ClearTimer(self._T.scoreTimerId)
-                self._T.scoreTimerId = 0
+            end
+            if self._T.selectTimerId and self._T.selectTimerId ~= 0 then
+                _TimerService:ClearTimer(self._T.selectTimerId)
             end
         else
             local uiGroup = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
@@ -39,7 +60,7 @@ script BattleManager extends Component
         end
     end
 
-    -- ── 초당 타이머: 플레이어 자동 등록 + 점수 적립 ──────────────────
+    -- ── 초당 타이머: 플레이어 등록 + 점수 적립 ───────────────────────
     @ExecSpace("ServerOnly")
     method void TickScore()
         local map = self.Entity.CurrentMap
@@ -55,8 +76,6 @@ script BattleManager extends Component
                 local pc = user.PlayerComponent
                 if isvalid(pc) then
                     local uid = tostring(pc.UserId)
-
-                    -- 처음 보는 플레이어면 자동 등록
                     if self._T.hpMap[uid] == nil then
                         self._T.hpMap[uid]    = self.MaxHp
                         self._T.nameMap[uid]  = pc.Nickname
@@ -64,9 +83,8 @@ script BattleManager extends Component
                         table.insert(self._T.players, uid)
                         log("[BattleManager] 플레이어 등록: " .. uid .. " (" .. pc.Nickname .. ")")
                     end
-
-                    -- HP > 0이면 점수 적립
-                    if (self._T.hpMap[uid] or 0.0) > 0.0 then
+                    -- 배틀 중이고 HP > 0이면 점수 적립
+                    if self._T.phase == "battle" and (self._T.hpMap[uid] or 0.0) > 0.0 then
                         self._T.scoreMap[uid] = (self._T.scoreMap[uid] or 0.0) + self.ScorePerSecond
                     end
                 end
@@ -76,7 +94,27 @@ script BattleManager extends Component
         self:BroadcastAll()
     end
 
-    -- ── 보스 피격 보너스 (5단계 플레이어 공격에서 호출) ───────────────
+    -- ── 보스 피격 처리 (5단계: 플레이어 공격에서 호출) ───────────────
+    @ExecSpace("ServerOnly")
+    method void TakeBossDamage(number damage, Entity attacker)
+        if self._T.phase ~= "battle" then return end
+
+        self._T.bossHp = math.max(0.0, (self._T.bossHp or 0.0) - damage)
+        log("[BattleManager] 보스 피격 -" .. tostring(damage) .. " → HP=" .. tostring(self._T.bossHp))
+
+        -- 보스 피격 점수 보너스
+        if isvalid(attacker) then
+            self:AddBossHitScore(attacker)
+        end
+
+        self:BroadcastAll()
+
+        if self._T.bossHp <= 0.0 then
+            self:OnStageClear()
+        end
+    end
+
+    -- ── 보스 피격 점수 보너스 ─────────────────────────────────────────
     @ExecSpace("ServerOnly")
     method void AddBossHitScore(Entity player)
         if not isvalid(player) then return end
@@ -84,33 +122,161 @@ script BattleManager extends Component
         if not isvalid(pc) then return end
         local uid = tostring(pc.UserId)
         if self._T.scoreMap[uid] == nil then return end
-
         self._T.scoreMap[uid] = self._T.scoreMap[uid] + self.BossHitScore
-        log("[BattleManager] 보스 피격 보너스 +" .. tostring(self.BossHitScore) .. " → " .. uid)
-        self:BroadcastAll()
     end
 
-    -- ── 피격 처리 ──────────────────────────────────────────────────────
+    -- ── 플레이어 피격 처리 ────────────────────────────────────────────
     @ExecSpace("ServerOnly")
     method void TakeDamage(Entity player, number damage)
         if not isvalid(player) then return end
         local pc = player.PlayerComponent
         if not isvalid(pc) then return end
         local uid = tostring(pc.UserId)
-
-        -- 아직 등록 안 됐으면 무시
         if self._T.hpMap[uid] == nil then return end
 
         local hp = math.max(0.0, self._T.hpMap[uid] - damage)
         self._T.hpMap[uid] = hp
         log("[BattleManager] " .. uid .. " 피격 -" .. tostring(damage) .. " → HP=" .. tostring(hp))
-
         self:BroadcastAll()
 
         -- TODO: 6단계에서 hp == 0 패배 처리 추가
     end
 
-    -- ── HP + 점수 통합 브로드캐스트 ───────────────────────────────────
+    -- ── 스테이지 클리어 ───────────────────────────────────────────────
+    @ExecSpace("ServerOnly")
+    method void OnStageClear()
+        self._T.phase = "selecting"
+        log("[BattleManager] " .. tostring(self._T.stage) .. "스테이지 클리어! 증강 선택 시작")
+
+        -- 보스 탄막 정지
+        local boss = self:GetBossAI()
+        if isvalid(boss) then boss:PauseAttack() end
+
+        -- 선택 초기화
+        self._T.selections = {}
+
+        -- 클라이언트에 증강 선택 UI 표시
+        self:MulticastShowAugmentUI(self._T.stage)
+
+        -- 15초 후 자동 처리
+        self._T.selectTimerId = _TimerService:SetTimerOnce(function()
+            self:OnSelectionTimeout()
+        end, self.AugmentSelectTime)
+    end
+
+    -- ── 타임아웃: 미선택 플레이어에게 랜덤 배정 ─────────────────────
+    @ExecSpace("ServerOnly")
+    method void OnSelectionTimeout()
+        log("[BattleManager] 선택 시간 초과 - 미선택자 랜덤 배정")
+        for _, uid in ipairs(self._T.players) do
+            if self._T.selections[uid] == nil then
+                local rand = math.floor(_UtilLogic:RandomDouble() * 4) + 1
+                self._T.selections[uid] = rand
+                log("[BattleManager] 랜덤 배정: " .. uid .. " → " .. tostring(rand))
+            end
+        end
+        self:ApplyAugmentsAndNextStage()
+    end
+
+    -- ── 플레이어 증강 선택 (클라이언트 → 서버 RPC) ───────────────────
+    @ExecSpace("Server")
+    method void RequestSelectAugment(integer augmentIndex)
+        if self._T.phase ~= "selecting" then return end
+        if augmentIndex < 1 or augmentIndex > 4 then return end
+
+        -- senderUserId로 선택한 플레이어 식별
+        local uid = tostring(senderUserId)
+        if self._T.selections[uid] ~= nil then return end  -- 이미 선택함
+
+        self._T.selections[uid] = augmentIndex
+        log("[BattleManager] " .. uid .. " 증강 선택: " .. tostring(augmentIndex))
+
+        -- 선택 확인 알림
+        self:MulticastConfirmSelection(uid, augmentIndex)
+
+        -- 모두 선택했는지 확인
+        local allSelected = true
+        for _, id in ipairs(self._T.players) do
+            if self._T.selections[id] == nil then
+                allSelected = false
+                break
+            end
+        end
+
+        if allSelected and #self._T.players >= 2 then
+            -- 타임아웃 타이머 취소
+            if self._T.selectTimerId ~= 0 then
+                _TimerService:ClearTimer(self._T.selectTimerId)
+                self._T.selectTimerId = 0
+            end
+            self:ApplyAugmentsAndNextStage()
+        end
+    end
+
+    -- ── 증강 적용 + 다음 스테이지 시작 ───────────────────────────────
+    @ExecSpace("ServerOnly")
+    method void ApplyAugmentsAndNextStage()
+        -- 수집된 선택들 모두 적용
+        for uid, idx in pairs(self._T.selections) do
+            local cfg = self._T.bossConfig
+            if idx == 1 then
+                cfg.speed    = cfg.speed + 1.0
+                log("[BattleManager] 증강 적용: 탄속 강화")
+            elseif idx == 2 then
+                cfg.count    = cfg.count + 2
+                log("[BattleManager] 증강 적용: 탄막 증가")
+            elseif idx == 3 then
+                cfg.interval = math.max(1.0, cfg.interval - 0.3)
+                log("[BattleManager] 증강 적용: 공격 가속")
+            elseif idx == 4 then
+                cfg.speed    = cfg.speed + 0.5
+                cfg.count    = cfg.count + 1
+                log("[BattleManager] 증강 적용: 파워 업")
+            end
+        end
+
+        -- 다음 스테이지로
+        self._T.stage = self._T.stage + 1
+        self:InitStage(self._T.stage)
+
+        -- 증강 선택 UI 숨김
+        self:MulticastHideAugmentUI()
+    end
+
+    -- ── 스테이지 초기화 ───────────────────────────────────────────────
+    @ExecSpace("ServerOnly")
+    method void InitStage(integer stage)
+        -- 보스 HP 설정 (10스테이지부터 무한)
+        if stage >= 10 then
+            self._T.bossMaxHp = 999999.0
+        else
+            self._T.bossMaxHp = self.BossHpBase + (stage - 1) * self.BossHpPerStage
+        end
+        self._T.bossHp = self._T.bossMaxHp
+        self._T.phase  = "battle"
+        log("[BattleManager] " .. tostring(stage) .. "스테이지 시작. 보스 HP=" .. tostring(self._T.bossMaxHp))
+
+        -- 보스에게 설정 적용 + 재개
+        local boss = self:GetBossAI()
+        if isvalid(boss) then
+            local cfg = self._T.bossConfig
+            boss:SetStageConfig(cfg.speed, cfg.count, cfg.interval)
+        end
+
+        self:BroadcastAll()
+    end
+
+    -- ── 보스 엔티티에서 BossAI 컴포넌트 가져오기 ─────────────────────
+    @ExecSpace("ServerOnly")
+    method Component GetBossAI()
+        local bossEntity = _EntityService:GetEntityByPath("/maps/랭킹전_배틀/RankingBoss")
+        if isvalid(bossEntity) then
+            return bossEntity:GetComponent("script.BossAI")
+        end
+        return nil
+    end
+
+    -- ── 통합 브로드캐스트 ─────────────────────────────────────────────
     @ExecSpace("ServerOnly")
     method void BroadcastAll()
         if #self._T.players < 2 then return end
@@ -123,17 +289,20 @@ script BattleManager extends Component
         local name2  = self._T.nameMap[uid2]  or "P2"
         local score1 = self._T.scoreMap[uid1] or 0.0
         local score2 = self._T.scoreMap[uid2] or 0.0
+        local bossHp    = self._T.bossHp    or self.BossHpBase
+        local bossMaxHp = self._T.bossMaxHp or self.BossHpBase
+        local stage     = self._T.stage     or 1
 
-        self:MulticastBattleUpdate(uid1, hp1, score1, uid2, hp2, score2, name1, name2)
+        self:MulticastBattleUpdate(uid1, hp1, score1, uid2, hp2, score2, name1, name2, bossHp, bossMaxHp, stage)
     end
 
-    -- 하위 호환 (BossProjectile에서 BroadcastHp 호출 대비)
+    -- 하위 호환
     @ExecSpace("ServerOnly")
     method void BroadcastHp()
         self:BroadcastAll()
     end
 
-    -- ── UI 표시/숨김 ──────────────────────────────────────────────────
+    -- ── UI 제어 ───────────────────────────────────────────────────────
     @ExecSpace("Multicast")
     method void ShowBattleUI()
         local uiGroup = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
@@ -146,9 +315,43 @@ script BattleManager extends Component
         if isvalid(uiGroup) then uiGroup.Enable = false end
     end
 
-    -- ── 통합 Multicast ────────────────────────────────────────────────
     @ExecSpace("Multicast")
-    method void MulticastBattleUpdate(string uid1, number hp1, number score1, string uid2, number hp2, number score2, string name1, string name2)
+    method void MulticastShowAugmentUI(integer stage)
+        local ui = _EntityService:GetEntityByPath("/ui/랭킹전_증강선택-UI")
+        if isvalid(ui) then
+            ui.Enable = true
+        end
+        -- AugmentSelectHUD에 스테이지 정보 전달
+        local hud = _EntityService:GetEntityByPath("/ui/랭킹전_증강선택-UI/AugmentSelectHUD")
+        if isvalid(hud) then
+            local comp = hud:GetComponent("script.AugmentSelectHUD")
+            if isvalid(comp) then
+                comp:ShowSelection(stage)
+            end
+        end
+    end
+
+    @ExecSpace("Multicast")
+    method void MulticastHideAugmentUI()
+        local ui = _EntityService:GetEntityByPath("/ui/랭킹전_증강선택-UI")
+        if isvalid(ui) then ui.Enable = false end
+    end
+
+    @ExecSpace("Multicast")
+    method void MulticastConfirmSelection(string uid, integer augmentIndex)
+        -- AugmentSelectHUD에 다른 플레이어의 선택 통보
+        local hud = _EntityService:GetEntityByPath("/ui/랭킹전_증강선택-UI/AugmentSelectHUD")
+        if isvalid(hud) then
+            local comp = hud:GetComponent("script.AugmentSelectHUD")
+            if isvalid(comp) then
+                comp:OnPlayerSelected(uid, augmentIndex)
+            end
+        end
+    end
+
+    -- ── 배틀 상태 통합 Multicast ──────────────────────────────────────
+    @ExecSpace("Multicast")
+    method void MulticastBattleUpdate(string uid1, number hp1, number score1, string uid2, number hp2, number score2, string name1, string name2, number bossHp, number bossMaxHp, integer stage)
         local localPlayer = _UserService.LocalPlayer
         if not isvalid(localPlayer) then return end
 
@@ -169,6 +372,7 @@ script BattleManager extends Component
         if isvalid(hud) then
             hud:UpdateHp(myHp, enemyHp, myName, enemyName)
             hud:UpdateScore(myScore, enemyScore)
+            hud:UpdateBoss(bossHp, bossMaxHp, stage)
         end
     end
 

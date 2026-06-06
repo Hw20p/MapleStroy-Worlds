@@ -1,0 +1,37 @@
+@Component
+script BossHitComponent extends HitComponent
+
+    -- 보스 피격 수신기
+    -- 플레이어의 AttackComponent 공격에 맞으면 BattleManager:TakeBossDamage() 호출
+
+    @ExecSpace("ServerOnly")
+    method void OnBeginPlay()
+        -- HitComponent 히트박스 설정 (비레거시 모드, 원형 콜라이더)
+        -- CollisionGroups.Monster: PlayerAttack이 AttackFast(shape, nil, CollisionGroups.Monster)로 공격하므로 반드시 Monster 그룹이어야 함
+        self.CollisionGroup = CollisionGroups.Monster
+        self.ColliderType = ColliderType.Circle
+        self.CircleRadius = 0.8
+        log("[BossHitComponent] 히트박스 초기화 완료 (Monster 그룹, Circle r=0.8)")
+    end
+
+    -- ⚠ ExecSpace 어노테이션 금지 — HitComponent 부모의 ExecSpace가 All이므로
+    --   @ExecSpace("ServerOnly") 추가 시 LEA-3014 SignatureMismatch 발생
+    method void OnHit(Entity attacker, integer damage, boolean isCritical, string attackInfo, int32 hitCount)
+        -- 부모 OnHit 호출 → HitEvent 발생 → HitEffectSpawner / DamageSkinSpawner 동작
+        __base:OnHit(attacker, damage, isCritical, attackInfo, hitCount)
+
+        -- 배틀 매니저에 피격 알림
+        local map = self.Entity.CurrentMap
+        if not isvalid(map) then return end
+
+        local bm = map:GetComponent("script.BattleManager")
+        if not isvalid(bm) then
+            log_warning("[BossHitComponent] BattleManager 없음")
+            return
+        end
+
+        bm:TakeBossDamage(damage, attacker)
+        log("[BossHitComponent] 피격 전달: damage=" .. tostring(damage) .. " isCritical=" .. tostring(isCritical))
+    end
+
+end

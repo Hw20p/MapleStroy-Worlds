@@ -2767,101 +2767,6 @@
                       "y": -1.0
                     }
                   }
-                ],
-                "2": [
-                  {
-                    "Length": 1.76,
-                    "NextFootholdId": 91,
-                    "PreviousFootholdId": 90,
-                    "groupID": 2,
-                    "layer": 2,
-                    "sortingLayerName": "MapLayer1",
-                    "attribute": {
-                      "walk": 1.0,
-                      "force": 0.0,
-                      "drag": 1.0,
-                      "isBlockVertical": false,
-                      "isDynamic": false,
-                      "isCustomFoothold": false,
-                      "inertiaOption": 0
-                    },
-                    "OwnerId": "cad33153-b02a-4db9-85a9-1929bbb375ce",
-                    "Id": 89,
-                    "StartPoint": {
-                      "x": -0.88,
-                      "y": 4.0
-                    },
-                    "EndPoint": {
-                      "x": 0.88,
-                      "y": 4.0
-                    },
-                    "Variance": {
-                      "x": 1.0,
-                      "y": 0.0
-                    }
-                  },
-                  {
-                    "Length": 0.0999999046,
-                    "NextFootholdId": 89,
-                    "PreviousFootholdId": 0,
-                    "groupID": 2,
-                    "layer": 2,
-                    "sortingLayerName": "MapLayer1",
-                    "attribute": {
-                      "walk": 1.0,
-                      "force": 0.0,
-                      "drag": 1.0,
-                      "isBlockVertical": false,
-                      "isDynamic": false,
-                      "isCustomFoothold": false,
-                      "inertiaOption": 0
-                    },
-                    "OwnerId": "cad33153-b02a-4db9-85a9-1929bbb375ce",
-                    "Id": 90,
-                    "StartPoint": {
-                      "x": -0.88,
-                      "y": 3.9
-                    },
-                    "EndPoint": {
-                      "x": -0.88,
-                      "y": 4.0
-                    },
-                    "Variance": {
-                      "x": 0.0,
-                      "y": 1.0
-                    }
-                  },
-                  {
-                    "Length": 0.0999999046,
-                    "NextFootholdId": 0,
-                    "PreviousFootholdId": 89,
-                    "groupID": 2,
-                    "layer": 2,
-                    "sortingLayerName": "MapLayer1",
-                    "attribute": {
-                      "walk": 1.0,
-                      "force": 0.0,
-                      "drag": 1.0,
-                      "isBlockVertical": false,
-                      "isDynamic": false,
-                      "isCustomFoothold": false,
-                      "inertiaOption": 0
-                    },
-                    "OwnerId": "cad33153-b02a-4db9-85a9-1929bbb375ce",
-                    "Id": 91,
-                    "StartPoint": {
-                      "x": 0.88,
-                      "y": 4.0
-                    },
-                    "EndPoint": {
-                      "x": 0.88,
-                      "y": 3.9
-                    },
-                    "Variance": {
-                      "x": 0.0,
-                      "y": -1.0
-                    }
-                  }
                 ]
               },
               "Enable": true
@@ -2960,8 +2865,8 @@
                 "z": 0.0
               },
               "Position": {
-                "x": 0.0801363,
-                "y": 2.120946,
+                "x": -4.80827427,
+                "y": 2.06085157,
                 "z": 999.999
               },
               "QuaternionRotation": {
@@ -7125,7 +7030,7 @@
       {
         "id": "c83b49e8-5904-49e5-810a-0b9d332a2807",
         "path": "/maps/랭킹전_배틀/RankingBoss",
-        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent,script.BossAI",
+        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent,script.BossAI,script.BossHitComponent",
         "jsonString": {
           "name": "RankingBoss",
           "path": "/maps/랭킹전_배틀/RankingBoss",
@@ -7148,8 +7053,8 @@
             {
               "@type": "MOD.Core.TransformComponent",
               "Position": {
-                "x": 0.08823967,
-                "y": 4.05216169,
+                "x": -0.512804031,
+                "y": 1.86996913,
                 "z": 0.0
               },
               "QuaternionRotation": {
@@ -7196,117 +7101,35 @@
               "_timerId": 0,
               "_patternIndex": 0,
               "_spiralAngle": 0.0
-            }
-          ],
-          "@version": 1
-        }
-      },
-      {
-        "id": "803c21d6-c2f8-4342-82c3-88f384c14c91",
-        "path": "/maps/랭킹전_배틀/MapleMapLayer_1",
-        "componentNames": "MOD.Core.MapLayerComponent",
-        "jsonString": {
-          "name": "MapleMapLayer_1",
-          "path": "/maps/랭킹전_배틀/MapleMapLayer_1",
-          "nameEditable": false,
-          "enable": true,
-          "visible": true,
-          "localize": false,
-          "displayOrder": 5,
-          "pathConstraints": "///",
-          "revision": 1,
-          "origin": {
-            "type": "Model",
-            "entry_id": "maplemaplayer",
-            "sub_entity_id": null,
-            "root_entity_id": null,
-            "replaced_model_id": null
-          },
-          "modelId": "maplemaplayer",
-          "@components": [
-            {
-              "@type": "MOD.Core.MapLayerComponent",
-              "IsVisible": true,
-              "LayerSortOrder": 1,
-              "Locked": false,
-              "MapLayerName": "Layer2",
-              "Thumbnail": "",
-              "Enable": true
-            }
-          ],
-          "@version": 1
-        }
-      },
-      {
-        "id": "cad33153-b02a-4db9-85a9-1929bbb375ce",
-        "path": "/maps/랭킹전_배틀/TileMap_1",
-        "componentNames": "MOD.Core.TransformComponent,MOD.Core.TileMapComponent",
-        "jsonString": {
-          "name": "TileMap_1",
-          "path": "/maps/랭킹전_배틀/TileMap_1",
-          "nameEditable": false,
-          "enable": true,
-          "visible": true,
-          "localize": false,
-          "displayOrder": 6,
-          "pathConstraints": "///",
-          "revision": 1,
-          "origin": {
-            "type": "Model",
-            "entry_id": "tilemap",
-            "sub_entity_id": null,
-            "root_entity_id": null,
-            "replaced_model_id": null
-          },
-          "modelId": "tilemap",
-          "@components": [
-            {
-              "@type": "MOD.Core.TransformComponent",
-              "Position": {
-                "x": -0.225,
-                "y": -0.15,
-                "z": 1000.0
-              },
-              "QuaternionRotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-              },
-              "Enable": true
             },
             {
-              "@type": "MOD.Core.TileMapComponent",
-              "IsOddGridPosition": false,
-              "SortingLayer": "MapLayer1",
-              "TileMapVersion": 1,
-              "TileSetRUID": {
-                "DataId": "3900d5d4594048c0a19f959801604497"
+              "@type": "script.BossHitComponent",
+              "BoxSize": {
+                "x": 2.16,
+                "y": 2.92
               },
-              "Tiles": [
+              "ColliderOffset": {
+                "x": -0.36,
+                "y": 1.41000009
+              },
+              "ColliderType": 1,
+              "IsLegacy": false,
+              "PolygonPoints": [
                 {
-                  "type": 9,
-                  "position": {
-                    "x": 0,
-                    "y": 13
-                  },
-                  "tileIndex": 0
+                  "x": -1.08,
+                  "y": 1.46
                 },
                 {
-                  "type": 11,
-                  "position": {
-                    "x": -1,
-                    "y": 13
-                  },
-                  "tileIndex": 0
+                  "x": 1.08,
+                  "y": 1.46
                 },
                 {
-                  "type": 11,
-                  "position": {
-                    "x": 1,
-                    "y": 13
-                  },
-                  "tileIndex": 3
+                  "x": 1.08,
+                  "y": -1.46
+                },
+                {
+                  "x": -1.08,
+                  "y": -1.46
                 }
               ],
               "Enable": true

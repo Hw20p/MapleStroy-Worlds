@@ -1,0 +1,159 @@
+@Component
+script AugmentSelectHUD extends Component
+
+	property Entity btn1ClickArea = "1e8cd609-af2d-4a5c-ae7b-1a859aac6752"
+
+	property Entity btn2ClickArea = "3af775a7-ae80-46e7-8326-4bf3c736a172"
+
+	property Entity btn3ClickArea = "b27f5d80-15ce-40cf-9a88-a103eb9ba12b"
+
+	property Entity btn4ClickArea = "ff260660-e4db-4bf5-b7d3-b64cfaf1adc7"
+
+	property Entity btn1 = "689a3b1c-3c07-44dc-a182-ab9c55b6ef98"
+
+	property Entity btn2 = "441bb2b6-ba30-4fbc-ae0b-20894c9b4c1e"
+
+	property Entity btn3 = "36a54d9b-d728-4045-b565-48a9c5313e46"
+
+	property Entity btn4 = "8db309d4-8e51-4014-b2fe-108dbf2b6e98"
+
+	property Entity titleText = "42007a8e-3e80-48a8-84b3-6e9a391aa842"
+
+	property Entity timerText = "30384d42-fbd9-4d9c-aee2-b1bf152b97d4"
+
+	property Entity myStatusText = "3636b5a5-cf3b-4cdb-bbdc-7a3e3c1ba7eb"
+
+	@ExecSpace("ClientOnly")
+	method void OnBeginPlay()
+		        -- 버튼 클릭 이벤트 연결
+		        self:ConnectButton(self.btn1ClickArea, 1)
+		        self:ConnectButton(self.btn2ClickArea, 2)
+		        self:ConnectButton(self.btn3ClickArea, 3)
+		        self:ConnectButton(self.btn4ClickArea, 4)
+		        log("[AugmentSelectHUD] 버튼 이벤트 연결 완료")
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ConnectButton(Entity btnEntity, integer augmentIdx)
+		        if not isvalid(btnEntity) then return end
+		        local btn = btnEntity.ButtonComponent
+		        if not isvalid(btn) then return end
+		        local idx = augmentIdx
+		        self._T["btnHandler" .. tostring(idx)] = btnEntity:ConnectEvent(
+		            ButtonClickEvent,
+		            function(evt) self:SelectAugment(idx) end
+		        )
+	end
+
+	@ExecSpace("ClientOnly")
+	method void ShowSelection(integer stage)
+		        self._T.mySelected = false
+		        self._T.remaining  = 30.0
+		        self._T.stage      = stage
+		
+		        -- 타이틀 업데이트
+		        if isvalid(self.titleText) then
+		            local txt = self.titleText.TextComponent
+		            if isvalid(txt) then
+		                txt.Text = "STAGE " .. tostring(stage) .. " 클리어!\n증강을 선택하세요"
+		            end
+		        end
+		        if isvalid(self.myStatusText) then
+		            local txt = self.myStatusText.TextComponent
+		            if isvalid(txt) then txt.Text = "선택 대기 중..." end
+		        end
+		
+		        -- 버튼 패널 활성화
+		        local panels = { self.btn1, self.btn2, self.btn3, self.btn4 }
+		        for _, p in ipairs(panels) do
+		            if isvalid(p) then p.Enable = true end
+		        end
+		
+		        -- 카운트다운 타이머
+		        if self._T.timerTickId and self._T.timerTickId ~= 0 then
+		            _TimerService:ClearTimer(self._T.timerTickId)
+		        end
+		        self._T.timerTickId = _TimerService:SetTimerRepeat(function()
+		            self:TimerTick()
+		        end, 1.0)
+		
+		        self:UpdateTimer(15.0)
+		        log("[AugmentSelectHUD] 선택 화면 표시: STAGE " .. tostring(stage))
+	end
+
+	@ExecSpace("ClientOnly")
+	method void TimerTick()
+		        self._T.remaining = (self._T.remaining or 30.0) - 1.0
+		        self:UpdateTimer(self._T.remaining)
+		        if self._T.remaining <= 0 then
+		            if self._T.timerTickId and self._T.timerTickId ~= 0 then
+		                _TimerService:ClearTimer(self._T.timerTickId)
+		                self._T.timerTickId = 0
+		            end
+		        end
+	end
+
+	@ExecSpace("ClientOnly")
+	method void UpdateTimer(number remaining)
+		        if isvalid(self.timerText) then
+		            local txt = self.timerText.TextComponent
+		            if isvalid(txt) then
+		                txt.Text = tostring(math.max(0, math.floor(remaining))) .. "초"
+		            end
+		        end
+	end
+
+	@ExecSpace("ClientOnly")
+	method void SelectAugment(integer idx)
+		        if self._T.mySelected then return end
+		        self._T.mySelected = true
+		
+		        local names = { "탄속 강화", "탄막 증가", "공격 가속", "파워 업" }
+		        local chosen = names[idx] or "?"
+		        if isvalid(self.myStatusText) then
+		            local txt = self.myStatusText.TextComponent
+		            if isvalid(txt) then txt.Text = "선택 완료: " .. chosen end
+		        end
+		
+		        -- 버튼 패널 비활성화
+		        local panels = { self.btn1, self.btn2, self.btn3, self.btn4 }
+		        for _, p in ipairs(panels) do
+		            if isvalid(p) then p.Enable = false end
+		        end
+		
+		        -- 서버에 선택 전송
+		        local localPlayer = _UserService.LocalPlayer
+		        if isvalid(localPlayer) then
+		            local map = localPlayer.CurrentMap
+		            if isvalid(map) then
+		                local bm = map:GetComponent("script.BattleManager")
+		                if isvalid(bm) then
+		                    bm:RequestSelectAugment(idx)
+		                end
+		            end
+		        end
+		
+		        log("[AugmentSelectHUD] 선택: " .. tostring(idx) .. " (" .. chosen .. ")")
+	end
+
+	@ExecSpace("ClientOnly")
+	method void OnPlayerSelected(string uid, integer augmentIndex)
+		        local localPlayer = _UserService.LocalPlayer
+		        if not isvalid(localPlayer) then return end
+		        local myId = tostring(localPlayer.PlayerComponent.UserId)
+		        if uid == myId then return end
+		
+		        local names = { "탄속 강화", "탄막 증가", "공격 가속", "파워 업" }
+		        log("[AugmentSelectHUD] 상대가 선택: " .. (names[augmentIndex] or "?"))
+	end
+
+	method void OnEndPlay()
+		        if self:IsClient() then
+		            if self._T.timerTickId and self._T.timerTickId ~= 0 then
+		                _TimerService:ClearTimer(self._T.timerTickId)
+		                self._T.timerTickId = 0
+		            end
+		        end
+	end
+
+end

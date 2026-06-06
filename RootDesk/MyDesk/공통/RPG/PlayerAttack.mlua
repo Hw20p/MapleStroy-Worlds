@@ -23,7 +23,7 @@ script PlayerAttack extends AttackComponent
 	end
 
 	method int CalcDamage(Entity attacker, Entity defender, string attackInfo)
-		return 50
+		return 10
 	end
 
 	method boolean CalcCritical(Entity attacker, Entity defender, string attackInfo)

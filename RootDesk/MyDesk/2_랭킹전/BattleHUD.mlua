@@ -1,14 +1,17 @@
 @Component
 script BattleHUD extends Component
 
-    property Entity myHPFill      = "f9b3224e-abe2-4727-a676-ac33a19bd8bc"
-    property Entity enemyHPFill   = "72887ca3-9e31-46fa-9ba7-21d7afcd181f"
-    property Entity myNameText    = "575c0c9c-35ad-4031-b8d2-68057296fae7"
-    property Entity enemyNameText = "4f6a5016-1d8f-4491-9c79-345483d038c4"
-    property Entity myHPText      = "a3035364-7d1b-43d9-9c82-e1c3241b5f98"
-    property Entity enemyHPText   = "1e5e5dcf-fdc8-4621-86d6-9d9399474cdc"
-    property Entity myScoreText   = "fc43f66a-8abc-4ad3-8acf-a992d2a2658f"
-    property Entity enemyScoreText = "5fc550fe-08dc-457b-aa72-549fd8a4ac49"
+    property Entity myHPFill      = "374383ca-c2d2-4ae6-ae5f-2acd6d790f5c"
+    property Entity enemyHPFill   = "d2747f77-8ac1-481b-a1b4-835654805e46"
+    property Entity myNameText    = "8cd056b9-93ab-46fb-9a16-dbd7ffeacda3"
+    property Entity enemyNameText = "c55a394c-7f9f-4090-87a9-2e70c5ee3086"
+    property Entity myHPText      = "cc6e729c-3335-4a3e-854c-4d5a7f94e0fe"
+    property Entity enemyHPText   = "c35f4ac5-7a06-499e-a4c4-7fede1d905b9"
+    property Entity myScoreText    = "43a3caab-f7a0-4d10-ad17-b28a5fd09ba1"
+    property Entity enemyScoreText = "07eb25a4-843f-4883-b5f1-5e3e3fd9d35f"
+    property Entity bossHPFill     = "8f71af40-e885-464c-b6ec-41ccef8b7c26"
+    property Entity bossHPText     = "978a4d52-ef3e-4c71-b8c8-c181b85d849f"
+    property Entity stageText      = "2175f019-b2f6-4435-ad7d-a238974ae10c"
     property number MaxHp = 100.0
 
     @ExecSpace("ClientOnly")
@@ -66,6 +69,35 @@ script BattleHUD extends Component
             local txt = self.enemyScoreText.TextComponent
             if isvalid(txt) then
                 txt.Text = "점수: " .. tostring(math.floor(enemyScore))
+            end
+        end
+    end
+
+    @ExecSpace("ClientOnly")
+    method void UpdateBoss(number bossHp, number bossMaxHp, integer stage)
+        -- 보스 HP 바
+        if isvalid(self.bossHPFill) then
+            local fill = self.bossHPFill.SpriteGUIRendererComponent
+            if isvalid(fill) and bossMaxHp > 0 then
+                fill.FillAmount = math.max(0.0, bossHp / bossMaxHp)
+            end
+        end
+        -- 보스 HP 텍스트
+        if isvalid(self.bossHPText) then
+            local txt = self.bossHPText.TextComponent
+            if isvalid(txt) then
+                if bossMaxHp >= 999999 then
+                    txt.Text = "∞"
+                else
+                    txt.Text = tostring(math.floor(bossHp)) .. "/" .. tostring(math.floor(bossMaxHp))
+                end
+            end
+        end
+        -- 스테이지 텍스트
+        if isvalid(self.stageText) then
+            local txt = self.stageText.TextComponent
+            if isvalid(txt) then
+                txt.Text = "STAGE " .. tostring(stage)
             end
         end
     end

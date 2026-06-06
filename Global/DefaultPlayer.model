@@ -7,19 +7,20 @@
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
-  "CoreVersion": "",
-  "StudioVersion": "",
+  "CoreVersion": "26.5.0.0",
+  "StudioVersion": "0.1.0.0",
   "DynamicLoading": 0,
   "ContentProto": {
     "Use": "Json",
     "Json": {
-      "Version": 2,
+      "Version": 1,
       "Name": "DefaultPlayer",
       "BaseModelId": "player",
       "Id": "defaultplayer",
       "Components": [
         "script.PlayerHit",
-        "script.PlayerAttack"
+        "script.PlayerAttack",
+        "MOD.Core.DamageSkinComponent"
       ],
       "Properties": [],
       "Values": [
@@ -64,7 +65,7 @@
           "Name": "cameraDeadZone",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -77,7 +78,7 @@
           "Name": "cameraSoftZone",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -90,7 +91,7 @@
           "Name": "cameraDamping",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -103,7 +104,7 @@
           "Name": "cameraScreen",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -125,7 +126,7 @@
           "Name": "cameraOffset",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -147,11 +148,11 @@
           "Name": "damageSkinId",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODDataRef, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODDataRef, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODDataRef, MOD.Core",
-            "DataId": "6ba67548f43f48f29eb23dafd0766383"
+            "DataId": "3271c3e79bf04ecba9a107d55495970d"
           }
         },
         {
@@ -168,7 +169,7 @@
           "Name": "triggerBodyBoxSize",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -181,7 +182,7 @@
           "Name": "triggerBodyBoxOffset",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -194,7 +195,7 @@
           "Name": "triggerBodyColliderOffset",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -225,7 +226,7 @@
           "Name": "CollisionGroup",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.Physics.CollisionGroup, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.Physics.CollisionGroup, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.Physics.CollisionGroup, MOD.Core",
@@ -237,7 +238,7 @@
           "Name": "BoxSize",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -250,7 +251,7 @@
           "Name": "ColliderOffset",
           "ValueType": {
             "$type": "MODNativeType",
-            "type": "MOD.Core.MODVector2, MOD.Core, Version=1.11.0.0, Culture=neutral, PublicKeyToken=null"
+            "type": "MOD.Core.MODVector2, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
           },
           "Value": {
             "$type": "MOD.Core.MODVector2, MOD.Core",
@@ -275,6 +276,18 @@
             "type": "System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
           },
           "Value": 1.0
+        },
+        {
+          "TargetType": "MOD.Core.DamageSkinSettingComponent",
+          "Name": "DamageSkinId",
+          "ValueType": {
+            "$type": "MODNativeType",
+            "type": "MOD.Core.MODDataRef, MOD.Core, Version=26.5.0.0, Culture=neutral, PublicKeyToken=null"
+          },
+          "Value": {
+            "$type": "MOD.Core.MODDataRef, MOD.Core",
+            "DataId": "3271c3e79bf04ecba9a107d55495970d"
+          }
         }
       ],
       "EventLinks": [],

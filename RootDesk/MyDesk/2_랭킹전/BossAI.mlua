@@ -26,6 +26,38 @@ script BossAI extends Component
         end
     end
 
+    -- ── 스테이지별 설정 적용 (BattleManager에서 호출) ─────────────────
+    @ExecSpace("ServerOnly")
+    method void SetStageConfig(number speed, integer count, number interval)
+        self.BulletSpeed    = speed
+        self.BulletCount    = count
+        self.AttackInterval = interval
+        -- 타이머 재시작 (새 간격 적용)
+        if self._timerId ~= 0 then
+            _TimerService:ClearTimer(self._timerId)
+        end
+        self._timerId = _TimerService:SetTimerRepeat(function() self:FirePattern() end, self.AttackInterval)
+        log("[BossAI] 스테이지 설정 적용: speed=" .. tostring(speed) .. " count=" .. tostring(count) .. " interval=" .. tostring(interval))
+    end
+
+    -- ── 탄막 일시정지 / 재개 ──────────────────────────────────────────
+    @ExecSpace("ServerOnly")
+    method void PauseAttack()
+        if self._timerId ~= 0 then
+            _TimerService:ClearTimer(self._timerId)
+            self._timerId = 0
+            log("[BossAI] 탄막 정지")
+        end
+    end
+
+    @ExecSpace("ServerOnly")
+    method void ResumeAttack()
+        if self._timerId == 0 then
+            self._timerId = _TimerService:SetTimerRepeat(function() self:FirePattern() end, self.AttackInterval)
+            log("[BossAI] 탄막 재개")
+        end
+    end
+
     @ExecSpace("ServerOnly")
     method void FirePattern()
         self._patternIndex += 1
