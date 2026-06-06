@@ -1,0 +1,162 @@
+@Component
+script BattleManager extends Component
+
+	property number MaxHp = 100.0
+
+	method void OnBeginPlay()
+		        if self:IsServer() then
+		            -- 플레이어별 HP / 이름 테이블 초기화
+		            self._T.hpMap   = {}
+		            self._T.nameMap = {}
+		            self._T.players = {}
+		            log("[BattleManager] 초기화 완료")
+		        else
+		            -- 클라이언트: 이 맵 로드 시 배틀 UI 표시
+		            local uiGroup = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
+		            if isvalid(uiGroup) then
+		                uiGroup.Enable = true
+		                log("[BattleManager] 배틀 UI 표시")
+		            else
+		                log_warning("[BattleManager] UI 없음: /ui/랭킹전_배틀-UI")
+		            end
+		        end
+	end
+
+	method void OnEndPlay()
+		        if self:IsClient() then
+		            -- 클라이언트: 맵 종료 시 UI 숨김
+		            local uiGroup = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
+		            if isvalid(uiGroup) then
+		                uiGroup.Enable = false
+		            end
+		        end
+	end
+
+	method void OnMapEnter(Entity player)
+		        -- 서버에서 입장한 플레이어 등록
+		        if not self:IsServer() then return end
+		        if not isvalid(player) then return end
+		
+		        local pc = player.PlayerComponent
+		        if not isvalid(pc) then return end
+		
+		        local userId = tostring(pc.UserId)
+		
+		        -- 중복 등록 방지
+		        for _, id in ipairs(self._T.players) do
+		            if id == userId then return end
+		        end
+		
+		        self._T.hpMap[userId]   = self.MaxHp
+		        self._T.nameMap[userId] = pc.Nickname
+		        table.insert(self._T.players, userId)
+		
+		        log("[BattleManager] 입장: " .. userId .. " (" .. pc.Nickname .. ") HP=" .. tostring(self.MaxHp))
+		
+		        -- 첫 입장 시 배틀 UI 표시
+		        self:ShowBattleUI()
+		        self:BroadcastHp()
+	end
+
+	method void OnMapLeave(Entity player)
+		        -- 퇴장 시 목록에서 제거
+		        if not self:IsServer() then return end
+		        if not isvalid(player) then return end
+		        local pc = player.PlayerComponent
+		        if not isvalid(pc) then return end
+		        local userId = tostring(pc.UserId)
+		
+		        for i, id in ipairs(self._T.players) do
+		            if id == userId then
+		                table.remove(self._T.players, i)
+		                self._T.hpMap[userId]   = nil
+		                self._T.nameMap[userId] = nil
+		                log("[BattleManager] 퇴장: " .. userId)
+		                -- 퇴장 시 해당 클라이언트에서 UI 숨김
+		                self:HideBattleUI()
+		                return
+		            end
+		        end
+	end
+
+	@ExecSpace("Multicast")
+	method void ShowBattleUI()
+		        -- 이 맵에 있는 클라이언트에서만 실행됨 (IsInstanceMap)
+		        local uiGroup = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
+		        if isvalid(uiGroup) then
+		            uiGroup.Enable = true
+		            log("[BattleManager] 배틀 UI 표시")
+		        end
+	end
+
+	@ExecSpace("Multicast")
+	method void HideBattleUI()
+		        local uiGroup = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
+		        if isvalid(uiGroup) then
+		            uiGroup.Enable = false
+		        end
+	end
+
+	@ExecSpace("ServerOnly")
+	method void TakeDamage(Entity player, number damage)
+		        -- 발사체 피격 시 호출
+		        if not isvalid(player) then return end
+		        local pc = player.PlayerComponent
+		        if not isvalid(pc) then return end
+		        local userId = tostring(pc.UserId)
+		
+		        local hp = self._T.hpMap[userId]
+		        if hp == nil then return end
+		
+		        hp = math.max(0.0, hp - damage)
+		        self._T.hpMap[userId] = hp
+		        log("[BattleManager] " .. userId .. " 피격 -" .. tostring(damage) .. " → HP=" .. tostring(hp))
+		
+		        self:BroadcastHp()
+		
+		        -- TODO: 6단계에서 hp == 0 패배 처리 추가
+	end
+
+	@ExecSpace("ServerOnly")
+	method void BroadcastHp()
+		        -- 2명이 모두 입장한 경우에만 전송
+		        if #self._T.players < 2 then return end
+		
+		        local uid1  = self._T.players[1]
+		        local uid2  = self._T.players[2]
+		        local hp1   = self._T.hpMap[uid1]   or self.MaxHp
+		        local hp2   = self._T.hpMap[uid2]   or self.MaxHp
+		        local name1 = self._T.nameMap[uid1] or "P1"
+		        local name2 = self._T.nameMap[uid2] or "P2"
+		
+		        -- Multicast: 모든 클라이언트에 전송, 각자 자신의 userId로 내/상대 HP 구분
+		        self:MulticastHpUpdate(uid1, hp1, uid2, hp2, name1, name2)
+	end
+
+	@ExecSpace("Multicast")
+	method void MulticastHpUpdate(string uid1, number hp1, string uid2, number hp2, string name1, string name2)
+		        -- 클라이언트에서 자신의 userId 확인 후 내/상대 HP 결정
+		        local localPlayer = _UserService.LocalPlayer
+		        if not isvalid(localPlayer) then return end
+		
+		        local myId = tostring(localPlayer.PlayerComponent.UserId)
+		        local myHp, enemyHp, myName, enemyName
+		
+		        if myId == uid1 then
+		            myHp = hp1; enemyHp = hp2; myName = name1; enemyName = name2
+		        else
+		            myHp = hp2; enemyHp = hp1; myName = name2; enemyName = name1
+		        end
+		
+		        local hudEntity = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI/BattleHUD")
+		        if not isvalid(hudEntity) then
+		            log_warning("[BattleManager] HUD 없음")
+		            return
+		        end
+		        local hud = hudEntity:GetComponent("script.BattleHUD")
+		        if isvalid(hud) then
+		            hud:UpdateHp(myHp, enemyHp, myName, enemyName)
+		        end
+	end
+
+end

@@ -73,7 +73,14 @@ script BossProjectile extends Component
 
     @ExecSpace("ServerOnly")
     method void OnHitPlayer(Entity player)
-        -- TODO: 3단계에서 player.PlayerComponent.Hp 데미지 연결
+        -- BattleManager에 데미지 10 전달
+        local map = self.Entity.CurrentMap
+        if isvalid(map) then
+            local bm = map:GetComponent("script.BattleManager")
+            if isvalid(bm) then
+                bm:TakeDamage(player, 10)
+            end
+        end
         local pos = self.Entity.TransformComponent.Position
         self:ShowHitEffect(pos.x, pos.y)
         log("[BossProjectile] 플레이어 적중!")

@@ -92,3 +92,5 @@
 2026-06-06T12:43:32.399+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-general | kind=reference | file=.claude/skills/msw-general/references/monster.md | mode=full | lines=724 | bytes=41665 | duration_ms=533
 2026-06-06T12:44:57.745+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=compact | file=CLAUDE.md | mode=full | lines=42 | bytes=1792
 2026-06-06T12:44:57.745+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=include | file=AGENTS.md | mode=full | lines=262 | bytes=23409
+2026-06-06T13:11:17.328+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=include | file=AGENTS.md | mode=full | lines=262 | bytes=23409
+2026-06-06T13:11:17.330+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=compact | file=CLAUDE.md | mode=full | lines=42 | bytes=1792

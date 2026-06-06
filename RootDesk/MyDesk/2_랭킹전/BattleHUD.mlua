@@ -1,0 +1,54 @@
+@Component
+script BattleHUD extends Component
+
+    property Entity myHPFill      = "5517b3bd-5eae-44df-a5ff-7ba7accbfe90"
+    property Entity enemyHPFill   = "5a710938-516b-4898-997c-8f77e8d5230f"
+    property Entity myNameText    = "3854b4de-bccf-4706-83b1-759a316e35e5"
+    property Entity enemyNameText = "444e9d3b-c2f6-4620-9aa2-74f985ee4335"
+    property Entity myHPText      = "059482ac-c497-49fe-8225-62542bdba65b"
+    property Entity enemyHPText   = "5f09f054-e84c-47f2-957d-582f43c1e7ff"
+    property number MaxHp = 100.0
+
+    @ExecSpace("ClientOnly")
+    method void UpdateHp(number myHp, number enemyHp, string myName, string enemyName)
+        -- HP 바 FillAmount 업데이트
+        if isvalid(self.myHPFill) then
+            local fill = self.myHPFill.SpriteGUIRendererComponent
+            if isvalid(fill) then
+                fill.FillAmount = math.max(0.0, myHp / self.MaxHp)
+            end
+        end
+        if isvalid(self.enemyHPFill) then
+            local fill = self.enemyHPFill.SpriteGUIRendererComponent
+            if isvalid(fill) then
+                fill.FillAmount = math.max(0.0, enemyHp / self.MaxHp)
+            end
+        end
+
+        -- 이름 텍스트 업데이트
+        if isvalid(self.myNameText) then
+            local txt = self.myNameText.TextComponent
+            if isvalid(txt) then txt.Text = myName end
+        end
+        if isvalid(self.enemyNameText) then
+            local txt = self.enemyNameText.TextComponent
+            if isvalid(txt) then txt.Text = enemyName end
+        end
+
+        -- HP 숫자 업데이트 (예: "90/100")
+        local maxInt = tostring(math.floor(self.MaxHp))
+        if isvalid(self.myHPText) then
+            local txt = self.myHPText.TextComponent
+            if isvalid(txt) then
+                txt.Text = tostring(math.floor(math.max(0.0, myHp))) .. "/" .. maxInt
+            end
+        end
+        if isvalid(self.enemyHPText) then
+            local txt = self.enemyHPText.TextComponent
+            if isvalid(txt) then
+                txt.Text = tostring(math.floor(math.max(0.0, enemyHp))) .. "/" .. maxInt
+            end
+        end
+    end
+
+end
