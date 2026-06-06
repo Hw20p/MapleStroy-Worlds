@@ -3,16 +3,16 @@ script LobbyInit extends Component
 
 	method void OnBeginPlay()
 		_SoundService:PlayBGM("1b9988e57879481f970bf12bb0aa59fc", 1.0)
-		
+
 		log("[LobbyInit] OnBeginPlay")
-		
+
 		local player = _UserService.LocalPlayer
 		if not isvalid(player) then return end
-		
+
 		local userId = tostring(player.PlayerComponent.UserId)
 		log("[LobbyInit] Requesting nameTag for userId=" .. userId)
 		self:RequestNameTag(userId)
-		
+
 		local ui_1 = _EntityService:GetEntityByPath("/ui/1_공통-UI")
 		ui_1.Enable = true
 	end

@@ -1,0 +1,51 @@
+@Component
+script DungeonPortal extends Component
+
+	property number portalCooldown = 0
+
+	method void OnBeginPlay()
+		portalCooldown = 0
+	end
+
+	method void OnUpdate(number delta)
+		self:CheckInput(delta)
+	end
+
+	@ExecSpace("ClientOnly")
+	method void CheckInput(number delta)
+		if portalCooldown > 0 then
+			portalCooldown = portalCooldown - delta
+			return
+		end
+
+		if not _InputService:IsKeyPressed(KeyboardKey.UpArrow) then return end
+
+		local player = _UserService.LocalPlayer
+		if not isvalid(player) then return end
+
+		local portal = _EntityService:GetEntityByPath("/maps/1_메인로비/던전입구_포탈")
+		if not isvalid(portal) then return end
+
+		local portalPos = portal.TransformComponent.WorldPosition
+		local playerPos = player.TransformComponent.WorldPosition
+
+		local dx = math.abs(playerPos.x - portalPos.x)
+		local dy = math.abs(playerPos.y - portalPos.y)
+
+		-- 포탈 BoxSize(1.01 x 1.42) 범위 안에 있을 때
+		if dx < 0.7 and dy < 1.2 then
+			log("[DungeonPortal] 랭킹전 이동 요청")
+			portalCooldown = 2.0
+			self:RequestTeleport(tostring(player.PlayerComponent.UserId))
+		end
+	end
+
+	@ExecSpace("Server")
+	method void RequestTeleport(string userId)
+		local player = _UserService:GetUserEntityByUserId(userId)
+		if not isvalid(player) then return end
+		log("[DungeonPortal] 텔레포트: " .. userId)
+		_TeleportService:TeleportToEntityPath(player, "/maps/2_랭킹전")
+	end
+
+end

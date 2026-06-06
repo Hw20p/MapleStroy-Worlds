@@ -15,6 +15,23 @@
 - 새 스크립트 로직을 추가할 때는 기존 `.codeblock` 파일을 수정하거나, 사용자가 Maker Studio 블록 에디터에서 직접 만든 `.codeblock`에 코드를 추가합니다
 - AI가 `.mlua` 파일을 만들면 사용자가 편집할 수 없으므로, 반드시 `.codeblock` 수정 방식으로 작업합니다
 
+## 진행 중인 구현
+
+### 랭킹전 시스템
+설계 확정 완료. 상세 내용: `C:\Users\HyeonWoo\.claude\projects\C--MapleStroy-Worlds\memory\project_ranking_battle_design.md`
+
+**구현 단계:**
+- [ ] 1단계: 매칭 시스템 (DataStorage 대기열 + IsInstanceMap)
+- [ ] 2단계: 랭킹전_배틀 맵 + 보스 배치 + 기본 탄막 패턴
+- [ ] 3단계: 플레이어 HP + 피격 판정
+- [ ] 4단계: 점수 시스템
+- [ ] 5단계: 스테이지 진행 + 증강 선택 UI
+- [ ] 6단계: 게임 종료 처리 + 결과 화면
+
+**핵심 구조:** 2_랭킹전(대기방) → 매칭 → IsInstanceMap(랭킹전_배틀) → 1v1 보스 탄막전 → 결과 → 대기방 복귀
+
+---
+
 ## 확인된 MSW API
 
 - 플레이어 닉네임: `player.PlayerComponent.Nickname`
