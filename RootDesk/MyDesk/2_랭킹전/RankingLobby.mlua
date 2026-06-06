@@ -1,0 +1,30 @@
+@Component
+script RankingLobby extends Component
+
+	method void OnMapEnter(Entity player)
+		-- 서버에서만 큐 처리
+		if not self:IsServer() then return end
+		if not isvalid(player) then return end
+		if not isvalid(player.PlayerComponent) then return end
+
+		local userId = tostring(player.PlayerComponent.UserId)
+		local nickname = player.PlayerComponent.Nickname
+		log("[RankingLobby] 입장: " .. nickname .. " (" .. userId .. ")")
+
+		-- 큐 입장은 UI 매칭 버튼으로 처리
+	end
+
+	method void OnMapLeave(Entity player)
+		-- 서버에서만 큐 처리
+		if not self:IsServer() then return end
+		if not isvalid(player) then return end
+		if not isvalid(player.PlayerComponent) then return end
+
+		local userId = tostring(player.PlayerComponent.UserId)
+		local nickname = player.PlayerComponent.Nickname
+		log("[RankingLobby] 퇴장: " .. nickname .. " (" .. userId .. ")")
+
+		_MatchingManager:RequestLeaveQueue(userId)
+	end
+
+end

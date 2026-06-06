@@ -17,21 +17,21 @@ script DungeonPortal extends Component
 			portalCooldown = portalCooldown - delta
 			return
 		end
-
+		
 		if not _InputService:IsKeyPressed(KeyboardKey.UpArrow) then return end
-
+		
 		local player = _UserService.LocalPlayer
 		if not isvalid(player) then return end
-
+		
 		local portal = _EntityService:GetEntityByPath("/maps/1_메인로비/던전입구_포탈")
 		if not isvalid(portal) then return end
-
+		
 		local portalPos = portal.TransformComponent.WorldPosition
 		local playerPos = player.TransformComponent.WorldPosition
-
+		
 		local dx = math.abs(playerPos.x - portalPos.x)
 		local dy = math.abs(playerPos.y - portalPos.y)
-
+		
 		-- 포탈 BoxSize(1.01 x 1.42) 범위 안에 있을 때
 		if dx < 0.7 and dy < 1.2 then
 			log("[DungeonPortal] 랭킹전 이동 요청")
@@ -45,7 +45,7 @@ script DungeonPortal extends Component
 		local player = _UserService:GetUserEntityByUserId(userId)
 		if not isvalid(player) then return end
 		log("[DungeonPortal] 텔레포트: " .. userId)
-		_TeleportService:TeleportToEntityPath(player, "/maps/2_랭킹전")
+		_TeleportService:TeleportToEntityPath(player, "/maps/2_던전대기방")
 	end
 
 end

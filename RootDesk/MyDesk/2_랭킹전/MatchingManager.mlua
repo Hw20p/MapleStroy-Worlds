@@ -1,0 +1,73 @@
+@Logic
+script MatchingManager extends Logic
+
+	@ExecSpace("ServerOnly")
+	method void OnBeginPlay()
+		-- 매칭 대기 큐 초기화 (userId 문자열 배열)
+		self._T.queue = {}
+		log("[MatchingManager] 매칭 시스템 시작")
+	end
+
+	@ExecSpace("Server")
+	method void RequestJoinQueue(string userId)
+		-- 중복 입장 방지
+		for i, id in ipairs(self._T.queue) do
+			if id == userId then
+				log("[MatchingManager] 이미 큐에 있음: " .. userId)
+				return
+			end
+		end
+
+		table.insert(self._T.queue, userId)
+		log("[MatchingManager] 큐 입장: " .. userId .. " (대기 " .. #self._T.queue .. "명)")
+
+		self:TryCreateMatch()
+	end
+
+	@ExecSpace("Server")
+	method void RequestLeaveQueue(string userId)
+		if not self._T.queue then return end
+		for i, id in ipairs(self._T.queue) do
+			if id == userId then
+				table.remove(self._T.queue, i)
+				log("[MatchingManager] 큐 퇴장: " .. userId .. " (대기 " .. #self._T.queue .. "명)")
+				return
+			end
+		end
+	end
+
+	@ExecSpace("ServerOnly")
+	method void TryCreateMatch()
+		if #self._T.queue < 2 then return end
+
+		local userId1 = self._T.queue[1]
+		local userId2 = self._T.queue[2]
+		table.remove(self._T.queue, 1)
+		table.remove(self._T.queue, 1)
+
+		log("[MatchingManager] 매칭 성사: " .. userId1 .. " vs " .. userId2)
+		self:CreateBattleRoom(userId1, userId2)
+	end
+
+	@ExecSpace("ServerOnly")
+	method void CreateBattleRoom(string userId1, string userId2)
+		-- 고유 룸 키 생성
+		local roomKey = "battle_" .. userId1 .. "_" .. userId2
+		log("[MatchingManager] 룸 생성 시도: " .. roomKey)
+
+		local room = _RoomService:CreateInstanceRoom(roomKey, {"랭킹전_배틀"}, 30)
+		-- InstanceRoom은 @Misc 타입이므로 isvalid() 대신 :IsValid() 사용
+		if room == nil or not room:IsValid() then
+			log_error("[MatchingManager] 인스턴스 룸 생성 실패 - 큐 복원")
+			table.insert(self._T.queue, 1, userId2)
+			table.insert(self._T.queue, 1, userId1)
+			return
+		end
+
+		log("[MatchingManager] 룸 생성 성공: " .. roomKey)
+		local userIds = {userId1, userId2}
+		local movedCount = _RoomService:MoveUsersToInstanceRoom(roomKey, userIds, "랭킹전_배틀")
+		log("[MatchingManager] 배틀 룸 이동 완료: " .. tostring(movedCount) .. "명 → " .. roomKey)
+	end
+
+end

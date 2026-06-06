@@ -1,14 +1,14 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "codeblock://f535e8cf-119c-4e39-8e21-b5a284c7d45e",
+  "EntryKey": "codeblock://3c00c62a-c6e7-4e60-a510-6a31ed54741d",
   "ContentType": "x-mod/codeblock",
   "Content": "",
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
   "CoreVersion": "26.5.0.0",
-  "StudioVersion": "0.1.0.0",
+  "StudioVersion": "",
   "DynamicLoading": 0,
   "ContentProto": {
     "Use": "Json",
@@ -22,9 +22,9 @@
         "Minor": 1
       },
       "Description": "",
-      "Id": "f535e8cf-119c-4e39-8e21-b5a284c7d45e",
+      "Id": "3c00c62a-c6e7-4e60-a510-6a31ed54741d",
       "Language": 1,
-      "Name": "DungeonPortal",
+      "Name": "MatchingUIController",
       "Type": 1,
       "Source": 0,
       "Target": null

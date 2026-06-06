@@ -1,14 +1,14 @@
 {
   "Id": "",
   "GameId": "",
-  "EntryKey": "codeblock://f535e8cf-119c-4e39-8e21-b5a284c7d45e",
+  "EntryKey": "codeblock://cc18357a-4fa9-4cc8-83cc-0fd810d0496b",
   "ContentType": "x-mod/codeblock",
   "Content": "",
   "Usage": 0,
   "UsePublish": 1,
   "UseService": 0,
   "CoreVersion": "26.5.0.0",
-  "StudioVersion": "0.1.0.0",
+  "StudioVersion": "",
   "DynamicLoading": 0,
   "ContentProto": {
     "Use": "Json",
@@ -22,9 +22,9 @@
         "Minor": 1
       },
       "Description": "",
-      "Id": "f535e8cf-119c-4e39-8e21-b5a284c7d45e",
+      "Id": "cc18357a-4fa9-4cc8-83cc-0fd810d0496b",
       "Language": 1,
-      "Name": "DungeonPortal",
+      "Name": "RankingLobby",
       "Type": 1,
       "Source": 0,
       "Target": null

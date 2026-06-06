@@ -63,3 +63,17 @@
 2026-06-06T10:31:08.511+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-general | kind=reference | file=.claude/skills/msw-general/references/builder-protocol.md | mode=full | lines=1072 | bytes=71428 | duration_ms=513
 2026-06-06T11:00:47.321+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=compact | file=CLAUDE.md | mode=full | lines=25 | bytes=1086
 2026-06-06T11:00:47.327+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=include | file=AGENTS.md | mode=full | lines=262 | bytes=23409
+2026-06-06T11:38:17.159+09:00 | session=203bff73 | event=PostToolUse | tool=Skill | skill=msw-general | mode=invoke | duration_ms=13
+2026-06-06T11:38:20.230+09:00 | session=203bff73 | event=PostToolUse | tool=Skill | skill=msw-scripting | mode=invoke | duration_ms=25
+2026-06-06T11:38:23.951+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-scripting | kind=reference | file=.claude/skills/msw-scripting/references/datastorage.md | mode=full | lines=250 | bytes=9305 | duration_ms=13
+2026-06-06T11:38:24.259+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-general | kind=reference | file=.claude/skills/msw-general/references/workspace.md | mode=full | lines=134 | bytes=5290 | duration_ms=11
+2026-06-06T11:39:15.766+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-general | kind=reference | file=.claude/skills/msw-general/references/builder-protocol.md | mode=full | lines=1072 | bytes=71428 | duration_ms=312
+2026-06-06T11:43:53.177+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=compact | file=CLAUDE.md | mode=full | lines=42 | bytes=1792
+2026-06-06T11:43:53.183+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=include | file=AGENTS.md | mode=full | lines=262 | bytes=23409
+2026-06-06T11:49:56.366+09:00 | session=203bff73 | event=PostToolUse | tool=Skill | skill=msw-general | mode=invoke | duration_ms=17
+2026-06-06T11:50:03.617+09:00 | session=203bff73 | event=PostToolUse | tool=Skill | skill=msw-ui-system | mode=invoke | duration_ms=14
+2026-06-06T11:50:07.703+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-general | kind=reference | file=.claude/skills/msw-general/references/builder-protocol.md | mode=full | lines=1072 | bytes=71428 | duration_ms=305
+2026-06-06T11:50:11.354+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-general | kind=reference | file=.claude/skills/msw-general/references/builder-protocol.md | mode=partial | offset=1073 | limit=250 | lines=249 | bytes=15071 | duration_ms=1
+2026-06-06T11:50:14.210+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-ui-system | kind=reference | file=.claude/skills/msw-ui-system/references/runtime-patterns.md | mode=partial | limit=100 | lines=100 | bytes=2996 | duration_ms=21
+2026-06-06T12:19:39.990+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=include | file=AGENTS.md | mode=full | lines=262 | bytes=23409
+2026-06-06T12:19:39.992+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=compact | file=CLAUDE.md | mode=full | lines=42 | bytes=1792

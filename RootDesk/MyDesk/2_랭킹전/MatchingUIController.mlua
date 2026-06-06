@@ -1,0 +1,128 @@
+@Component
+script MatchingUIController extends Component
+
+	-- Entity 참조는 크로스-계층에서 정상 동작
+	property Entity matchingPanel = "b3a4d780-6d37-4191-adc2-b70e90a6d2e4"
+	property Entity miniHUD = "490fccfe-6ca1-4d63-b7ab-59da3f17c03b"
+
+	-- 로컬 플레이어가 이 맵에 입장할 때 UI 초기화
+	method void OnMapEnter(Entity player)
+		log("[MatchingUI] OnMapEnter 발동 - isClient=" .. tostring(self:IsClient()) .. " playerValid=" .. tostring(isvalid(player)))
+		if not self:IsClient() then return end
+
+		log("[MatchingUI] 로컬 플레이어 입장 - UI 초기화")
+		log("[MatchingUI] matchingPanel valid=" .. tostring(isvalid(self.matchingPanel)))
+		log("[MatchingUI] miniHUD valid=" .. tostring(isvalid(self.miniHUD)))
+
+		if isvalid(self.matchingPanel) then
+			self.matchingPanel.Enable = true
+		end
+		if isvalid(self.miniHUD) then
+			self.miniHUD.Enable = false
+		end
+		self:SetWaitingState(false)
+		self:ConnectButtons()
+
+		log("[MatchingUI] 초기화 완료")
+	end
+
+	-- 로컬 플레이어가 이 맵에서 나갈 때 UI 정리
+	method void OnMapLeave(Entity player)
+		if not self:IsClient() then return end
+		local localPlayer = _UserService.LocalPlayer
+		if not isvalid(localPlayer) then return end
+		if player ~= localPlayer then return end
+
+		log("[MatchingUI] 로컬 플레이어 퇴장 - UI 정리")
+		self:DisconnectButtons()
+		if isvalid(self.matchingPanel) then
+			self.matchingPanel.Enable = false
+		end
+		if isvalid(self.miniHUD) then
+			self.miniHUD.Enable = false
+		end
+	end
+
+	method void ConnectButtons()
+		local uiRoot = "/ui/2_던전대기방-UI"
+		local matchBtn = _EntityService:GetEntityByPath(uiRoot .. "/MatchingPanel/RankingMatchBtn")
+		local cancelBtn = _EntityService:GetEntityByPath(uiRoot .. "/MatchingPanel/CancelMatchBtn")
+		local minimizeBtn = _EntityService:GetEntityByPath(uiRoot .. "/MatchingPanel/MinimizeBtn")
+		local restoreBtn = _EntityService:GetEntityByPath(uiRoot .. "/MiniHUD/RestoreBtn")
+
+		log("[MatchingUI] matchBtn valid=" .. tostring(isvalid(matchBtn)))
+		log("[MatchingUI] cancelBtn valid=" .. tostring(isvalid(cancelBtn)))
+		log("[MatchingUI] minimizeBtn valid=" .. tostring(isvalid(minimizeBtn)))
+		log("[MatchingUI] restoreBtn valid=" .. tostring(isvalid(restoreBtn)))
+
+		if isvalid(matchBtn) then
+			self._T.rankingHandler = matchBtn:ConnectEvent(ButtonClickEvent, function()
+				local p = _UserService.LocalPlayer
+				if not isvalid(p) then return end
+				local userId = tostring(p.PlayerComponent.UserId)
+				log("[MatchingUI] 매칭 요청: " .. userId)
+				_MatchingManager:RequestJoinQueue(userId)
+				self:SetWaitingState(true)
+			end)
+			self._T.matchBtn = matchBtn
+		end
+		if isvalid(cancelBtn) then
+			self._T.cancelHandler = cancelBtn:ConnectEvent(ButtonClickEvent, function()
+				local p = _UserService.LocalPlayer
+				if not isvalid(p) then return end
+				local userId = tostring(p.PlayerComponent.UserId)
+				log("[MatchingUI] 매칭 취소: " .. userId)
+				_MatchingManager:RequestLeaveQueue(userId)
+				self:SetWaitingState(false)
+			end)
+			self._T.cancelBtn = cancelBtn
+		end
+		if isvalid(minimizeBtn) then
+			self._T.minimizeHandler = minimizeBtn:ConnectEvent(ButtonClickEvent, function()
+				log("[MatchingUI] 최소화")
+				if isvalid(self.matchingPanel) then self.matchingPanel.Enable = false end
+				if isvalid(self.miniHUD) then self.miniHUD.Enable = true end
+			end)
+			self._T.minimizeBtn = minimizeBtn
+		end
+		if isvalid(restoreBtn) then
+			self._T.restoreHandler = restoreBtn:ConnectEvent(ButtonClickEvent, function()
+				log("[MatchingUI] 패널 복원")
+				if isvalid(self.matchingPanel) then self.matchingPanel.Enable = true end
+				if isvalid(self.miniHUD) then self.miniHUD.Enable = false end
+			end)
+			self._T.restoreBtn = restoreBtn
+		end
+	end
+
+	method void DisconnectButtons()
+		if self._T.rankingHandler and isvalid(self._T.matchBtn) then
+			self._T.matchBtn:DisconnectEvent(ButtonClickEvent, self._T.rankingHandler)
+			self._T.rankingHandler = nil
+		end
+		if self._T.cancelHandler and isvalid(self._T.cancelBtn) then
+			self._T.cancelBtn:DisconnectEvent(ButtonClickEvent, self._T.cancelHandler)
+			self._T.cancelHandler = nil
+		end
+		if self._T.minimizeHandler and isvalid(self._T.minimizeBtn) then
+			self._T.minimizeBtn:DisconnectEvent(ButtonClickEvent, self._T.minimizeHandler)
+			self._T.minimizeHandler = nil
+		end
+		if self._T.restoreHandler and isvalid(self._T.restoreBtn) then
+			self._T.restoreBtn:DisconnectEvent(ButtonClickEvent, self._T.restoreHandler)
+			self._T.restoreHandler = nil
+		end
+	end
+
+	method void SetWaitingState(boolean isWaiting)
+		local uiRoot = "/ui/2_던전대기방-UI/MatchingPanel"
+		local matchBtn = self._T.matchBtn or _EntityService:GetEntityByPath(uiRoot .. "/RankingMatchBtn")
+		local statusTxt = _EntityService:GetEntityByPath(uiRoot .. "/StatusText")
+		local cancelBtn = self._T.cancelBtn or _EntityService:GetEntityByPath(uiRoot .. "/CancelMatchBtn")
+
+		if isvalid(matchBtn) then matchBtn.Enable = not isWaiting end
+		if isvalid(statusTxt) then statusTxt.Enable = isWaiting end
+		if isvalid(cancelBtn) then cancelBtn.Enable = isWaiting end
+	end
+
+end
