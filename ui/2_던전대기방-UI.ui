@@ -24,7 +24,7 @@
           "enable": true,
           "visible": true,
           "localize": true,
-          "displayOrder": 10,
+          "displayOrder": 11,
           "pathConstraints": "//",
           "revision": 0,
           "origin": {
@@ -97,7 +97,7 @@
             {
               "@type": "MOD.Core.UIGroupComponent",
               "DefaultShow": true,
-              "GroupOrder": 10,
+              "GroupOrder": 11,
               "GroupType": 1,
               "Enable": true
             },
@@ -1373,7 +1373,7 @@
           "name": "MiniHUD",
           "path": "/ui/2_던전대기방-UI/MiniHUD",
           "nameEditable": true,
-          "enable": true,
+          "enable": false,
           "visible": true,
           "localize": true,
           "displayOrder": 1,

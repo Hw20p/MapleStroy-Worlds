@@ -1,0 +1,58 @@
+@Component
+script LobbyReturnPortal extends Component
+
+    property number portalCooldown = 0
+
+    method void OnBeginPlay()
+        -- 쿨다운 초기화
+        portalCooldown = 0
+    end
+
+    method void OnUpdate(number delta)
+        self:CheckInput(delta)
+    end
+
+    @ExecSpace("ClientOnly")
+    method void CheckInput(number delta)
+        -- 쿨다운 감소
+        if portalCooldown > 0 then
+            portalCooldown = portalCooldown - delta
+            return
+        end
+
+        -- 위쪽 화살표 키 입력 감지
+        if not _InputService:IsKeyPressed(KeyboardKey.UpArrow) then return end
+
+        local player = _UserService.LocalPlayer
+        if not isvalid(player) then return end
+
+        local portal = _EntityService:GetEntityByPath("/maps/2_던전대기방/복귀포탈")
+        if not isvalid(portal) then return end
+
+        local portalPos = portal.TransformComponent.WorldPosition
+        local playerPos = player.TransformComponent.WorldPosition
+
+        local dx = math.abs(playerPos.x - portalPos.x)
+        local dy = math.abs(playerPos.y - portalPos.y)
+
+        -- 복귀포탈 BoxSize(1.2 x 2) 범위 + 여유
+        if dx < 0.7 and dy < 1.2 then
+            log("[LobbyReturnPortal] 메인로비 이동 요청")
+            portalCooldown = 2.0
+            -- 던전 대기방 UI 비활성화
+            local ui = _EntityService:GetEntityByPath("/ui/2_던전대기방-UI")
+            if isvalid(ui) then ui.Enable = false end
+            self:RequestTeleport(tostring(player.PlayerComponent.UserId))
+        end
+    end
+
+    @ExecSpace("Server")
+    method void RequestTeleport(string userId)
+        -- 서버에서 텔레포트 처리
+        local player = _UserService:GetUserEntityByUserId(userId)
+        if not isvalid(player) then return end
+        log("[LobbyReturnPortal] 텔레포트 → 메인로비: " .. userId)
+        _TeleportService:TeleportToEntityPath(player, "/maps/1_메인로비")
+    end
+
+end

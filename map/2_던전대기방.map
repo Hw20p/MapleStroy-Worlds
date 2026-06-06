@@ -16,7 +16,7 @@
       {
         "id": "2ac7bc87-6240-498c-b7fe-3c3c436bf0b8",
         "path": "/maps/2_던전대기방",
-        "componentNames": "MOD.Core.MapComponent,MOD.Core.FootholdComponent,script.RankingLobby,script.MatchingUIController",
+        "componentNames": "MOD.Core.MapComponent,MOD.Core.FootholdComponent,script.RankingLobby,script.MatchingUIController,script.LobbyReturnPortal",
         "jsonString": {
           "name": "2_던전대기방",
           "path": "/maps/2_던전대기방",
@@ -133,7 +133,7 @@
                     }
                   },
                   {
-                    "Length": 0.9,
+                    "Length": 0.899999738,
                     "NextFootholdId": 5,
                     "PreviousFootholdId": 3,
                     "groupID": 1,
@@ -155,7 +155,7 @@
                       "y": -0.15
                     },
                     "EndPoint": {
-                      "x": -1.34999979,
+                      "x": -1.35,
                       "y": -0.15
                     },
                     "Variance": {
@@ -288,7 +288,7 @@
                     }
                   },
                   {
-                    "Length": 0.9000001,
+                    "Length": 0.899999857,
                     "NextFootholdId": 10,
                     "PreviousFootholdId": 8,
                     "groupID": 1,
@@ -306,7 +306,7 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 9,
                     "StartPoint": {
-                      "x": 2.24999976,
+                      "x": 2.25,
                       "y": -0.15
                     },
                     "EndPoint": {
@@ -678,11 +678,11 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 21,
                     "StartPoint": {
-                      "x": 8.88,
+                      "x": 8.879999,
                       "y": -0.3
                     },
                     "EndPoint": {
-                      "x": 8.88,
+                      "x": 8.879999,
                       "y": -0.9
                     },
                     "Variance": {
@@ -709,11 +709,11 @@
                     "OwnerId": "bb98b631-96af-4d07-9409-8284e29a158a",
                     "Id": 22,
                     "StartPoint": {
-                      "x": 8.88,
+                      "x": 8.879999,
                       "y": -0.9000001
                     },
                     "EndPoint": {
-                      "x": 8.88,
+                      "x": 8.879999,
                       "y": -1.50000012
                     },
                     "Variance": {
@@ -744,6 +744,10 @@
                 "EntityId": "490fccfe-6ca1-4d63-b7ab-59da3f17c03b",
                 "Version2": false
               }
+            },
+            {
+              "@type": "script.LobbyReturnPortal",
+              "Enable": true
             }
           ],
           "@version": 1

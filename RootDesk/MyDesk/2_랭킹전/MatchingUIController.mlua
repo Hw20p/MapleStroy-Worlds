@@ -14,6 +14,10 @@ script MatchingUIController extends Component
 		log("[MatchingUI] matchingPanel valid=" .. tostring(isvalid(self.matchingPanel)))
 		log("[MatchingUI] miniHUD valid=" .. tostring(isvalid(self.miniHUD)))
 
+		-- 부모 UI 그룹 활성화 (포탈 이동 후 비활성화됐을 수 있음)
+		local uiGroup = _EntityService:GetEntityByPath("/ui/2_던전대기방-UI")
+		if isvalid(uiGroup) then uiGroup.Enable = true end
+
 		if isvalid(self.matchingPanel) then
 			self.matchingPanel.Enable = true
 		end

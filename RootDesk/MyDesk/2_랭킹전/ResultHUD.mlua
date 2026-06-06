@@ -1,0 +1,105 @@
+@Component
+script ResultHUD extends Component
+
+    -- ── UI 엔티티 바인딩 ──────────────────────────────────────────────
+    property Entity resultTitleText = "58bda0f1-e094-4d9c-8b17-13586e618a66"
+    property Entity stageText       = "35a384c1-44d3-4016-b3d9-0bfc58f57865"
+
+    property Entity myNameText      = "89768bd5-695d-498f-8bc4-8037f5a85cba"
+    property Entity mySurvText      = "8c3da5f3-ee15-4af6-967f-acb94e7eaa12"
+    property Entity myAtkText       = "7c84d185-44db-408c-90a7-c6db83dcde7f"
+    property Entity myTotalText     = "8178063e-4a29-407e-a038-4beac9b99f3d"
+
+    property Entity enemyNameText   = "3bef4473-ce55-4927-b278-59f6bf85f657"
+    property Entity enemySurvText   = "c3a9c456-11e8-40e7-868b-b2317a800fd6"
+    property Entity enemyAtkText    = "4915b523-d544-4838-9483-33246c37e06c"
+    property Entity enemyTotalText  = "5b708bf8-f164-4481-9b0d-e72dc5b9de09"
+
+    property Entity returnBtn       = "a2b83168-4fd4-46d8-a745-dd5ae3252d77"
+
+    method void OnBeginPlay()
+        -- 복귀 버튼 연결 (클라이언트에서 서버 RPC 호출)
+        if self:IsClient() then
+            if isvalid(self.returnBtn) then
+                self._T.returnHandler = self.returnBtn:ConnectEvent(ButtonClickEvent, function()
+                    log("[ResultHUD] 대기방 복귀 요청")
+                    -- BattleManager 서버 RPC로 텔레포트 요청
+                    local mapEntity = _EntityService:GetEntityByPath("/maps/랭킹전_배틀")
+                    if isvalid(mapEntity) then
+                        local bm = mapEntity:GetComponent("script.BattleManager")
+                        if isvalid(bm) then
+                            bm:RequestReturnToLobby()
+                        else
+                            log_warning("[ResultHUD] BattleManager 없음")
+                        end
+                    else
+                        log_warning("[ResultHUD] 랭킹전_배틀 맵 엔티티 없음")
+                    end
+                end)
+            end
+        end
+    end
+
+    method void OnEndPlay()
+        if self:IsClient() then
+            if self._T.returnHandler and isvalid(self.returnBtn) then
+                self.returnBtn:DisconnectEvent(ButtonClickEvent, self._T.returnHandler)
+                self._T.returnHandler = nil
+            end
+        end
+    end
+
+    -- ── 결과 표시 (서버 → Multicast로 호출됨) ────────────────────────
+    @ExecSpace("ClientOnly")
+    method void ShowResult(boolean isWin, string myName, number mySurv, number myAtk, string enemyName, number enemySurv, number enemyAtk, integer stage)
+        -- 제목
+        if isvalid(self.resultTitleText) then
+            local t = self.resultTitleText.TextComponent
+            if isvalid(t) then
+                if isWin then
+                    t.Text = "🏆 승리!"
+                    t.FontColor = Color(1, 1, 0, 1)
+                else
+                    t.Text = "💀 패배..."
+                    t.FontColor = Color(0.8, 0.2, 0.2, 1)
+                end
+            end
+        end
+
+        -- 스테이지
+        if isvalid(self.stageText) then
+            local t = self.stageText.TextComponent
+            if isvalid(t) then
+                t.Text = "도달 스테이지: " .. tostring(stage)
+            end
+        end
+
+        -- 내 점수
+        local myTotal = mySurv + myAtk
+        self:SetText(self.myNameText,  myName)
+        self:SetText(self.mySurvText,  "생존: " .. tostring(math.floor(mySurv)))
+        self:SetText(self.myAtkText,   "공격: " .. tostring(math.floor(myAtk)))
+        self:SetText(self.myTotalText, "합계: " .. tostring(math.floor(myTotal)))
+
+        -- 상대 점수
+        local enemyTotal = enemySurv + enemyAtk
+        self:SetText(self.enemyNameText,  enemyName)
+        self:SetText(self.enemySurvText,  "생존: " .. tostring(math.floor(enemySurv)))
+        self:SetText(self.enemyAtkText,   "공격: " .. tostring(math.floor(enemyAtk)))
+        self:SetText(self.enemyTotalText, "합계: " .. tostring(math.floor(enemyTotal)))
+
+        log("[ResultHUD] 결과 표시 완료 - 승리=" .. tostring(isWin))
+    end
+
+    -- ── 헬퍼 ─────────────────────────────────────────────────────────
+    @ExecSpace("ClientOnly")
+    method void SetText(Entity entity, string value)
+        -- 텍스트 컴포넌트 내용 갱신
+        if not isvalid(entity) then return end
+        local t = entity.TextComponent
+        if isvalid(t) then
+            t.Text = value
+        end
+    end
+
+end

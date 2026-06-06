@@ -150,7 +150,62 @@ script BattleManager extends Component
         log("[BattleManager] " .. uid .. " 피격 -" .. tostring(damage) .. " → HP=" .. tostring(hp))
         self:BroadcastAll()
 
-        -- TODO: 6단계에서 hp == 0 패배 처리 추가
+        if hp <= 0.0 then
+            self:OnGameEnd(uid)
+        end
+    end
+
+    -- ── 게임 종료 (패배자 uid) ────────────────────────────────────────
+    @ExecSpace("ServerOnly")
+    method void OnGameEnd(string loserUid)
+        if self._T.phase == "ended" then return end   -- 중복 방지
+        self._T.phase = "ended"
+        log("[BattleManager] 게임 종료 - 패배자: " .. loserUid)
+
+        -- 타이머 정지
+        if self._T.scoreTimerId and self._T.scoreTimerId ~= 0 then
+            _TimerService:ClearTimer(self._T.scoreTimerId)
+            self._T.scoreTimerId = 0
+        end
+        if self._T.selectTimerId and self._T.selectTimerId ~= 0 then
+            _TimerService:ClearTimer(self._T.selectTimerId)
+            self._T.selectTimerId = 0
+        end
+
+        -- 보스 탄막 정지
+        local boss = self:GetBossAI()
+        if isvalid(boss) then boss:PauseAttack() end
+
+        -- 승리자 uid 결정
+        local winnerUid = ""
+        for _, uid in ipairs(self._T.players) do
+            if uid ~= loserUid then
+                winnerUid = uid
+                break
+            end
+        end
+
+        -- 점수 취합
+        local loserSurv  = self._T.survivalScoreMap[loserUid]  or 0.0
+        local loserAtk   = self._T.attackScoreMap[loserUid]    or 0.0
+        local winnerSurv = self._T.survivalScoreMap[winnerUid] or 0.0
+        local winnerAtk  = self._T.attackScoreMap[winnerUid]   or 0.0
+        local loserName  = self._T.nameMap[loserUid]           or "패배자"
+        local winnerName = self._T.nameMap[winnerUid]          or "승리자"
+        local stage      = self._T.stage or 1
+
+        -- 증강 UI 숨기기 (혹시 열려 있으면)
+        self:MulticastHideAugmentUI()
+
+        -- 결과 화면 표시 (1초 후 — 마지막 HP 브로드캐스트가 먼저 도착하도록)
+        local ls = loserSurv; local la = loserAtk
+        local ws = winnerSurv; local wa = winnerAtk
+        local ln = loserName; local wn = winnerName
+        local lid = loserUid; local wid = winnerUid
+        local st = stage
+        _TimerService:SetTimerOnce(function()
+            self:MulticastShowResult(lid, ln, ls, la, wid, wn, ws, wa, st)
+        end, 1.0)
     end
 
     -- ── 스테이지 클리어 ───────────────────────────────────────────────
@@ -361,6 +416,66 @@ script BattleManager extends Component
                 comp:OnPlayerSelected(uid, augmentIndex)
             end
         end
+    end
+
+    -- ── 대기방 복귀 요청 (클라이언트 → 서버) ────────────────────────
+    @ExecSpace("Server")
+    method void RequestReturnToLobby()
+        -- senderUserId로 요청한 플레이어를 찾아 대기방으로 이동
+        local map = self.Entity.CurrentMap
+        if not isvalid(map) then return end
+        local mapComp = map.MapComponent
+        if not isvalid(mapComp) then return end
+        local users = _UserService:GetUsersByMapComponent(mapComp)
+        if users == nil then return end
+        for _, user in ipairs(users) do
+            if isvalid(user) then
+                local pc = user.PlayerComponent
+                if isvalid(pc) and tostring(pc.UserId) == tostring(senderUserId) then
+                    log("[BattleManager] 대기방 복귀: " .. pc.Nickname)
+                    _TeleportService:TeleportToEntityPath(user, "/maps/2_랭킹전")
+                    return
+                end
+            end
+        end
+        log_warning("[BattleManager] RequestReturnToLobby - 플레이어 못 찾음: " .. tostring(senderUserId))
+    end
+
+    -- ── 결과 화면 Multicast ───────────────────────────────────────────
+    @ExecSpace("Multicast")
+    method void MulticastShowResult(string loserUid, string loserName, number loserSurv, number loserAtk, string winnerUid, string winnerName, number winnerSurv, number winnerAtk, integer stage)
+        -- 배틀 UI 숨김
+        local battleUI = _EntityService:GetEntityByPath("/ui/랭킹전_배틀-UI")
+        if isvalid(battleUI) then battleUI.Enable = false end
+
+        -- 결과 UI 표시
+        local resultUI = _EntityService:GetEntityByPath("/ui/랭킹전_결과-UI")
+        if isvalid(resultUI) then resultUI.Enable = true end
+
+        -- 내가 누군지 판단
+        local localPlayer = _UserService.LocalPlayer
+        if not isvalid(localPlayer) then return end
+        local myId = tostring(localPlayer.PlayerComponent.UserId)
+
+        local isWin = (myId == winnerUid)
+        local myName, mySurv, myAtk, enemyName, enemySurv, enemyAtk
+        if isWin then
+            myName = winnerName; mySurv = winnerSurv; myAtk = winnerAtk
+            enemyName = loserName; enemySurv = loserSurv; enemyAtk = loserAtk
+        else
+            myName = loserName; mySurv = loserSurv; myAtk = loserAtk
+            enemyName = winnerName; enemySurv = winnerSurv; enemyAtk = winnerAtk
+        end
+
+        -- ResultHUD에 데이터 전달
+        local hudEntity = _EntityService:GetEntityByPath("/ui/랭킹전_결과-UI/ResultHUD")
+        if isvalid(hudEntity) then
+            local hud = hudEntity:GetComponent("script.ResultHUD")
+            if isvalid(hud) then
+                hud:ShowResult(isWin, myName, mySurv, myAtk, enemyName, enemySurv, enemyAtk, stage)
+            end
+        end
+        log("[BattleManager] 결과 화면 표시 완료 - isWin=" .. tostring(isWin))
     end
 
     -- ── 배틀 상태 통합 Multicast ──────────────────────────────────────

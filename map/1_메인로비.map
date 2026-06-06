@@ -47,7 +47,7 @@
               "FootholdsByLayer": {
                 "1": [
                   {
-                    "Length": 1.28000069,
+                    "Length": 1.2300005,
                     "NextFootholdId": 2,
                     "PreviousFootholdId": 27,
                     "groupID": 1,
@@ -65,12 +65,12 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 1,
                     "StartPoint": {
-                      "x": -8.93,
-                      "y": -0.04000002
+                      "x": -8.88,
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -7.64999962,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -97,11 +97,11 @@
                     "Id": 2,
                     "StartPoint": {
                       "x": -7.64999962,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -6.75,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -128,11 +128,11 @@
                     "Id": 3,
                     "StartPoint": {
                       "x": -6.74999952,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -5.85,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -159,11 +159,11 @@
                     "Id": 4,
                     "StartPoint": {
                       "x": -5.84999943,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -4.95,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -190,11 +190,11 @@
                     "Id": 5,
                     "StartPoint": {
                       "x": -4.95,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -4.05,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -221,11 +221,11 @@
                     "Id": 6,
                     "StartPoint": {
                       "x": -4.05,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -3.14999986,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -252,11 +252,11 @@
                     "Id": 7,
                     "StartPoint": {
                       "x": -3.14999986,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -2.24999976,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -283,11 +283,11 @@
                     "Id": 8,
                     "StartPoint": {
                       "x": -2.24999976,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -1.34999979,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -314,11 +314,11 @@
                     "Id": 9,
                     "StartPoint": {
                       "x": -1.35,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": -0.449999958,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -345,11 +345,11 @@
                     "Id": 10,
                     "StartPoint": {
                       "x": -0.45,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 0.449999958,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -376,11 +376,11 @@
                     "Id": 11,
                     "StartPoint": {
                       "x": 0.450000018,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 1.35,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -407,11 +407,11 @@
                     "Id": 12,
                     "StartPoint": {
                       "x": 1.34999979,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 2.25,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -438,11 +438,11 @@
                     "Id": 13,
                     "StartPoint": {
                       "x": 2.24999976,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 3.14999986,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -469,11 +469,11 @@
                     "Id": 14,
                     "StartPoint": {
                       "x": 3.14999986,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 4.04999971,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -500,11 +500,11 @@
                     "Id": 15,
                     "StartPoint": {
                       "x": 4.05,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 4.95,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -531,11 +531,11 @@
                     "Id": 16,
                     "StartPoint": {
                       "x": 4.95,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 5.84999943,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -562,11 +562,11 @@
                     "Id": 17,
                     "StartPoint": {
                       "x": 5.85,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
                       "x": 6.74999952,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -574,7 +574,7 @@
                     }
                   },
                   {
-                    "Length": 1.27999878,
+                    "Length": 1.23,
                     "NextFootholdId": 19,
                     "PreviousFootholdId": 17,
                     "groupID": 1,
@@ -593,11 +593,11 @@
                     "Id": 18,
                     "StartPoint": {
                       "x": 6.75,
-                      "y": -0.04000002
+                      "y": -0.15
                     },
                     "EndPoint": {
-                      "x": 8.029999,
-                      "y": -0.04000002
+                      "x": 7.98,
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 1.0,
@@ -605,7 +605,7 @@
                     }
                   },
                   {
-                    "Length": 0.859999955,
+                    "Length": 0.75,
                     "NextFootholdId": 20,
                     "PreviousFootholdId": 18,
                     "groupID": 1,
@@ -623,11 +623,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 19,
                     "StartPoint": {
-                      "x": 8.029999,
-                      "y": -0.04000002
+                      "x": 7.98,
+                      "y": -0.15
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -0.9
                     },
                     "Variance": {
@@ -654,11 +654,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 20,
                     "StartPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -0.9000001
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -1.50000012
                     },
                     "Variance": {
@@ -685,11 +685,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 21,
                     "StartPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -1.50000012
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -2.10000014
                     },
                     "Variance": {
@@ -716,11 +716,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 22,
                     "StartPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -2.10000014
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -2.7
                     },
                     "Variance": {
@@ -747,11 +747,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 23,
                     "StartPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -2.7
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -3.3
                     },
                     "Variance": {
@@ -778,11 +778,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 24,
                     "StartPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -3.30000019
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -3.9
                     },
                     "Variance": {
@@ -809,11 +809,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 25,
                     "StartPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -3.90000033
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -4.50000048
                     },
                     "Variance": {
@@ -840,11 +840,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 26,
                     "StartPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -4.5
                     },
                     "EndPoint": {
-                      "x": 8.029999,
+                      "x": 7.98,
                       "y": -5.10000038
                     },
                     "Variance": {
@@ -853,7 +853,7 @@
                     }
                   },
                   {
-                    "Length": 0.859999955,
+                    "Length": 0.75,
                     "NextFootholdId": 1,
                     "PreviousFootholdId": 28,
                     "groupID": 1,
@@ -871,12 +871,12 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 27,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -0.9
                     },
                     "EndPoint": {
-                      "x": -8.93,
-                      "y": -0.04000002
+                      "x": -8.88,
+                      "y": -0.15
                     },
                     "Variance": {
                       "x": 0.0,
@@ -902,11 +902,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 28,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -1.50000012
                     },
                     "EndPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -0.9000001
                     },
                     "Variance": {
@@ -933,11 +933,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 29,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -2.10000014
                     },
                     "EndPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -1.50000012
                     },
                     "Variance": {
@@ -964,11 +964,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 30,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -2.7
                     },
                     "EndPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -2.10000014
                     },
                     "Variance": {
@@ -995,11 +995,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 31,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -3.3
                     },
                     "EndPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -2.7
                     },
                     "Variance": {
@@ -1026,11 +1026,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 32,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -3.9
                     },
                     "EndPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -3.30000019
                     },
                     "Variance": {
@@ -1057,11 +1057,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 33,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -4.50000048
                     },
                     "EndPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -3.90000033
                     },
                     "Variance": {
@@ -1088,11 +1088,11 @@
                     "OwnerId": "c9a3018a-f6fa-4c4b-b91e-404ac5ce9858",
                     "Id": 34,
                     "StartPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -5.10000038
                     },
                     "EndPoint": {
-                      "x": -8.93,
+                      "x": -8.88,
                       "y": -4.5
                     },
                     "Variance": {
@@ -1140,7 +1140,7 @@
                 "b": 0.5019608,
                 "a": 0.7058824
               },
-              "TemplateRUID": "794ad8421e2543d8a6d2c70307637450",
+              "TemplateRUID": "23da82ab54d6474fa2d9d901a5b2e65c",
               "Type": 1,
               "WebUrl": "",
               "Enable": true
@@ -1245,7 +1245,7 @@
               "SortingLayer": "MapLayer0",
               "TileMapVersion": 1,
               "TileSetRUID": {
-                "DataId": "9dfea3808bbd49a5877d8624df21b1c7"
+                "DataId": "3ca52bc385574e56aaffa15eea5c23aa"
               },
               "Tiles": [
                 {
@@ -6364,58 +6364,6 @@
         }
       },
       {
-        "id": "fb2dfc54-fe54-4393-814c-a231479a4d33",
-        "path": "/maps/1_메인로비/던전입구",
-        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent",
-        "jsonString": {
-          "name": "던전입구",
-          "path": "/maps/1_메인로비/던전입구",
-          "nameEditable": true,
-          "enable": true,
-          "visible": true,
-          "localize": false,
-          "displayOrder": 4,
-          "pathConstraints": "///",
-          "revision": 1,
-          "origin": {
-            "type": "Model",
-            "entry_id": "mapobject",
-            "sub_entity_id": null,
-            "root_entity_id": "fb2dfc54-fe54-4393-814c-a231479a4d33",
-            "replaced_model_id": null
-          },
-          "modelId": "mapobject",
-          "@components": [
-            {
-              "@type": "MOD.Core.TransformComponent",
-              "Position": {
-                "x": 1.97838521,
-                "y": 0.8689737,
-                "z": 999.999
-              },
-              "QuaternionRotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-              },
-              "Enable": true
-            },
-            {
-              "@type": "MOD.Core.SpriteRendererComponent",
-              "ActionSheet": {},
-              "EndFrameIndex": 2147483647,
-              "RenderSetting": 0,
-              "SortingLayer": "MapLayer0",
-              "SpriteRUID": "61e56321798d4fa8b6e100acf6d5dbac",
-              "StartFrameIndex": 0,
-              "Enable": true
-            }
-          ],
-          "@version": 1
-        }
-      },
-      {
         "id": "5ff59a55-a8b2-41c8-b07b-96d96a1c2e40",
         "path": "/maps/1_메인로비/던전입구_포탈",
         "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent,MOD.Core.PortalComponent,MOD.Core.TagComponent",
@@ -6426,7 +6374,7 @@
           "enable": true,
           "visible": true,
           "localize": false,
-          "displayOrder": 5,
+          "displayOrder": 4,
           "pathConstraints": "///",
           "revision": 1,
           "origin": {
@@ -6487,6 +6435,63 @@
               "Tags": [
                 "MODRespawnArea"
               ],
+              "Enable": true
+            }
+          ],
+          "@version": 1
+        }
+      },
+      {
+        "id": "20868b03-e47d-4ca2-8ccf-fe8bfb6274a2",
+        "path": "/maps/1_메인로비/sprite-169506",
+        "componentNames": "MOD.Core.TransformComponent,MOD.Core.SpriteRendererComponent",
+        "jsonString": {
+          "name": "sprite-169506",
+          "path": "/maps/1_메인로비/sprite-169506",
+          "nameEditable": true,
+          "enable": true,
+          "visible": true,
+          "localize": false,
+          "displayOrder": 5,
+          "pathConstraints": "///",
+          "revision": 1,
+          "origin": {
+            "type": "Model",
+            "entry_id": "mapobject",
+            "sub_entity_id": null,
+            "root_entity_id": "20868b03-e47d-4ca2-8ccf-fe8bfb6274a2",
+            "replaced_model_id": null
+          },
+          "modelId": "mapobject",
+          "@components": [
+            {
+              "@type": "MOD.Core.TransformComponent",
+              "Position": {
+                "x": 2.3132863,
+                "y": 0.69,
+                "z": 999.999
+              },
+              "QuaternionRotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "Scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "Enable": true
+            },
+            {
+              "@type": "MOD.Core.SpriteRendererComponent",
+              "ActionSheet": {},
+              "EndFrameIndex": 2147483647,
+              "RenderSetting": 0,
+              "SortingLayer": "MapLayer0",
+              "SpriteRUID": "eafe95dce8a34e819667cca953c33327",
+              "StartFrameIndex": 0,
               "Enable": true
             }
           ],
