@@ -124,3 +124,5 @@
 2026-06-06T17:36:47.428+09:00 | session=203bff73 | event=PostToolUse | tool=Read | skill=msw-general | kind=reference | file=.claude/skills/msw-general/references/builder-protocol.md | mode=partial | offset=728 | limit=250 | lines=250 | bytes=18505 | duration_ms=1
 2026-06-06T18:09:04.347+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=compact | file=CLAUDE.md | mode=full | lines=42 | bytes=1792
 2026-06-06T18:09:04.361+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=include | file=AGENTS.md | mode=full | lines=262 | bytes=23409
+2026-06-06T19:36:13.623+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=session_start | file=CLAUDE.md | mode=full | lines=42 | bytes=1792
+2026-06-06T19:36:13.623+09:00 | session=203bff73 | event=InstructionsLoaded | memory=Project | reason=include | file=AGENTS.md | mode=full | lines=262 | bytes=23409

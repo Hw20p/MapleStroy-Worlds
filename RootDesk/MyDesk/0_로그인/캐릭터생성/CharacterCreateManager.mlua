@@ -131,7 +131,7 @@ script CharacterCreateManager extends Component
 			showToast("닉네임은 최대 12자까지 입력 가능합니다.")
 			return
 		end
-
+		
 		-- 한글 자모 단독 입력 검사 (0xE3 0x84/0x85 범위)
 		local hasJamo = false
 		local bi = 1
@@ -152,10 +152,10 @@ script CharacterCreateManager extends Component
 			end
 		end
 		if hasJamo then
-			showToast("완성된 글자로만 입력해주세요.")
+			showToast("사용할 수 없는 닉네임입니다.")
 			return
 		end
-
+		
 		log("[CharacterCreate] Requesting create: " .. nickname .. " / " .. self.selectedJob)
 		local player = _UserService.LocalPlayer
 		if not isvalid(player) then return end
